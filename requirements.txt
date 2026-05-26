@@ -1,0 +1,30 @@
+# KG-Agent System v2 - Python Dependencies
+# Python >= 3.10
+
+# Web framework
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+
+# Database
+sqlalchemy==2.0.25
+pymysql==1.1.0
+cryptography==42.0.2
+
+# Config & validation
+python-dotenv==1.0.1
+pydantic==2.6.1
+
+# LLM & search
+duckduckgo-search==5.3.1
+httpx==0.26.0
+
+# Vector database
+chromadb==0.4.24
+
+# Utilities
+python-dateutil==2.8.2
+
+# Testing
+pytest==8.0.0
+pytest-asyncio==0.23.4

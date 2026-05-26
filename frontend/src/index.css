@@ -1,0 +1,113 @@
+/* highlight.js - dark theme for code blocks */
+@import 'highlight.js/styles/github-dark.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Claude 配色体系 ── */
+  --canvas-black: #1a1614;
+  --surface-slate: #2b2522;
+  --brand-accent: #d97757;
+  --brand-warm: #c4956a;
+  --info-blue: #6b8aed;
+  --success-green: #6db88f;
+  --warning-amber: #d4a843;
+  --danger-red: #d45d5d;
+  --hazard-white: #ede8e3;
+  --secondary-text: #a89e95;
+  --muted-text: #6e6560;
+  --border-color: #3d3632;
+  --border-subtle: #2e2824;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--canvas-black);
+  color: var(--hazard-white);
+  font-family: 'DM Sans', 'Hanken Grotesk', Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-text);
+}
+
+/* Mono uppercase label */
+.label-mono {
+  font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 11px;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* ── Markdown 渲染增强 ────────────────────────────────────────── */
+.markdown-body {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.markdown-body p:first-child { margin-top: 0; }
+.markdown-body p:last-child { margin-bottom: 0; }
+
+.markdown-body h1 + p,
+.markdown-body h2 + p,
+.markdown-body h3 + p { margin-top: 0; }
+
+/* 行内代码高亮背景 */
+.markdown-body code {
+  font-size: 0.875em;
+}
+
+/* 表格行 hover */
+.markdown-body tbody tr:hover {
+  background-color: rgba(217, 119, 87, 0.05);
+}
+
+/* highlight.js token 颜色微调 */
+.hljs { background: transparent !important; }
+
+/* ── Pulse animation for processing ─────────────────────────── */
+@keyframes brand-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-brand-pulse {
+  animation: brand-pulse 1.5s ease-in-out infinite;
+}
+
+/* ── Streaming cursor ─────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

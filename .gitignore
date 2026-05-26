@@ -1,0 +1,66 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+ENV/
+
+# Node
+node_modules/
+.pnp
+.pnp.js
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+tmp/
+
+# Database
+*.db
+*.sqlite3
+chroma_db/
+
+# Config (runtime-generated, not committed)
+config.json
+*.sqlite
+
+# Chroma persisted data
+chroma/
+chroma_data/
+chroma_data_backup_*/
+
+# Local database data
+mysql/
+
+# Misc
+*.bak
+*.tmp
+notes/

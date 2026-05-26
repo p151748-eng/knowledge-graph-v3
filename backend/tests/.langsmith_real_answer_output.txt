@@ -1,0 +1,1038 @@
+C:\Users\33506\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (7.1.0)/charset_normalizer (3.4.5) doesn't match a supported version!
+  warnings.warn(
+2026-05-19 16:19:09,347 INFO sqlalchemy.engine.Engine SELECT DATABASE()
+2026-05-19 16:19:09,348 INFO sqlalchemy.engine.Engine [raw sql] {}
+2026-05-19 16:19:09,349 INFO sqlalchemy.engine.Engine SELECT @@sql_mode
+2026-05-19 16:19:09,349 INFO sqlalchemy.engine.Engine [raw sql] {}
+2026-05-19 16:19:09,349 INFO sqlalchemy.engine.Engine SELECT @@lower_case_table_names
+2026-05-19 16:19:09,349 INFO sqlalchemy.engine.Engine [raw sql] {}
+2026-05-19 16:19:09,350 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:19:09,351 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2026-05-19 16:19:09,351 INFO sqlalchemy.engine.Engine [generated in 0.00012s] {'table_schema': 'konw', 'table_name': 'nodes'}
+2026-05-19 16:19:09,353 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2026-05-19 16:19:09,353 INFO sqlalchemy.engine.Engine [cached since 0.001827s ago] {'table_schema': 'konw', 'table_name': 'edges'}
+2026-05-19 16:19:09,354 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2026-05-19 16:19:09,354 INFO sqlalchemy.engine.Engine [cached since 0.003384s ago] {'table_schema': 'konw', 'table_name': 'documents'}
+2026-05-19 16:19:09,355 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2026-05-19 16:19:09,355 INFO sqlalchemy.engine.Engine [cached since 0.004352s ago] {'table_schema': 'konw', 'table_name': 'document_chunks'}
+2026-05-19 16:19:09,357 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = %(table_schema)s AND table_name = %(table_name)s
+2026-05-19 16:19:09,357 INFO sqlalchemy.engine.Engine [cached since 0.005723s ago] {'table_schema': 'konw', 'table_name': 'conversations'}
+2026-05-19 16:19:09,357 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:19:09,362 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:19:09,363 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.source = %(source_1)s
+2026-05-19 16:19:09,363 INFO sqlalchemy.engine.Engine [generated in 0.00009s] {'source_1': 'paper_langsmith_real_answer_regression'}
+2026-05-19 16:19:09,364 INFO sqlalchemy.engine.Engine INSERT INTO documents (title, content, source, tags, created_at, source_url) VALUES (%(title)s, %(content)s, %(source)s, %(tags)s, %(created_at)s, %(source_url)s)
+2026-05-19 16:19:09,364 INFO sqlalchemy.engine.Engine [generated in 0.00014s] {'title': 'LangSmith Live Paper LiveTraceRAG2026', 'content': '\n# LangSmith Live Paper LiveTraceRAG2026\n\nAlice Researcher\n2026\n\n## Abstract\nLiveTraceRAG2026 studies traceable paper assistant retrieval for  ... (1821 characters truncated) ... rieval-Augmented Generation for Knowledge-Intensive NLP Tasks. 2020.\n[2] Asai et al. Self-RAG: Learning to Retrieve, Generate, and Critique. 2023.\n', 'source': 'paper_langsmith_real_answer_regression', 'tags': '["paper", "langsmith_real_answer"]', 'created_at': datetime.datetime(2026, 5, 19, 8, 19, 9, 364857), 'source_url': None}
+2026-05-19 16:20:11,615 INFO sqlalchemy.engine.Engine SELECT nodes.name AS nodes_name 
+FROM nodes
+2026-05-19 16:20:11,615 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {}
+2026-05-19 16:20:11,620 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,620 INFO sqlalchemy.engine.Engine [generated in 0.00014s] {'name': 'Alice Researcher', 'type': 'entity', 'description': '论文作者', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 620337), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 620341)}
+2026-05-19 16:20:11,622 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,622 INFO sqlalchemy.engine.Engine [generated in 0.00007s] {'pk_1': 793}
+2026-05-19 16:20:11,622 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,622 INFO sqlalchemy.engine.Engine [cached since 0.002478s ago] {'name': 'BM25 retrieval', 'type': 'concept', 'description': '精确术语检索方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 622719), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 622722)}
+2026-05-19 16:20:11,623 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,623 INFO sqlalchemy.engine.Engine [cached since 0.00126s ago] {'pk_1': 794}
+2026-05-19 16:20:11,623 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,623 INFO sqlalchemy.engine.Engine [cached since 0.003413s ago] {'name': 'vector retrieval', 'type': 'concept', 'description': '语义证据检索方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 623661), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 623663)}
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine [cached since 0.002129s ago] {'pk_1': 795}
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine [cached since 0.004273s ago] {'name': 'paper graph retrieval', 'type': 'concept', 'description': '结构证据检索方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 624522), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 624524)}
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,624 INFO sqlalchemy.engine.Engine [cached since 0.002973s ago] {'pk_1': 796}
+2026-05-19 16:20:11,625 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,625 INFO sqlalchemy.engine.Engine [cached since 0.005234s ago] {'name': 'manager agent', 'type': 'entity', 'description': '系统路由组件', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 625453), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 625456)}
+2026-05-19 16:20:11,626 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,626 INFO sqlalchemy.engine.Engine [cached since 0.00447s ago] {'pk_1': 797}
+2026-05-19 16:20:11,627 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,627 INFO sqlalchemy.engine.Engine [cached since 0.006778s ago] {'name': 'EvidenceGrader', 'type': 'entity', 'description': '证据评分工具', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 627006), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 627008)}
+2026-05-19 16:20:11,627 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,627 INFO sqlalchemy.engine.Engine [cached since 0.005619s ago] {'pk_1': 798}
+2026-05-19 16:20:11,628 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,628 INFO sqlalchemy.engine.Engine [cached since 0.007855s ago] {'name': 'retrieval augmented generation', 'type': 'concept', 'description': '检索增强生成概念', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 628101), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 628104)}
+2026-05-19 16:20:11,628 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,628 INFO sqlalchemy.engine.Engine [cached since 0.006794s ago] {'pk_1': 799}
+2026-05-19 16:20:11,629 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,629 INFO sqlalchemy.engine.Engine [cached since 0.008972s ago] {'name': 'Self-RAG', 'type': 'concept', 'description': '自检索增强生成方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 629218), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 629220)}
+2026-05-19 16:20:11,629 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,629 INFO sqlalchemy.engine.Engine [cached since 0.007759s ago] {'pk_1': 800}
+2026-05-19 16:20:11,630 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,630 INFO sqlalchemy.engine.Engine [cached since 0.01005s ago] {'name': 'corrective RAG', 'type': 'concept', 'description': '纠正性检索增强生成方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 630276), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 630278)}
+2026-05-19 16:20:11,630 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,630 INFO sqlalchemy.engine.Engine [cached since 0.008902s ago] {'pk_1': 801}
+2026-05-19 16:20:11,631 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,631 INFO sqlalchemy.engine.Engine [cached since 0.01111s ago] {'name': 'graph-based retrieval', 'type': 'concept', 'description': '基于图的检索方法', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 631352), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 631354)}
+2026-05-19 16:20:11,631 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,631 INFO sqlalchemy.engine.Engine [cached since 0.009869s ago] {'pk_1': 802}
+2026-05-19 16:20:11,632 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,632 INFO sqlalchemy.engine.Engine [cached since 0.01208s ago] {'name': 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. 2020.', 'type': 'document', 'description': 'Lewis等人2020年的论文', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 632309), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 632311)}
+2026-05-19 16:20:11,633 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,633 INFO sqlalchemy.engine.Engine [cached since 0.01146s ago] {'pk_1': 803}
+2026-05-19 16:20:11,634 INFO sqlalchemy.engine.Engine INSERT INTO nodes (name, type, description, embedding, source_doc_ids, confidence, created_at, updated_at) VALUES (%(name)s, %(type)s, %(description)s, %(embedding)s, %(source_doc_ids)s, %(confidence)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:20:11,634 INFO sqlalchemy.engine.Engine [cached since 0.01381s ago] {'name': 'Self-RAG: Learning to Retrieve, Generate, and Critique. 2023.', 'type': 'document', 'description': 'Asai等人2023年的论文', 'embedding': None, 'source_doc_ids': '[173]', 'confidence': 0.7, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 634038), 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 634041)}
+2026-05-19 16:20:11,634 INFO sqlalchemy.engine.Engine SELECT nodes.id, nodes.name, nodes.type, nodes.description, nodes.properties, nodes.source_docs, nodes.provenance, nodes.embedding, nodes.source_doc_ids, nodes.confidence, nodes.created_at, nodes.updated_at 
+FROM nodes 
+WHERE nodes.id = %(pk_1)s
+2026-05-19 16:20:11,634 INFO sqlalchemy.engine.Engine [cached since 0.01273s ago] {'pk_1': 804}
+2026-05-19 16:20:11,635 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:20:11,643 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:20:11,643 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,644 INFO sqlalchemy.engine.Engine [generated in 0.00008s] {'document_id': 173, 'chunk_index': 0, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026\n【类型】paragraph\n【正文】\nAlice Researcher\n2026', 'token_count': 154, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 643971)}
+2026-05-19 16:20:11,644 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,644 INFO sqlalchemy.engine.Engine [cached since 0.00094s ago] {'document_id': 173, 'chunk_index': 1, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Abstract\n【类型】abstract\n【正文】\n ... (82 characters truncated) ... -answer chains.\nIt focuses on making each answer auditable through retrieval evidence, graph evidence, evidence grading and expert-agent generation.', 'token_count': 373, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 644840)}
+2026-05-19 16:20:11,645 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,645 INFO sqlalchemy.engine.Engine [cached since 0.001296s ago] {'document_id': 173, 'chunk_index': 2, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Introduction\n【类型】paragraph\n【 ... (70 characters truncated) ... ents while showing where each claim comes from.\nThe LiveTraceRAG2026 system combines local knowledge base retrieval and manager-agent orchestration.', 'token_count': 361, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 645202)}
+2026-05-19 16:20:11,646 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,646 INFO sqlalchemy.engine.Engine [cached since 0.002257s ago] {'document_id': 173, 'chunk_index': 3, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Method\n【类型】method\n【方法】LiveTr ... (257 characters truncated) ... parison expert, literature review expert or writing expert.\nEvidenceGrader checks whether the retrieved chunks support the answer before generation.', 'token_count': 545, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 646016)}
+2026-05-19 16:20:11,646 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,646 INFO sqlalchemy.engine.Engine [cached since 0.002983s ago] {'document_id': 173, 'chunk_index': 4, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Experiments\n【类型】experiment\n【任务】\n【数据集】S2ORC, arXiv HTML full ... (272 characters truncated) ...  experiment section reports that combining BM25, vector retrieval and paper graph retrieval improves evidence coverage for paper-reference questions.', 'token_count': 560, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 646865)}
+2026-05-19 16:20:11,647 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,647 INFO sqlalchemy.engine.Engine [cached since 0.003467s ago] {'document_id': 173, 'chunk_index': 5, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Experiments\n【类型】table\n【内容】\n| Model | Dataset | Metric | Res ... (51 characters truncated) ... S2ORC | F1 | 82.4 |\n| LiveTraceRAG | arXiv HTML full text | citation accuracy | 88.1 |\n| LiveTraceRAG | AI paper notes | evidence coverage | 91.3 |', 'token_count': 341, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 647368)}
+2026-05-19 16:20:11,647 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,647 INFO sqlalchemy.engine.Engine [cached since 0.003792s ago] {'document_id': 173, 'chunk_index': 6, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Related Work\n【类型】related_work\n【正文】\nPrior work includes retrieval augmented generation, Self-RAG, corrective RAG and graph-based retrieval.', 'token_count': 254, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 647696)}
+2026-05-19 16:20:11,648 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,648 INFO sqlalchemy.engine.Engine [cached since 0.004092s ago] {'document_id': 173, 'chunk_index': 7, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【作者】Alice Researcher\n【年份】2026\n【章节】LangSmith Live Paper LiveTraceRAG2026 / Conclusion\n【类型】conclusion\n【正 ... (56 characters truncated) ... t paper assistant can improve student-facing paper explanation by combining structured chunks, hybrid retrieval, evidence grading and expert answers.', 'token_count': 348, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 648002)}
+2026-05-19 16:20:11,648 INFO sqlalchemy.engine.Engine INSERT INTO document_chunks (document_id, chunk_index, content, token_count, created_at) VALUES (%(document_id)s, %(chunk_index)s, %(content)s, %(token_count)s, %(created_at)s)
+2026-05-19 16:20:11,648 INFO sqlalchemy.engine.Engine [cached since 0.004367s ago] {'document_id': 173, 'chunk_index': 8, 'content': '【论文】LangSmith Live Paper LiveTraceRAG2026\n【章节】References\n【类型】reference\n【引用】researcher2026langsmithlivepaper\n【内容】\n[1] Lewis et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. 2020.\n[2] Asai et al. Self-RAG: Learning to Retrieve, Generate, and Critique. 2023.', 'token_count': 279, 'created_at': datetime.datetime(2026, 5, 19, 8, 20, 11, 648278)}
+2026-05-19 16:20:11,648 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:20:12,749 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:20:12,750 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,750 INFO sqlalchemy.engine.Engine [generated in 0.00010s] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:12,751 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.document_id = %(document_id_1)s ORDER BY document_chunks.chunk_index ASC
+2026-05-19 16:20:12,751 INFO sqlalchemy.engine.Engine [generated in 0.00008s] {'document_id_1': 173}
+2026-05-19 16:20:12,753 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes) AS anon_1
+2026-05-19 16:20:12,754 INFO sqlalchemy.engine.Engine [generated in 0.00007s] {}
+2026-05-19 16:20:12,755 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges) AS anon_1
+2026-05-19 16:20:12,755 INFO sqlalchemy.engine.Engine [generated in 0.00007s] {}
+2026-05-19 16:20:12,756 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,756 INFO sqlalchemy.engine.Engine [generated in 0.00008s] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026', 'type_1': 'paper', 'param_1': 1}
+2026-05-19 16:20:12,758 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,758 INFO sqlalchemy.engine.Engine [generated in 0.00012s] {'properties': '{"source": "paper_langsmith_real_answer_regression", "document_id": 173}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 758362), 'nodes_id': 770}
+2026-05-19 16:20:12,759 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,759 INFO sqlalchemy.engine.Engine [cached since 0.002413s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,760 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,760 INFO sqlalchemy.engine.Engine [cached since 0.002332s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 760588), 'nodes_id': 771}
+2026-05-19 16:20:12,761 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,761 INFO sqlalchemy.engine.Engine [generated in 0.00009s] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,762 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,763 INFO sqlalchemy.engine.Engine [generated in 0.00009s] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 719}
+2026-05-19 16:20:12,763 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,763 INFO sqlalchemy.engine.Engine [cached since 0.006797s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-0', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,764 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,764 INFO sqlalchemy.engine.Engine [cached since 0.00602s ago] {'properties': '{"chunk_id": 2411, "chunk_type": "paragraph", "chunk_index": 0, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 764292), 'nodes_id': 772}
+2026-05-19 16:20:12,764 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,764 INFO sqlalchemy.engine.Engine [cached since 0.00339s ago] {'source_id_1': 771, 'target_id_1': 772, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,765 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,765 INFO sqlalchemy.engine.Engine [cached since 0.002609s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 720}
+2026-05-19 16:20:12,765 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,765 INFO sqlalchemy.engine.Engine [cached since 0.004483s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,766 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,766 INFO sqlalchemy.engine.Engine [cached since 0.009659s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Abstract', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine [cached since 0.008733s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Abstract"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 767011), 'nodes_id': 773}
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine [cached since 0.006031s ago] {'source_id_1': 771, 'target_id_1': 773, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,767 INFO sqlalchemy.engine.Engine [cached since 0.005006s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 721}
+2026-05-19 16:20:12,768 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,768 INFO sqlalchemy.engine.Engine [cached since 0.006848s ago] {'source_id_1': 773, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,768 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,768 INFO sqlalchemy.engine.Engine [cached since 0.005816s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 722}
+2026-05-19 16:20:12,769 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,769 INFO sqlalchemy.engine.Engine [cached since 0.01225s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-1', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,769 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,769 INFO sqlalchemy.engine.Engine [cached since 0.0113s ago] {'properties': '{"chunk_id": 2412, "chunk_type": "abstract", "chunk_index": 1, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Abstract"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 769583), 'nodes_id': 774}
+2026-05-19 16:20:12,770 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,770 INFO sqlalchemy.engine.Engine [cached since 0.009045s ago] {'source_id_1': 773, 'target_id_1': 774, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,771 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,771 INFO sqlalchemy.engine.Engine [cached since 0.008245s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 723}
+2026-05-19 16:20:12,771 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,771 INFO sqlalchemy.engine.Engine [cached since 0.01015s ago] {'source_id_1': 772, 'target_id_1': 774, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,772 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,772 INFO sqlalchemy.engine.Engine [cached since 0.009269s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 724}
+2026-05-19 16:20:12,772 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,772 INFO sqlalchemy.engine.Engine [cached since 0.01122s ago] {'source_id_1': 774, 'target_id_1': 772, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,773 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,773 INFO sqlalchemy.engine.Engine [cached since 0.0104s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 725}
+2026-05-19 16:20:12,773 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,773 INFO sqlalchemy.engine.Engine [cached since 0.01235s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,774 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,774 INFO sqlalchemy.engine.Engine [cached since 0.01751s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Introduction', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,774 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,774 INFO sqlalchemy.engine.Engine [cached since 0.01659s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Introduction"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 774868), 'nodes_id': 775}
+2026-05-19 16:20:12,775 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,775 INFO sqlalchemy.engine.Engine [cached since 0.0139s ago] {'source_id_1': 771, 'target_id_1': 775, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,775 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,775 INFO sqlalchemy.engine.Engine [cached since 0.01288s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 726}
+2026-05-19 16:20:12,776 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,776 INFO sqlalchemy.engine.Engine [cached since 0.01478s ago] {'source_id_1': 775, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,776 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,776 INFO sqlalchemy.engine.Engine [cached since 0.0139s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 727}
+2026-05-19 16:20:12,777 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,777 INFO sqlalchemy.engine.Engine [cached since 0.02046s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-2', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,777 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,778 INFO sqlalchemy.engine.Engine [cached since 0.01969s ago] {'properties': '{"chunk_id": 2413, "chunk_type": "paragraph", "chunk_index": 2, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Introduction"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 777950), 'nodes_id': 776}
+2026-05-19 16:20:12,778 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,778 INFO sqlalchemy.engine.Engine [cached since 0.01705s ago] {'source_id_1': 775, 'target_id_1': 776, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,778 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,778 INFO sqlalchemy.engine.Engine [cached since 0.01606s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 728}
+2026-05-19 16:20:12,779 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,779 INFO sqlalchemy.engine.Engine [cached since 0.0179s ago] {'source_id_1': 774, 'target_id_1': 776, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,779 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,779 INFO sqlalchemy.engine.Engine [cached since 0.01701s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 729}
+2026-05-19 16:20:12,780 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,780 INFO sqlalchemy.engine.Engine [cached since 0.01898s ago] {'source_id_1': 776, 'target_id_1': 774, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,780 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,780 INFO sqlalchemy.engine.Engine [cached since 0.01801s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 730}
+2026-05-19 16:20:12,781 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,781 INFO sqlalchemy.engine.Engine [cached since 0.01985s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,781 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,781 INFO sqlalchemy.engine.Engine [cached since 0.02493s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Method', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,782 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,782 INFO sqlalchemy.engine.Engine [cached since 0.02398s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Method"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 782259), 'nodes_id': 777}
+2026-05-19 16:20:12,782 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,782 INFO sqlalchemy.engine.Engine [cached since 0.02126s ago] {'source_id_1': 771, 'target_id_1': 777, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine [cached since 0.02021s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 731}
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine [cached since 0.02203s ago] {'source_id_1': 777, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,783 INFO sqlalchemy.engine.Engine [cached since 0.02099s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 732}
+2026-05-19 16:20:12,784 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,784 INFO sqlalchemy.engine.Engine [cached since 0.02736s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-3', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,784 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,784 INFO sqlalchemy.engine.Engine [cached since 0.02639s ago] {'properties': '{"chunk_id": 2414, "chunk_type": "method", "chunk_index": 3, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Method"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 784672), 'nodes_id': 778}
+2026-05-19 16:20:12,785 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,785 INFO sqlalchemy.engine.Engine [cached since 0.02366s ago] {'source_id_1': 777, 'target_id_1': 778, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,785 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,785 INFO sqlalchemy.engine.Engine [cached since 0.0226s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 733}
+2026-05-19 16:20:12,786 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,786 INFO sqlalchemy.engine.Engine [cached since 0.02489s ago] {'source_id_1': 776, 'target_id_1': 778, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,786 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,786 INFO sqlalchemy.engine.Engine [cached since 0.02397s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 734}
+2026-05-19 16:20:12,787 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,787 INFO sqlalchemy.engine.Engine [cached since 0.02584s ago] {'source_id_1': 778, 'target_id_1': 776, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,787 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,787 INFO sqlalchemy.engine.Engine [cached since 0.02498s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 735}
+2026-05-19 16:20:12,788 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,788 INFO sqlalchemy.engine.Engine [cached since 0.03138s ago] {'name_1': 'LiveTraceRAG', 'type_1': 'method', 'param_1': 1}
+2026-05-19 16:20:12,788 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,788 INFO sqlalchemy.engine.Engine [cached since 0.03058s ago] {'properties': '{"document_id": 173, "paper_title": "LangSmith Live Paper LiveTraceRAG2026"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 788857), 'nodes_id': 779}
+2026-05-19 16:20:12,789 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,789 INFO sqlalchemy.engine.Engine [cached since 0.02787s ago] {'source_id_1': 770, 'target_id_1': 779, 'relation_1': 'PAPER_HAS_METHOD', 'param_1': 1}
+2026-05-19 16:20:12,789 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,789 INFO sqlalchemy.engine.Engine [cached since 0.02684s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 736}
+2026-05-19 16:20:12,790 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,790 INFO sqlalchemy.engine.Engine [cached since 0.02878s ago] {'source_id_1': 779, 'target_id_1': 778, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,790 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,790 INFO sqlalchemy.engine.Engine [cached since 0.02778s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 737}
+2026-05-19 16:20:12,790 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,791 INFO sqlalchemy.engine.Engine [cached since 0.02961s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,791 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,791 INFO sqlalchemy.engine.Engine [cached since 0.03469s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Experiments', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,792 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,792 INFO sqlalchemy.engine.Engine [cached since 0.03372s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Experiments"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 792002), 'nodes_id': 780}
+2026-05-19 16:20:12,792 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,792 INFO sqlalchemy.engine.Engine [cached since 0.03122s ago] {'source_id_1': 771, 'target_id_1': 780, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,793 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,793 INFO sqlalchemy.engine.Engine [cached since 0.03031s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 738}
+2026-05-19 16:20:12,793 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,793 INFO sqlalchemy.engine.Engine [cached since 0.03223s ago] {'source_id_1': 780, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,794 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,794 INFO sqlalchemy.engine.Engine [cached since 0.03127s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 739}
+2026-05-19 16:20:12,794 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,794 INFO sqlalchemy.engine.Engine [cached since 0.03769s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-4', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine [cached since 0.03675s ago] {'properties': '{"chunk_id": 2415, "chunk_type": "experiment", "chunk_index": 4, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Experiments"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 795032), 'nodes_id': 781}
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine [cached since 0.03404s ago] {'source_id_1': 780, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,795 INFO sqlalchemy.engine.Engine [cached since 0.03299s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 740}
+2026-05-19 16:20:12,796 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,796 INFO sqlalchemy.engine.Engine [cached since 0.03482s ago] {'source_id_1': 778, 'target_id_1': 781, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,796 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,796 INFO sqlalchemy.engine.Engine [cached since 0.03405s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 741}
+2026-05-19 16:20:12,797 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,797 INFO sqlalchemy.engine.Engine [cached since 0.03595s ago] {'source_id_1': 781, 'target_id_1': 778, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,797 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,797 INFO sqlalchemy.engine.Engine [cached since 0.03494s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 742}
+2026-05-19 16:20:12,798 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,798 INFO sqlalchemy.engine.Engine [cached since 0.04139s ago] {'name_1': 'S2ORC', 'type_1': 'dataset', 'param_1': 1}
+2026-05-19 16:20:12,798 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,798 INFO sqlalchemy.engine.Engine [cached since 0.04044s ago] {'properties': '{"document_id": 173}', 'source_doc_ids': '[84, 87, 88, 91, 92, 93, 96, 97, 108, 113, 155, 156, 166, 167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 798725), 'nodes_id': 462}
+2026-05-19 16:20:12,799 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,799 INFO sqlalchemy.engine.Engine [cached since 0.03772s ago] {'source_id_1': 770, 'target_id_1': 462, 'relation_1': 'METHOD_EVALUATED_ON_DATASET', 'param_1': 1}
+2026-05-19 16:20:12,799 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,799 INFO sqlalchemy.engine.Engine [cached since 0.03667s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 743}
+2026-05-19 16:20:12,799 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,800 INFO sqlalchemy.engine.Engine [cached since 0.03861s ago] {'source_id_1': 462, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,800 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,800 INFO sqlalchemy.engine.Engine [cached since 0.03761s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 744}
+2026-05-19 16:20:12,800 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,800 INFO sqlalchemy.engine.Engine [cached since 0.04402s ago] {'name_1': 'arXiv HTML full text', 'type_1': 'dataset', 'param_1': 1}
+2026-05-19 16:20:12,801 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,801 INFO sqlalchemy.engine.Engine [cached since 0.04305s ago] {'properties': '{"document_id": 173}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 801330), 'nodes_id': 782}
+2026-05-19 16:20:12,801 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,801 INFO sqlalchemy.engine.Engine [cached since 0.0403s ago] {'source_id_1': 770, 'target_id_1': 782, 'relation_1': 'METHOD_EVALUATED_ON_DATASET', 'param_1': 1}
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine [cached since 0.03924s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 745}
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine [cached since 0.04105s ago] {'source_id_1': 782, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,802 INFO sqlalchemy.engine.Engine [cached since 0.03998s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 746}
+2026-05-19 16:20:12,803 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,803 INFO sqlalchemy.engine.Engine [cached since 0.04635s ago] {'name_1': 'AI paper notes', 'type_1': 'dataset', 'param_1': 1}
+2026-05-19 16:20:12,803 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,803 INFO sqlalchemy.engine.Engine [cached since 0.04536s ago] {'properties': '{"document_id": 173}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 803649), 'nodes_id': 783}
+2026-05-19 16:20:12,803 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,804 INFO sqlalchemy.engine.Engine [cached since 0.04261s ago] {'source_id_1': 770, 'target_id_1': 783, 'relation_1': 'METHOD_EVALUATED_ON_DATASET', 'param_1': 1}
+2026-05-19 16:20:12,804 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,804 INFO sqlalchemy.engine.Engine [cached since 0.04154s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 747}
+2026-05-19 16:20:12,804 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,804 INFO sqlalchemy.engine.Engine [cached since 0.04336s ago] {'source_id_1': 783, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,805 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,805 INFO sqlalchemy.engine.Engine [cached since 0.04229s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 748}
+2026-05-19 16:20:12,805 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,805 INFO sqlalchemy.engine.Engine [cached since 0.04866s ago] {'name_1': 'F1', 'type_1': 'metric', 'param_1': 1}
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine [cached since 0.04771s ago] {'properties': '{"document_id": 173}', 'source_doc_ids': '[84, 87, 88, 91, 92, 93, 96, 97, 107, 108, 113, 114, 115, 117, 118, 120, 122, 124, 126, 128, 130, 132, 135, 142, 146, 151, 153, 155, 156, 157, 162, 164, 166, 167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 805990), 'nodes_id': 465}
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine [cached since 0.045s ago] {'source_id_1': 770, 'target_id_1': 465, 'relation_1': 'METHOD_REPORTED_METRIC', 'param_1': 1}
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,806 INFO sqlalchemy.engine.Engine [cached since 0.04397s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 749}
+2026-05-19 16:20:12,807 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,807 INFO sqlalchemy.engine.Engine [cached since 0.04583s ago] {'source_id_1': 465, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,807 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,807 INFO sqlalchemy.engine.Engine [cached since 0.04496s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 750}
+2026-05-19 16:20:12,808 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,808 INFO sqlalchemy.engine.Engine [cached since 0.05142s ago] {'name_1': 'accuracy', 'type_1': 'metric', 'param_1': 1}
+2026-05-19 16:20:12,808 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,808 INFO sqlalchemy.engine.Engine [cached since 0.05056s ago] {'properties': '{"document_id": 173}', 'source_doc_ids': '[87, 97, 107, 113, 114, 167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 808843), 'nodes_id': 520}
+2026-05-19 16:20:12,809 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,809 INFO sqlalchemy.engine.Engine [cached since 0.04789s ago] {'source_id_1': 770, 'target_id_1': 520, 'relation_1': 'METHOD_REPORTED_METRIC', 'param_1': 1}
+2026-05-19 16:20:12,809 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,809 INFO sqlalchemy.engine.Engine [cached since 0.04688s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 751}
+2026-05-19 16:20:12,810 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,810 INFO sqlalchemy.engine.Engine [cached since 0.04917s ago] {'source_id_1': 520, 'target_id_1': 781, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,811 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,811 INFO sqlalchemy.engine.Engine [cached since 0.04825s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 752}
+2026-05-19 16:20:12,811 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,811 INFO sqlalchemy.engine.Engine [cached since 0.05012s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,812 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,812 INFO sqlalchemy.engine.Engine [cached since 0.05065s ago] {'source_id_1': 771, 'target_id_1': 780, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,812 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,812 INFO sqlalchemy.engine.Engine [cached since 0.05123s ago] {'source_id_1': 780, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,813 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,813 INFO sqlalchemy.engine.Engine [cached since 0.05688s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-5', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,814 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,814 INFO sqlalchemy.engine.Engine [cached since 0.05642s ago] {'properties': '{"chunk_id": 2416, "chunk_type": "table", "chunk_index": 5, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Experiments"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 814684), 'nodes_id': 784}
+2026-05-19 16:20:12,815 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,815 INFO sqlalchemy.engine.Engine [cached since 0.05384s ago] {'source_id_1': 780, 'target_id_1': 784, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,815 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,815 INFO sqlalchemy.engine.Engine [cached since 0.05289s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 753}
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine [cached since 0.05476s ago] {'source_id_1': 781, 'target_id_1': 784, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine [cached since 0.05372s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 754}
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,816 INFO sqlalchemy.engine.Engine [cached since 0.05554s ago] {'source_id_1': 784, 'target_id_1': 781, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,817 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,817 INFO sqlalchemy.engine.Engine [cached since 0.05456s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 755}
+2026-05-19 16:20:12,817 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,817 INFO sqlalchemy.engine.Engine [cached since 0.06106s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#table-5', 'type_1': 'table', 'param_1': 1}
+2026-05-19 16:20:12,818 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,818 INFO sqlalchemy.engine.Engine [cached since 0.06011s ago] {'properties': '{"chunk_id": 2416, "chunk_type": "table", "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Experiments"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 818395), 'nodes_id': 785}
+2026-05-19 16:20:12,818 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,818 INFO sqlalchemy.engine.Engine [cached since 0.0574s ago] {'source_id_1': 780, 'target_id_1': 785, 'relation_1': 'SECTION_HAS_TABLE', 'param_1': 1}
+2026-05-19 16:20:12,819 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,819 INFO sqlalchemy.engine.Engine [cached since 0.05635s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 756}
+2026-05-19 16:20:12,819 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,819 INFO sqlalchemy.engine.Engine [cached since 0.05849s ago] {'source_id_1': 785, 'target_id_1': 784, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,820 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,820 INFO sqlalchemy.engine.Engine [cached since 0.05763s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 757}
+2026-05-19 16:20:12,820 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,820 INFO sqlalchemy.engine.Engine [cached since 0.05949s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,821 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,821 INFO sqlalchemy.engine.Engine [cached since 0.06456s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Related Work', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,821 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,821 INFO sqlalchemy.engine.Engine [cached since 0.06365s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Related Work"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 821921), 'nodes_id': 786}
+2026-05-19 16:20:12,822 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,822 INFO sqlalchemy.engine.Engine [cached since 0.06128s ago] {'source_id_1': 771, 'target_id_1': 786, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,823 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,823 INFO sqlalchemy.engine.Engine [cached since 0.06033s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 758}
+2026-05-19 16:20:12,823 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,823 INFO sqlalchemy.engine.Engine [cached since 0.0622s ago] {'source_id_1': 786, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine [cached since 0.06116s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 759}
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine [cached since 0.06754s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-6', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,824 INFO sqlalchemy.engine.Engine [cached since 0.06657s ago] {'properties': '{"chunk_id": 2417, "chunk_type": "related_work", "chunk_index": 6, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Related Work"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 824852), 'nodes_id': 787}
+2026-05-19 16:20:12,825 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,825 INFO sqlalchemy.engine.Engine [cached since 0.06384s ago] {'source_id_1': 786, 'target_id_1': 787, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,825 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,825 INFO sqlalchemy.engine.Engine [cached since 0.06278s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 760}
+2026-05-19 16:20:12,825 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,826 INFO sqlalchemy.engine.Engine [cached since 0.06461s ago] {'source_id_1': 784, 'target_id_1': 787, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,826 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,826 INFO sqlalchemy.engine.Engine [cached since 0.06354s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 761}
+2026-05-19 16:20:12,826 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,826 INFO sqlalchemy.engine.Engine [cached since 0.06538s ago] {'source_id_1': 787, 'target_id_1': 784, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,827 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,827 INFO sqlalchemy.engine.Engine [cached since 0.06435s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 762}
+2026-05-19 16:20:12,827 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,827 INFO sqlalchemy.engine.Engine [cached since 0.06625s ago] {'source_id_1': 770, 'target_id_1': 771, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,828 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,828 INFO sqlalchemy.engine.Engine [cached since 0.07132s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#LangSmith Live Paper LiveTraceRAG2026/Conclusion', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,829 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,829 INFO sqlalchemy.engine.Engine [cached since 0.07078s ago] {'properties': '{"document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026/Conclusion"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 829042), 'nodes_id': 788}
+2026-05-19 16:20:12,829 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,829 INFO sqlalchemy.engine.Engine [cached since 0.06826s ago] {'source_id_1': 771, 'target_id_1': 788, 'relation_1': 'CHILD_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,830 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,830 INFO sqlalchemy.engine.Engine [cached since 0.06738s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 763}
+2026-05-19 16:20:12,830 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,830 INFO sqlalchemy.engine.Engine [cached since 0.06931s ago] {'source_id_1': 788, 'target_id_1': 771, 'relation_1': 'PARENT_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,831 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,831 INFO sqlalchemy.engine.Engine [cached since 0.0683s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 764}
+2026-05-19 16:20:12,831 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,831 INFO sqlalchemy.engine.Engine [cached since 0.07469s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-7', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine [cached since 0.07373s ago] {'properties': '{"chunk_id": 2418, "chunk_type": "conclusion", "chunk_index": 7, "document_id": 173, "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Conclusion"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 832010), 'nodes_id': 789}
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine [cached since 0.07105s ago] {'source_id_1': 788, 'target_id_1': 789, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,832 INFO sqlalchemy.engine.Engine [cached since 0.07001s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 765}
+2026-05-19 16:20:12,833 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,833 INFO sqlalchemy.engine.Engine [cached since 0.07184s ago] {'source_id_1': 787, 'target_id_1': 789, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,833 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,833 INFO sqlalchemy.engine.Engine [cached since 0.07078s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 766}
+2026-05-19 16:20:12,833 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,834 INFO sqlalchemy.engine.Engine [cached since 0.07261s ago] {'source_id_1': 789, 'target_id_1': 787, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,834 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,834 INFO sqlalchemy.engine.Engine [cached since 0.07159s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 767}
+2026-05-19 16:20:12,834 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,834 INFO sqlalchemy.engine.Engine [cached since 0.07797s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#References', 'type_1': 'section', 'param_1': 1}
+2026-05-19 16:20:12,835 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,835 INFO sqlalchemy.engine.Engine [cached since 0.07699s ago] {'properties': '{"document_id": 173, "section_path": "References"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 835269), 'nodes_id': 790}
+2026-05-19 16:20:12,835 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,835 INFO sqlalchemy.engine.Engine [cached since 0.07428s ago] {'source_id_1': 770, 'target_id_1': 790, 'relation_1': 'PAPER_HAS_SECTION', 'param_1': 1}
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine [cached since 0.07323s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 768}
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine [cached since 0.07961s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#chunk-8', 'type_1': 'chunk', 'param_1': 1}
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,836 INFO sqlalchemy.engine.Engine [cached since 0.07863s ago] {'properties': '{"chunk_id": 2419, "chunk_type": "reference", "chunk_index": 8, "document_id": 173, "section_path": "References"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 836914), 'nodes_id': 791}
+2026-05-19 16:20:12,838 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,838 INFO sqlalchemy.engine.Engine [cached since 0.07752s ago] {'source_id_1': 790, 'target_id_1': 791, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,839 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,839 INFO sqlalchemy.engine.Engine [cached since 0.07652s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 769}
+2026-05-19 16:20:12,839 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,839 INFO sqlalchemy.engine.Engine [cached since 0.07843s ago] {'source_id_1': 789, 'target_id_1': 791, 'relation_1': 'NEXT_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,840 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,840 INFO sqlalchemy.engine.Engine [cached since 0.07742s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 770}
+2026-05-19 16:20:12,840 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,840 INFO sqlalchemy.engine.Engine [cached since 0.07927s ago] {'source_id_1': 791, 'target_id_1': 789, 'relation_1': 'PREV_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,841 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,841 INFO sqlalchemy.engine.Engine [cached since 0.07821s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 771}
+2026-05-19 16:20:12,841 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,841 INFO sqlalchemy.engine.Engine [cached since 0.08459s ago] {'name_1': 'LangSmith Live Paper LiveTraceRAG2026#reference-8', 'type_1': 'reference', 'param_1': 1}
+2026-05-19 16:20:12,841 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,842 INFO sqlalchemy.engine.Engine [cached since 0.08368s ago] {'properties': '{"chunk_id": 2419, "chunk_type": "reference", "document_id": 173, "section_path": "References"}', 'source_doc_ids': '[169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 841958), 'nodes_id': 792}
+2026-05-19 16:20:12,842 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,842 INFO sqlalchemy.engine.Engine [cached since 0.08098s ago] {'source_id_1': 790, 'target_id_1': 792, 'relation_1': 'SECTION_HAS_REFERENCE', 'param_1': 1}
+2026-05-19 16:20:12,842 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,842 INFO sqlalchemy.engine.Engine [cached since 0.07993s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 772}
+2026-05-19 16:20:12,843 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,843 INFO sqlalchemy.engine.Engine [cached since 0.08176s ago] {'source_id_1': 792, 'target_id_1': 791, 'relation_1': 'SECTION_HAS_CHUNK', 'param_1': 1}
+2026-05-19 16:20:12,843 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,843 INFO sqlalchemy.engine.Engine [cached since 0.08107s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 773}
+2026-05-19 16:20:12,844 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,844 INFO sqlalchemy.engine.Engine [cached since 0.08805s ago] {'name_1': 'reference:ref-1:Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks', 'type_1': 'reference', 'param_1': 1}
+2026-05-19 16:20:12,845 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,845 INFO sqlalchemy.engine.Engine [cached since 0.08746s ago] {'properties': '{"doi": "", "year": "2020", "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", "venue": "2020", "authors": "Lewis et al", " ... (14 characters truncated) ...  "raw_text": "[1] Lewis et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. 2020.", "document_id": 173, "citation_key": "ref-1"}', 'source_doc_ids': '[167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 845721), 'nodes_id': 764}
+2026-05-19 16:20:12,846 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,846 INFO sqlalchemy.engine.Engine [cached since 0.08944s ago] {'name_1': 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks', 'type_1': 'paper', 'param_1': 1}
+2026-05-19 16:20:12,846 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,846 INFO sqlalchemy.engine.Engine [cached since 0.08863s ago] {'properties': '{"doi": "", "year": "2020", "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", "venue": "2020", "source": "arxiv-html:2005.11401", "authors": "Lewis et al", "arxiv_id": "", "document_id": 173, "citation_key": "ref-1", "is_cited_reference": true}', 'source_doc_ids': '[94, 95, 107, 109, 114, 153, 157, 164, 167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 846892), 'nodes_id': 554}
+2026-05-19 16:20:12,847 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,847 INFO sqlalchemy.engine.Engine [cached since 0.08605s ago] {'source_id_1': 770, 'target_id_1': 554, 'relation_1': 'PAPER_CITES_PAPER', 'param_1': 1}
+2026-05-19 16:20:12,847 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,848 INFO sqlalchemy.engine.Engine [cached since 0.08507s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 774}
+2026-05-19 16:20:12,848 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,848 INFO sqlalchemy.engine.Engine [cached since 0.08701s ago] {'source_id_1': 790, 'target_id_1': 764, 'relation_1': 'SECTION_MENTIONS_REFERENCE', 'param_1': 1}
+2026-05-19 16:20:12,848 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,848 INFO sqlalchemy.engine.Engine [cached since 0.08602s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 775}
+2026-05-19 16:20:12,849 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,849 INFO sqlalchemy.engine.Engine [cached since 0.08796s ago] {'source_id_1': 791, 'target_id_1': 764, 'relation_1': 'CHUNK_MENTIONS_REFERENCE', 'param_1': 1}
+2026-05-19 16:20:12,849 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,849 INFO sqlalchemy.engine.Engine [cached since 0.08704s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 776}
+2026-05-19 16:20:12,850 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,850 INFO sqlalchemy.engine.Engine [cached since 0.08897s ago] {'source_id_1': 764, 'target_id_1': 554, 'relation_1': 'REFERENCE_RESOLVES_TO_PAPER', 'param_1': 1}
+2026-05-19 16:20:12,850 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,850 INFO sqlalchemy.engine.Engine [cached since 0.08795s ago] {'source_doc_ids': '[167, 168, 169, 170, 171, 172, 173]', 'edges_id': 714}
+2026-05-19 16:20:12,851 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,851 INFO sqlalchemy.engine.Engine [cached since 0.09435s ago] {'name_1': 'reference:ref-2:Self-RAG: Learning to Retrieve, Generate, and Critique', 'type_1': 'reference', 'param_1': 1}
+2026-05-19 16:20:12,851 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,851 INFO sqlalchemy.engine.Engine [cached since 0.09341s ago] {'properties': '{"doi": "", "year": "2023", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique", "venue": "2023", "authors": "Asai et al", "arxiv_id": "", "raw_text": "[2] Asai et al. Self-RAG: Learning to Retrieve, Generate, and Critique. 2023.", "document_id": 173, "citation_key": "ref-2"}', 'source_doc_ids': '[167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 851692), 'nodes_id': 765}
+2026-05-19 16:20:12,852 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE nodes.name = %(name_1)s AND nodes.type = %(type_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,852 INFO sqlalchemy.engine.Engine [cached since 0.09528s ago] {'name_1': 'Self-RAG: Learning to Retrieve, Generate, and Critique', 'type_1': 'paper', 'param_1': 1}
+2026-05-19 16:20:12,852 INFO sqlalchemy.engine.Engine UPDATE nodes SET properties=%(properties)s, source_doc_ids=%(source_doc_ids)s, updated_at=%(updated_at)s WHERE nodes.id = %(nodes_id)s
+2026-05-19 16:20:12,852 INFO sqlalchemy.engine.Engine [cached since 0.09433s ago] {'properties': '{"doi": "", "year": "2023", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique", "venue": "2023", "authors": "Asai et al", "arxiv_id": "", "document_id": 173, "citation_key": "ref-2", "is_cited_reference": true}', 'source_doc_ids': '[167, 168, 169, 170, 171, 172, 173]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 20, 12, 852611), 'nodes_id': 766}
+2026-05-19 16:20:12,852 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,853 INFO sqlalchemy.engine.Engine [cached since 0.09162s ago] {'source_id_1': 770, 'target_id_1': 766, 'relation_1': 'PAPER_CITES_PAPER', 'param_1': 1}
+2026-05-19 16:20:12,853 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,853 INFO sqlalchemy.engine.Engine [cached since 0.09059s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 777}
+2026-05-19 16:20:12,853 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,853 INFO sqlalchemy.engine.Engine [cached since 0.09242s ago] {'source_id_1': 790, 'target_id_1': 765, 'relation_1': 'SECTION_MENTIONS_REFERENCE', 'param_1': 1}
+2026-05-19 16:20:12,854 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,854 INFO sqlalchemy.engine.Engine [cached since 0.09143s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 778}
+2026-05-19 16:20:12,854 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,854 INFO sqlalchemy.engine.Engine [cached since 0.09329s ago] {'source_id_1': 791, 'target_id_1': 765, 'relation_1': 'CHUNK_MENTIONS_REFERENCE', 'param_1': 1}
+2026-05-19 16:20:12,855 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,855 INFO sqlalchemy.engine.Engine [cached since 0.09243s ago] {'source_doc_ids': '[169, 170, 171, 172, 173]', 'edges_id': 779}
+2026-05-19 16:20:12,855 INFO sqlalchemy.engine.Engine SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges 
+WHERE edges.source_id = %(source_id_1)s AND edges.target_id = %(target_id_1)s AND edges.relation = %(relation_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:12,855 INFO sqlalchemy.engine.Engine [cached since 0.09438s ago] {'source_id_1': 765, 'target_id_1': 766, 'relation_1': 'REFERENCE_RESOLVES_TO_PAPER', 'param_1': 1}
+2026-05-19 16:20:12,856 INFO sqlalchemy.engine.Engine UPDATE edges SET source_doc_ids=%(source_doc_ids)s WHERE edges.id = %(edges_id)s
+2026-05-19 16:20:12,856 INFO sqlalchemy.engine.Engine [cached since 0.09335s ago] {'source_doc_ids': '[167, 168, 169, 170, 171, 172, 173]', 'edges_id': 718}
+2026-05-19 16:20:12,857 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:20:12,859 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:20:12,859 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes) AS anon_1
+2026-05-19 16:20:12,859 INFO sqlalchemy.engine.Engine [cached since 0.1057s ago] {}
+2026-05-19 16:20:12,860 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT edges.id AS edges_id, edges.source_id AS edges_source_id, edges.target_id AS edges_target_id, edges.relation AS edges_relation, edges.type AS edges_type, edges.weight AS edges_weight, edges.confidence AS edges_confidence, edges.source_docs AS edges_source_docs, edges.first_mentioned_in AS edges_first_mentioned_in, edges.source_doc_ids AS edges_source_doc_ids, edges.created_at AS edges_created_at 
+FROM edges) AS anon_1
+2026-05-19 16:20:12,860 INFO sqlalchemy.engine.Engine [cached since 0.1046s ago] {}
+2026-05-19 16:20:40,108 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at, documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM document_chunks INNER JOIN documents ON documents.id = document_chunks.document_id 
+WHERE documents.source != %(source_1)s
+2026-05-19 16:20:40,108 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {'source_1': 'query_template'}
+2026-05-19 16:20:40,414 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,414 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'id_1': 2416, 'param_1': 1}
+2026-05-19 16:20:40,417 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,417 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,417 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,417 INFO sqlalchemy.engine.Engine [cached since 0.003098s ago] {'id_1': 2415, 'param_1': 1}
+2026-05-19 16:20:40,418 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,418 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,418 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,418 INFO sqlalchemy.engine.Engine [cached since 0.004188s ago] {'id_1': 2414, 'param_1': 1}
+2026-05-19 16:20:40,419 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,419 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine [cached since 0.005431s ago] {'id_1': 2412, 'param_1': 1}
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,420 INFO sqlalchemy.engine.Engine [cached since 0.006314s ago] {'id_1': 2417, 'param_1': 1}
+2026-05-19 16:20:40,421 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,421 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,421 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,421 INFO sqlalchemy.engine.Engine [cached since 0.007271s ago] {'id_1': 2418, 'param_1': 1}
+2026-05-19 16:20:40,422 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,422 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,422 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,422 INFO sqlalchemy.engine.Engine [cached since 0.008303s ago] {'id_1': 2411, 'param_1': 1}
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine [cached since 0.009021s ago] {'id_1': 2419, 'param_1': 1}
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,423 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,424 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,424 INFO sqlalchemy.engine.Engine [cached since 0.00973s ago] {'id_1': 2413, 'param_1': 1}
+2026-05-19 16:20:40,424 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,424 INFO sqlalchemy.engine.Engine [cached since 27.67s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:20:40,425 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,425 INFO sqlalchemy.engine.Engine [cached since 0.01051s ago] {'id_1': 330, 'param_1': 1}
+2026-05-19 16:20:40,425 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,425 INFO sqlalchemy.engine.Engine [cached since 27.68s ago] {'id_1': 49, 'param_1': 1}
+2026-05-19 16:20:40,427 INFO sqlalchemy.engine.Engine SELECT nodes.id AS nodes_id, nodes.name AS nodes_name, nodes.type AS nodes_type, nodes.description AS nodes_description, nodes.properties AS nodes_properties, nodes.source_docs AS nodes_source_docs, nodes.provenance AS nodes_provenance, nodes.embedding AS nodes_embedding, nodes.source_doc_ids AS nodes_source_doc_ids, nodes.confidence AS nodes_confidence, nodes.created_at AS nodes_created_at, nodes.updated_at AS nodes_updated_at 
+FROM nodes 
+WHERE lower(nodes.name) LIKE lower(%(name_1)s) OR lower(nodes.name) LIKE lower(%(name_2)s) OR lower(nodes.name) LIKE lower(%(name_3)s) OR lower(nodes.name) LIKE lower(%(name_4)s) OR lower(nodes.name) LIKE lower(%(name_5)s) OR lower(nodes.name) LIKE lower(%(name_6)s) 
+ LIMIT %(param_1)s
+2026-05-19 16:20:40,427 INFO sqlalchemy.engine.Engine [generated in 0.00009s] {'name_1': '%LiveTraceRAG2026%', 'name_2': '%RAG%', 'name_3': '%的实验用了哪%', 'name_4': '%些数据集和指%', 'name_5': '%请结合证据完%', 'name_6': '%整回答%', 'param_1': 10}
+2026-05-19 16:21:37,428 INFO sqlalchemy.engine.Engine INSERT INTO conversations (title, messages, created_at, updated_at) VALUES (%(title)s, %(messages)s, %(created_at)s, %(updated_at)s)
+2026-05-19 16:21:37,428 INFO sqlalchemy.engine.Engine [generated in 0.00027s] {'title': 'LiveTraceRAG2026 的实验用了哪些数据集和指标？请结合证据完整回答。', 'messages': '[]', 'created_at': datetime.datetime(2026, 5, 19, 8, 21, 37, 427987), 'updated_at': datetime.datetime(2026, 5, 19, 8, 21, 37, 427991)}
+2026-05-19 16:21:37,429 INFO sqlalchemy.engine.Engine UPDATE conversations SET messages=%(messages)s, updated_at=%(updated_at)s WHERE conversations.id = %(conversations_id)s
+2026-05-19 16:21:37,429 INFO sqlalchemy.engine.Engine [generated in 0.00014s] {'messages': '[{"role": "user", "content": "LiveTraceRAG2026 \\u7684\\u5b9e\\u9a8c\\u7528\\u4e86\\u54ea\\u4e9b\\u6570\\u636e\\u96c6\\u548c\\u6307\\u6807\\uff1f\\u8 ... (8444 characters truncated) ... on", "section_path": "LangSmith Live Paper LiveTraceRAG2026 / Conclusion", "source": "paper_langsmith_real_answer_regression"}], "explanations": []}]', 'updated_at': datetime.datetime(2026, 5, 19, 8, 21, 37, 429581), 'conversations_id': 260}
+2026-05-19 16:21:37,430 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:21:37,433 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:21:37,434 INFO sqlalchemy.engine.Engine SELECT conversations.id, conversations.title, conversations.messages, conversations.created_at, conversations.updated_at 
+FROM conversations 
+WHERE conversations.id = %(pk_1)s
+2026-05-19 16:21:37,434 INFO sqlalchemy.engine.Engine [generated in 0.00006s] {'pk_1': 260}
+=== LangSmith 真实大模型论文问答完整链路测试完成 ===
+question=LiveTraceRAG2026 的实验用了哪些数据集和指标？请结合证据完整回答。
+path=paper_assistant
+response=### **实验分析：LiveTraceRAG2026**
+
+根据提供的论文证据，对 LiveTraceRAG2026 的实验设置分析如下：
+
+#### **一、 数据集**
+实验使用了以下三个数据集进行评估：
+1.  **S2ORC**
+2.  **arXiv HTML full text**
+3.  **AI paper notes**
+
+*证据来源：实验章节明确列出* [experiment Experiments] *，并在实验结果表格中得到确认* [table Experiments] *。*
+
+#### **二、 评估指标**
+实验采用了以下三个评估指标：
+1.  **F1**
+2.  **Citation Accuracy (引用准确性)**
+3.  **Evidence Coverage (证据覆盖度)**
+
+*证据来源：实验章节的指标描述* [experiment Experiments] *与表格中各数据集使用的指标一致* [table Experiments] *。*
+
+#### **三、 实验结论**
+根据实验章节的描述，主要实验结论如下：
+1.  **评估任务**：LiveTraceRAG2026 被用于评估科学论文问答、实验分析和基于引用的答案生成任务 [experiment Experiments]。
+2.  **核心发现**：实验报告指出，结合 BM25 检索、向量检索和论文图谱检索的方法，能够提升针对论文与参考文献相关问题的证据覆盖度 [experiment Experiments]。
+3.  **系统结论**：论文在结论部分总结，LiveTraceRAG 这种可追溯的“管理-智能体”架构论文助手，能够通过结合结构化文本块、混合检索、证据评分和专家回答，改善面向学生的论文解释效果 [conclusion Conclusion]。
+
+#### **四、 可疑不足与局限性分析**
+*基于现有检索证据，未直接发现论文对自身实验局限性的讨论。以下是基于实验设计完整性的一般性分析：*
+
+**证据不足说明**：在提供的实验章节、表格及其他章节证据中，均未提及任何关于**对照实验、消融研究、数据集划分细节、误差分析或模型失败案例分析**的内容。
+
+**基于现有证据的谨慎分析**：
+现有证据展示了系统在特定数据集和指标上的表现，但评估设置的完整性有待进一步考证。可能的潜在不足包括：
+1.  **缺乏基线对比**：实验结论仅描述了自身系统的效果（如“improves evidence coverage”），但**未提供与任何基线模型（如标准RAG、单一检索模型）的定量对比** [experiment Experiments]，这使得结论的说服力有所欠缺。
+2.  **评估指标局限性**：指标（F1， Citation Accuracy， Evidence Coverage）侧重于检索和引用的表面准确性，可能未充分评估答案的**完整性、逻辑连贯性、解释深度或用户满意度**等更复杂的维度。
+3.  **泛化性存疑**：实验仅在三个特定学术语料数据集上进行，系统在**其他领域（如医疗、法律）或非英文语境**下的有效性未得到验证。
+
+---
+**总结**：LiveTraceRAG2026 的实验在三个学术论文数据集上，使用 F1、引用准确性和证据覆盖度进行了评估，并得出了混合检索能提升证据覆盖等结论。然而，基于现有证据，其实验在对照分析和评估维度完整性方面可能存在不足，需要查阅论文原文的完整实验部分以进行确认。
+paper_task={'task_type': 'experiment', 'answer_style': 'experiment_analysis', 'preferred_chunk_types': ['experiment', 'table', 'paragraph'], 'retrieval_override': {'bm25': True, 'vector': True, 'graph': False, 'intent': 'explain', 'bm25_top_k': 12, 'vector_top_k': 10, 'graph_method': 'none'}, 'reason': '实验分析优先实验章节和表格证据', 'expert': 'paper_experiment_expert'}
+evidence_grade={'relevance_score': 0.95, 'support_score': 0.95, 'coverage_score': 0.9, 'freshness_required': True, 'conflict_detected': False, 'sufficient': True, 'missing_aspects': ['现有证据不足以完整支撑回答'], 'next_action': 'answer', 'reason': '证据中直接包含实验数据集和指标的表格，完整覆盖问题所问。'}
+retrieval_rounds=[{'round': 1, 'query': 'LiveTraceRAG2026 的实验用了哪些数据集和指标？请结合证据完整回答。', 'source': 'local', 'grade': {'relevance_score': 0.95, 'support_score': 0.95, 'coverage_score': 0.9, 'freshness_required': True, 'conflict_detected': False, 'sufficient': True, 'missing_aspects': ['现有证据不足以完整支撑回答'], 'next_action': 'answer', 'reason': '证据中直接包含实验数据集和指标的表格，完整覆盖问题所问。'}, 'retrieval': {'bm25_hits': 10, 'semantic_hits': 10, 'graph_hits': 0, 'merged': 10, 'chunk_types': ['abstract', 'conclusion', 'experiment', 'method', 'paragraph', 'related_work', 'table']}}]
+sources_count=8
+source_1={'id': 2415, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'experiment', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Experiments', 'source': 'paper_langsmith_real_answer_regression'}
+source_2={'id': 2416, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'table', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Experiments', 'source': 'paper_langsmith_real_answer_regression'}
+source_3={'id': 2411, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'paragraph', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026', 'source': 'paper_langsmith_real_answer_regression'}
+source_4={'id': 2413, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'paragraph', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Introduction', 'source': 'paper_langsmith_real_answer_regression'}
+source_5={'id': 2412, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'abstract', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Abstract', 'source': 'paper_langsmith_real_answer_regression'}
+source_6={'id': 2417, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'related_work', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Related Work', 'source': 'paper_langsmith_real_answer_regression'}
+source_7={'id': 2414, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'method', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Method', 'source': 'paper_langsmith_real_answer_regression'}
+source_8={'id': 2418, 'name': 'LangSmith Live Paper LiveTraceRAG2026', 'type': 'chunk', 'chunk_type': 'conclusion', 'section_path': 'LangSmith Live Paper LiveTraceRAG2026 / Conclusion', 'source': 'paper_langsmith_real_answer_regression'}
+2026-05-19 16:21:37,435 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.id = %(id_1)s 
+ LIMIT %(param_1)s
+2026-05-19 16:21:37,435 INFO sqlalchemy.engine.Engine [cached since 84.69s ago] {'id_1': 173, 'param_1': 1}
+2026-05-19 16:21:37,436 INFO sqlalchemy.engine.Engine SELECT document_chunks.id AS document_chunks_id, document_chunks.document_id AS document_chunks_document_id, document_chunks.chunk_index AS document_chunks_chunk_index, document_chunks.content AS document_chunks_content, document_chunks.token_count AS document_chunks_token_count, document_chunks.created_at AS document_chunks_created_at 
+FROM document_chunks 
+WHERE document_chunks.document_id = %(document_id_1)s
+2026-05-19 16:21:37,436 INFO sqlalchemy.engine.Engine [generated in 0.00007s] {'document_id_1': 173}
+2026-05-19 16:21:37,560 INFO sqlalchemy.engine.Engine DELETE FROM documents WHERE documents.id = %(id)s
+2026-05-19 16:21:37,560 INFO sqlalchemy.engine.Engine [generated in 0.00023s] {'id': 173}
+2026-05-19 16:21:37,561 INFO sqlalchemy.engine.Engine COMMIT
+2026-05-19 16:21:37,575 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-05-19 16:21:37,575 INFO sqlalchemy.engine.Engine SELECT documents.id AS documents_id, documents.title AS documents_title, documents.content AS documents_content, documents.source AS documents_source, documents.tags AS documents_tags, documents.created_at AS documents_created_at, documents.source_url AS documents_source_url 
+FROM documents 
+WHERE documents.source = %(source_1)s
+2026-05-19 16:21:37,575 INFO sqlalchemy.engine.Engine [cached since 148.2s ago] {'source_1': 'paper_langsmith_real_answer_regression'}
+2026-05-19 16:21:37,576 INFO sqlalchemy.engine.Engine ROLLBACK
