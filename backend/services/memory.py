@@ -17,7 +17,8 @@ from chroma.manager import chroma_manager
 from llm.manager import llm_manager
 from models.db import Conversation, ConversationMemoryItem, ConversationSummary, get_session_factory, init_db
 
-RECENT_HISTORY_ROUNDS = 2
+RECENT_HISTORY_ROUNDS = 4
+# 对于大纲生成等需要完整上下文的任务，需要保留更多历史轮次
 SUMMARY_TRIGGER_MESSAGES = 8
 SUMMARY_TRIGGER_DELTA = 4
 SUMMARY_LOCK_TIMEOUT_SECONDS = 300
@@ -373,10 +374,17 @@ class MemoryService:
             lines = [f"- {s.get('summary') or s.get('content')}" for s in snippets[:5]]
             parts.append("【相关历史片段】\n" + "\n".join(lines))
         if recent_turns:
+            # 检测是否为大纲/开题任务，需要更完整的上下文
+            is_outline_task = any(
+                kw in (msg.get('content', '') or '')
+                for msg in recent_turns
+                for kw in ['选题', '开题', '大纲', '提纲', 'outline', '基于']
+            )
+            truncate_limit = 480 if is_outline_task else 240
             recent_lines = []
-            for msg in recent_turns[-4:]:
+            for msg in recent_turns[-6:]:
                 role = "用户" if msg.get("role") == "user" else "助手"
-                recent_lines.append(f"{role}: {self._shorten(msg.get('content', ''), 240)}")
+                recent_lines.append(f"{role}: {self._shorten(msg.get('content', ''), truncate_limit)}")
             if recent_lines:
                 parts.append("【最近原文】\n" + "\n".join(recent_lines))
         if not parts and recent_turns:
