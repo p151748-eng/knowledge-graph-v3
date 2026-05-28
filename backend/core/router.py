@@ -48,13 +48,16 @@ class ContextAwareRouter:
         "贡献", "局限", "不足", "创新点",
     ]
     SELF_RAG_KEYWORDS = [
-        "最新", "当前", "现在", "2026", "验证", "可靠", "依据", "证据", "是否真实",
-        "有没有支撑", "查证", "联网", "fresh", "verify", "reliable", "current",
+        "验证", "可靠", "依据", "证据", "是否真实", "有没有支撑", "查证",
+        "是否可靠", "可靠吗", "证据是否充分", "verify", "reliable",
+    ]
+    WEB_SEARCH_KEYWORDS = [
+        "联网", "搜索", "上网查", "百度", "谷歌", "web search", "search",
     ]
     RESEARCH_KEYWORDS = [
         "研究综述", "文献综述", "研究方向", "研究空白", "开题报告", "跨论文", "多篇论文",
         "系统分析", "优化方案", "路线图", "技术路线", "架构设计", "设计", "拆解", "规划",
-        "方案", "瓶颈", "升级", "roadmap", "survey", "research gap", "proposal",
+        "方案", "瓶颈", "升级", "选题", "研究主题", "研究方向", "roadmap", "survey", "research gap", "proposal",
     ]
     COMPLEX_KEYWORDS = [
         "分析", "对比", "比较", "如何", "为什么", "区别", "差异", "联系", "关系", "结合", "整合",
@@ -108,7 +111,7 @@ class ContextAwareRouter:
             confidence=confidence,
             reason=self._route_reason(path, features),
             reporting_level=self._reporting_level(path),
-            metadata={"features": features, "scores": scores},
+            metadata={"features": features, "scores": scores, "web_search_requested": features.get("has_web_search", False)},
         )
 
     def estimate_complexity(self, query: str) -> str:
@@ -121,16 +124,23 @@ class ContextAwareRouter:
         design_terms = ["设计", "架构", "方案", "路线", "技术路线", "拆解", "规划", "升级", "优化", "瓶颈", "roadmap", "proposal"]
         research_terms = self.RESEARCH_KEYWORDS
         verify_terms = self.SELF_RAG_KEYWORDS
+        web_search_terms = self.WEB_SEARCH_KEYWORDS
         paper_terms = self.PAPER_KEYWORDS
         simple_terms = ["是什么", "定义", "什么意思", "介绍一下", "what is"]
         current_object_terms = ["这个结论", "该结论", "这个回答", "当前回答", "上述结论", "是否可靠", "可靠吗", "依据是什么", "证据是否", "有没有支撑"]
+        outline_terms = ["大纲", "开题", "提纲", "outline", "章节安排", "生成大纲"]
+        freshness_terms = ["最新", "当前", "现在", "2025", "2026", "fresh", "current", "latest"]
         multi_object = self._multi_object_signal(query)
+        has_outline = self._contains_any(lowered, outline_terms)
         return {
-            "has_research": self._contains_any(lowered, research_terms),
+            "has_research": self._contains_any(lowered, research_terms) and not has_outline,
             "has_compare": self._contains_any(lowered, compare_terms),
-            "has_design": self._contains_any(lowered, design_terms),
+            "has_design": self._contains_any(lowered, design_terms) and not has_outline,
             "has_verify": self._contains_any(lowered, verify_terms),
+            "has_freshness": self._contains_any(lowered, freshness_terms),
+            "has_web_search": self._contains_any(lowered, web_search_terms),
             "has_paper": self._contains_any(lowered, paper_terms),
+            "has_outline": has_outline,
             "has_complex": self._contains_any(lowered, self.COMPLEX_KEYWORDS),
             "has_simple": self._contains_any(lowered, simple_terms),
             "current_object_verification": self._contains_any(lowered, current_object_terms),
@@ -157,13 +167,22 @@ class ContextAwareRouter:
             scores["fast"] = min(scores["fast"], 0.45)
         if features["has_paper"] and not (features["has_design"] or features["has_research"] or features["multi_object"] or features["has_verify"]):
             scores["paper_assistant"] += 0.35
+        # 大纲生成任务优先路由到 paper_assistant
+        if features.get("has_outline"):
+            scores["paper_assistant"] += 0.55
+            scores["research"] = min(scores["research"], 0.3)
         if features["has_verify"] and not (features["has_design"] or features["has_research"]):
             scores["paper_assistant"] -= 0.3
 
+        # 验证类问题才走 self_rag（需要证据支撑、可靠性检查）
+        # 注意：仅"联网搜索"不触发 self_rag，因为用户可能只是想获取新信息，而非验证
         if features["has_verify"]:
             scores["self_rag"] += 0.75
         if features["current_object_verification"]:
             scores["self_rag"] += 0.65
+        if features["has_freshness"] and not features["has_web_search"]:
+            # 时效性需求但没有明确联网请求时，self_rag 可通过检索验证 freshness
+            scores["self_rag"] += 0.45
         if features["has_design"] or features["has_research"]:
             scores["self_rag"] -= 0.35
 
@@ -282,7 +301,3 @@ class ContextAwareRouter:
         }.get(path, "normal")
 
 
-class ComplexityRouter(ContextAwareRouter):
-    """Compatibility router for old call sites."""
-
-    COMPLEX_KEYWORDS: List[str] = ContextAwareRouter.COMPLEX_KEYWORDS

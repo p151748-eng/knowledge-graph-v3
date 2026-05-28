@@ -79,7 +79,12 @@ class PaperTaskRouter:
     def route(self, query: str) -> PaperTaskPlan:
         query_lower = (query or "").lower()
         scores = {task: self._score(query_lower, words) for task, words in self.KEYWORDS.items()}
-        if scores.get("compare", 0) > 0 and any(token in query_lower for token in ["区别", "不同", "差异", "对比", "比较", "vs", "versus", "compare"]):
+        # 优先检测大纲任务（用户明确要求生成大纲时）
+        if scores.get("outline", 0) > 0 and any(token in query_lower for token in ["大纲", "开题", "提纲", "outline", "生成大纲", "章节安排"]):
+            task_type = "outline"
+        elif scores.get("literature_review", 0) > 0 and any(token in query_lower for token in ["综述", "研究现状", "相关工作", "文献综述"]):
+            task_type = "literature_review"
+        elif scores.get("compare", 0) > 0 and any(token in query_lower for token in ["区别", "不同", "差异", "对比", "比较", "vs", "versus", "compare"]):
             task_type = "compare"
         elif scores.get("experiment", 0) > 0 and any(token in query_lower for token in ["实验", "结果", "指标", "数据集", "消融", "benchmark", "bleu", "accuracy", "f1", "rouge", "dataset", "ablation"]):
             task_type = "experiment"
