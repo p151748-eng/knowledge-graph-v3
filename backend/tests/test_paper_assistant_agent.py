@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agents.paper_task_router import PaperTaskRouter
+from agents.paper_assistant import PaperAssistantAgent
+from agents.paper_task_router import PaperTaskPlan, PaperTaskRouter
 from models.db import Document, DocumentChunk, get_session_factory, init_db
 from services.chat import ChatService
 from services.ingest import IngestService
@@ -121,7 +122,27 @@ def cleanup_regression_docs(db):
         IngestService(db).delete_document(doc.id)
 
 
+def test_contextual_web_enrichment_query_uses_previous_topic():
+    agent = PaperAssistantAgent(db=None, llm=FakeLLM())
+    plan = PaperTaskPlan(
+        task_type="literature_review",
+        reason="相关工作综述需要相关工作、引用和方法证据",
+        answer_style="literature_review",
+        preferred_chunk_types=["related_work", "reference", "method", "abstract"],
+        retrieval_override={},
+    )
+    recent_history = [
+        {"role": "user", "content": "帮我写一段研究背景，说明多 Agent RAG 在医学论文阅读中的研究现状和依据。"},
+        {"role": "assistant", "content": "证据提示：当前内容主要基于本地论文库，可以继续联网补充。", "path": "paper_assistant"},
+    ]
+    query = agent._web_enrichment_query("帮我联网补充", "", plan, recent_history)
+    assert "联网补充" not in query
+    assert any(token in query.lower() for token in ["medical", "biomedical", "医学"]), query
+    assert any(token in query.lower() for token in ["multi-agent", "rag", "多智能体"]), query
+
+
 def main():
+    test_contextual_web_enrichment_query_uses_previous_topic()
     init_db()
     db = get_session_factory()()
     created_doc_id = None

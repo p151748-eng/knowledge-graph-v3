@@ -3,9 +3,11 @@ SelfRAGPipeline: 本地检索、证据评估、检索修正、联网验证与答
 """
 
 import asyncio
+import re
 import time
 from dataclasses import asdict
 from typing import Any, AsyncGenerator, Dict, List
+from urllib.parse import urlparse
 from sqlalchemy.orm import Session
 
 from agents.answer_verifier import AnswerVerifierAgent
@@ -59,6 +61,7 @@ class SelfRAGPipeline:
     def run(self, context: AgentContext) -> AgentResult:
         query = context.pipeline_data.query
         memory_context = context.extra.get("memory_context", "") if context.extra else ""
+        recent_history = context.extra.get("recent_history", []) if context.extra else []
         if memory_context:
             query_for_retrieval = f"{query}\n\n{memory_context}"
         else:
@@ -92,18 +95,21 @@ class SelfRAGPipeline:
             (final_grade.next_action == "web_verify" or final_grade.freshness_required or needs_external_verification)
             and (not final_grade.sufficient or needs_external_verification)
         ):
-            web_evidence = self.web_verifier.search_and_grade(local_query, final_grade)
+            web_query = self._external_verification_query(query, local_query, memory_context, recent_history)
+            search_mode = self._web_search_mode(web_query)
+            web_evidence = self.web_verifier.search_and_grade(web_query, final_grade, search_mode=search_mode)
             context.pipeline_data.web_evidence = web_evidence
             attempts.append(RetrievalAttemptData(
                 round=len(attempts) + 1,
                 query=local_query,
-                strategy={"web": True, "max_results": config.CRAG_WEB_MAX_RESULTS, "save": self.persist_web},
+                strategy={"web": True, "max_results": config.CRAG_WEB_MAX_RESULTS, "save": self.persist_web, "search_mode": search_mode},
                 retrieval={"web_evidence": web_evidence},
                 grade=final_grade,
                 source="web",
             ))
 
-        answer = self._generate_answer(query, final_retrieval, web_evidence, memory_context)
+        suggested_actions = self._build_import_actions(query, final_grade, web_evidence)
+        answer = self._generate_answer(query, final_retrieval, web_evidence, memory_context, suggested_actions)
         verification = self.answer_verifier.verify(query, answer, final_retrieval.get("context_text", ""), web_evidence)
         if verification.get("final_action") == "refuse":
             answer = "当前本地知识库和联网验证都没有提供足够可靠的证据，暂时无法给出有支撑的回答。"
@@ -132,6 +138,7 @@ class SelfRAGPipeline:
                 "answer": answer,
                 "sources": sources,
                 "web_sources": [item for item in sources if item.get("type") == "web"],
+                "suggested_actions": suggested_actions,
                 "retrieval_rounds": [self._attempt_dict(item) for item in attempts],
                 "evidence_grade": asdict(final_grade),
                 "answer_verification": verification,
@@ -154,7 +161,13 @@ class SelfRAGPipeline:
         yield {"type": "sources", "data": output.get("sources", [])}
         for char in output.get("answer", ""):
             yield {"type": "delta", "content": char}
-        yield {"type": "metrics", "path": "self_rag", "processing_time": f"{elapsed:.1f}s", "confidence": output.get("confidence", 0.5)}
+        yield {
+            "type": "metrics",
+            "path": "self_rag",
+            "processing_time": f"{elapsed:.1f}s",
+            "confidence": output.get("confidence", 0.5),
+            "suggested_actions": output.get("suggested_actions", []),
+        }
 
     def _needs_external_verification(self, query: str) -> bool:
         lowered = (query or "").lower()
@@ -162,7 +175,58 @@ class SelfRAGPipeline:
         method_terms = ["self-rag", "crag", "graphrag"]
         return any(term in lowered for term in verification_terms) and any(term in lowered for term in method_terms)
 
-    def _generate_answer(self, query: str, retrieval: Dict[str, Any], web_evidence: List[Dict[str, Any]], memory_context: str = "") -> str:
+    def _web_search_mode(self, query: str) -> str:
+        lowered = (query or "").lower()
+        has_paper_terms = any(term in lowered for term in [
+            "论文", "文献", "paper", "papers", "survey", "related work", "研究现状", "研究背景", "相关工作", "引用", "参考文献",
+        ])
+        has_web_terms = any(term in lowered for term in [
+            "官网", "官方", "政策", "公告", "报告", "github", "新闻", "行业资料", "行业", "公司", "产品", "文档",
+            "official", "policy", "announcement", "report", "news", "industry",
+        ])
+        if has_paper_terms and has_web_terms:
+            return "mixed"
+        if has_paper_terms:
+            return "academic"
+        return "web"
+
+    def _external_verification_query(self, query: str, local_query: str, memory_context: str, recent_history: List[dict]) -> str:
+        if not self._is_contextual_followup(query):
+            return local_query
+        topic = self._topic_from_history(memory_context, recent_history)
+        if not topic:
+            return local_query
+        return f"{topic}\n{query}"
+
+    def _is_contextual_followup(self, query: str) -> bool:
+        text = (query or "").strip()
+        if not text:
+            return False
+        followup_terms = ["联网补充", "继续联网", "补充一下", "继续补充", "查一下", "搜索一下", "验证一下", "可靠吗", "依据"]
+        if any(term in text for term in followup_terms):
+            return len(text) <= 24
+        return len(text) <= 12 and any(term in text for term in ["继续", "上面", "刚才", "这个", "它"])
+
+    def _topic_from_history(self, memory_context: str, recent_history: List[dict]) -> str:
+        for msg in reversed(recent_history or []):
+            if msg.get("role") != "user":
+                continue
+            content = (msg.get("content") or "").strip()
+            if content and not self._is_contextual_followup(content):
+                return content
+        if memory_context:
+            marker = "【最近原文】"
+            recent = memory_context.split(marker, 1)[1] if marker in memory_context else memory_context
+            for line in reversed(recent.splitlines()):
+                line = line.strip()
+                if not line.startswith("用户:"):
+                    continue
+                content = line.split("用户:", 1)[1].strip()
+                if content and not self._is_contextual_followup(content):
+                    return content
+        return ""
+
+    def _generate_answer(self, query: str, retrieval: Dict[str, Any], web_evidence: List[Dict[str, Any]], memory_context: str = "", suggested_actions: List[Dict[str, Any]] | None = None) -> str:
         web_context = "\n".join([f"- {item.get('title')}: {item.get('snippet')} ({item.get('url')})" for item in web_evidence])
         prompt = SELF_RAG_ANSWER_PROMPT.format(
             query=query,
@@ -171,9 +235,69 @@ class SelfRAGPipeline:
             web_context=web_context or "（无联网证据）",
         )
         try:
-            return self.llm.complete(prompt).content
+            answer = self.llm.complete(prompt).content
         except Exception as e:
             return f"[错误] LLM 调用失败: {str(e)}"
+        if suggested_actions:
+            return answer.rstrip() + "\n\n注意：当前只找到了可联网确认的论文来源，尚未自动下载或解析入库全文。你可以确认“下载并解析入库”后，再基于入库内容继续提问。"
+        return answer
+
+    def _build_import_actions(self, query: str, grade, web_evidence: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        if not self._should_suggest_import(grade):
+            return []
+        actions = []
+        for paper in self._extract_importable_papers(web_evidence):
+            if not self._paper_relevant_to_query(query, paper):
+                continue
+            actions.append({
+                "type": "import_paper",
+                "label": "下载并解析入库",
+                "requires_confirmation": True,
+                "reason": "本地知识库证据不足，但联网找到了相关论文来源",
+                "paper": paper,
+            })
+            if len(actions) >= 3:
+                break
+        return actions
+
+    def _should_suggest_import(self, grade) -> bool:
+        if not grade:
+            return False
+        return (not grade.sufficient) or grade.next_action == "web_verify" or bool(getattr(grade, "missing_aspects", []))
+
+    def _extract_importable_papers(self, web_evidence: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        papers = []
+        seen = set()
+        for item in web_evidence:
+            url = item.get("url") or ""
+            arxiv_id = self._extract_arxiv_id(url)
+            if not arxiv_id or arxiv_id in seen:
+                continue
+            seen.add(arxiv_id)
+            papers.append({
+                "title": item.get("title") or "arXiv paper",
+                "url": f"https://arxiv.org/abs/{arxiv_id}",
+                "source": "arxiv",
+                "arxiv_id": arxiv_id,
+                "snippet": item.get("snippet") or "",
+                "provider": item.get("provider", ""),
+                "quality_score": item.get("quality_score", 0.0),
+            })
+        return papers
+
+    def _extract_arxiv_id(self, url: str) -> str:
+        parsed = urlparse(url or "")
+        if parsed.netloc.lower() not in {"arxiv.org", "www.arxiv.org"}:
+            return ""
+        match = re.search(r"/(?:abs|html|pdf)/(\d{4}\.\d{4,5})(?:v\d+)?", parsed.path)
+        return match.group(1) if match else ""
+
+    def _paper_relevant_to_query(self, query: str, paper: Dict[str, Any]) -> bool:
+        text = f"{paper.get('title', '')} {paper.get('snippet', '')}".lower()
+        terms = [term for term in re.split(r"[^\w一-鿿-]+", (query or "").lower()) if len(term) >= 3]
+        if not terms:
+            return True
+        return any(term in text for term in terms)
 
     def _attempt(self, round_index: int, query: str, retrieval: Dict[str, Any], grade, source: str) -> RetrievalAttemptData:
         return RetrievalAttemptData(

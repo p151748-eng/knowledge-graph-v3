@@ -76,6 +76,12 @@ class WorkflowState:
                 "description": item.content[:160],
                 "chunk_type": item.metadata.get("chunk_type"),
                 "source": item.metadata.get("source"),
+                "url": item.metadata.get("url"),
+                "authors": item.metadata.get("authors"),
+                "year": item.metadata.get("year"),
+                "paper_id": item.metadata.get("paper_id"),
+                "provider": item.metadata.get("provider"),
+                "citation": item.citation,
             }
             for item in self.evidence_items[:limit]
         ]
@@ -115,22 +121,28 @@ class WorkflowState:
 
     def _to_evidence_item(self, item: Dict[str, Any]) -> EvidenceItem:
         result_type = item.get("result_type") or item.get("type") or "document"
-        original_id = item.get("chunk_id") or item.get("node_id") or item.get("edge_id") or item.get("id") or len(self.evidence_items) + 1
+        original_id = item.get("chunk_id") or item.get("node_id") or item.get("edge_id") or item.get("paper_id") or item.get("id") or len(self.evidence_items) + 1
         evidence_id = f"{result_type}:{original_id}"
         title = item.get("paper_title") or item.get("title") or item.get("name") or item.get("description") or "证据"
         content = item.get("content") or item.get("description") or item.get("snippet") or title
+        citation_label = item.get("citation") or evidence_id
         return EvidenceItem(
             id=evidence_id,
             source_type=result_type,
             title=str(title),
             content=str(content),
-            score=float(item.get("total_score") or item.get("score") or 0.0),
-            citation=evidence_id,
+            score=float(item.get("total_score") or item.get("score") or item.get("quality_score") or 0.0),
+            citation=citation_label,
             metadata={
                 "original_id": original_id,
                 "chunk_type": item.get("chunk_type") or item.get("section_type"),
                 "source": item.get("source") or item.get("url"),
                 "match_type": item.get("match_type"),
                 "routes": item.get("routes", []),
+                "authors": item.get("authors"),
+                "year": item.get("year"),
+                "paper_id": item.get("paper_id"),
+                "provider": item.get("provider"),
+                "url": item.get("url"),
             },
         )

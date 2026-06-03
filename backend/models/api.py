@@ -19,6 +19,12 @@ class SourceItem(BaseModel):
     chunk_type: Optional[str] = None
     section_path: Optional[str] = None
     source: Optional[str] = None
+    url: Optional[str] = None
+    authors: Optional[str] = None
+    year: Optional[str] = None
+    paper_id: Optional[str] = None
+    provider: Optional[str] = None
+    citation: Optional[str] = None
 
 
 class ExplanationItem(BaseModel):
@@ -56,6 +62,12 @@ class SearchResultItem(BaseModel):
     title: str
     url: str
     snippet: str
+    authors: Optional[str] = None
+    year: Optional[str] = None
+    source: Optional[str] = None
+    provider: Optional[str] = None
+    paper_id: Optional[str] = None
+    quality_score: Optional[float] = None
 
 
 class WebSearchData(BaseModel):
@@ -65,6 +77,7 @@ class WebSearchData(BaseModel):
     nodes_created: int = 0
     edges_created: int = 0
     docs_created: int = 0
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
 
 
 class WebSearchResponse(BaseModel):

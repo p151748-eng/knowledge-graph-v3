@@ -91,6 +91,18 @@ def test_context_followup_inherits_path():
     assert decision.intent == "paper_experiment"
 
 
+def test_web_supplement_followup_inherits_context_and_web_intent():
+    router = ContextAwareRouter()
+    decision = router.route(RouteInput(
+        query="帮我联网补充",
+        recent_turns=[{"role": "assistant", "content": "论文背景回答", "path": "paper_assistant", "intent": "paper_literature_review"}],
+    ))
+    assert decision.path == "paper_assistant"
+    assert decision.context_dependent is True
+    assert decision.topic_changed is False
+    assert decision.metadata["web_search_requested"] is True
+
+
 def test_planned_workflow_validation_adds_verify_claims():
     workflow = ResearchWorkflow(db=None, llm=FakeLLM())
     plan = ExecutionPlan(goal="研究方案", tasks=[PlannedTask(id="t1", type="retrieve_papers")])
@@ -153,6 +165,7 @@ def test_forced_self_rag_complex_question_reports_evidence():
 def main():
     test_context_aware_router_paths()
     test_context_followup_inherits_path()
+    test_web_supplement_followup_inherits_context_and_web_intent()
     test_planned_workflow_validation_adds_verify_claims()
     test_planned_workflow_rejects_illegal_task()
     test_chat_and_stream_auto_path_consistent()

@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from config import config
 from core.agent import AgentResult, BaseAgent
 from core.context import AgentContext
+from tools.academic_search import AcademicSearchTool
 from tools.web_search import WebSearchTool
 
 
@@ -59,10 +60,12 @@ class WebSearchVerifierAgent(BaseAgent):
             confidence=0.8 if evidence else 0.2,
         )
 
-    def search_and_grade(self, query: str, grade=None, max_results: int | None = None) -> List[Dict[str, Any]]:
+    def search_and_grade(self, query: str, grade=None, max_results: int | None = None, search_mode: str = "web") -> List[Dict[str, Any]]:
         max_results = max_results or config.CRAG_WEB_MAX_RESULTS
         search_query = self._web_query(query, grade)
-        raw = WebSearchTool(self.db).execute(search_query, max_results=max_results, save=False)
+        if search_mode in {"academic", "mixed", "auto"}:
+            search_query = self._academic_query(search_query)
+        raw = self._search_external(search_query, max_results, search_mode=search_mode)
         candidates = [self._normalize(item, idx) for idx, item in enumerate(raw.get("results", []))]
         candidates = [item for item in candidates if self._is_candidate_usable(item)]
         if not candidates:
@@ -70,11 +73,72 @@ class WebSearchVerifierAgent(BaseAgent):
         accepted = self._grade_with_llm(query, candidates, grade)
         return accepted or self._heuristic_accept(candidates)
 
+    def _search_external(self, search_query: str, max_results: int, search_mode: str = "web") -> Dict[str, Any]:
+        mode = search_mode if search_mode in {"auto", "academic", "web", "mixed"} else "web"
+        if mode == "web":
+            return WebSearchTool(self.db).execute(search_query, max_results=max_results, save=False)
+        if mode == "academic":
+            academic = AcademicSearchTool(self.db, llm=self.llm).execute(search_query, max_results=max_results)
+            if academic.get("results"):
+                return academic
+            return WebSearchTool(self.db).execute(search_query, max_results=max_results, save=False)
+        if mode == "mixed" or (mode == "auto" and self._needs_mixed_search(search_query)):
+            return self._mixed_search(search_query, max_results)
+        if self._needs_academic_search(search_query) and not self._needs_web_first(search_query):
+            academic = AcademicSearchTool(self.db, llm=self.llm).execute(search_query, max_results=max_results)
+            if academic.get("results"):
+                return academic
+        return WebSearchTool(self.db).execute(search_query, max_results=max_results, save=False)
+
+    def _mixed_search(self, search_query: str, max_results: int) -> Dict[str, Any]:
+        results: List[Dict[str, Any]] = []
+        if self._needs_academic_search(search_query):
+            academic = AcademicSearchTool(self.db, llm=self.llm).execute(search_query, max_results=max_results)
+            results.extend(academic.get("results", []))
+        if self._needs_web_first(search_query) or not results:
+            web = WebSearchTool(self.db).execute(search_query, max_results=max_results, save=False)
+            results.extend(web.get("results", []))
+        return {"results": self._dedupe_results(results)[:max_results], "provider": "mixed_search"}
+
+    def _needs_academic_search(self, query: str) -> bool:
+        lowered = (query or "").lower()
+        return any(term in lowered for term in [
+            "论文", "文献", "研究现状", "研究背景", "相关工作", "研究空白", "参考论文", "参考文献",
+            "引用", "paper", "papers", "survey", "related work", "literature review", "arxiv", "doi",
+        ])
+
+    def _needs_web_first(self, query: str) -> bool:
+        lowered = (query or "").lower()
+        return any(term in lowered for term in [
+            "官网", "官方", "政策", "公告", "报告", "github", "新闻", "行业资料", "行业", "公司", "产品", "文档",
+            "official", "policy", "announcement", "report", "news", "industry",
+        ])
+
+    def _needs_mixed_search(self, query: str) -> bool:
+        return self._needs_academic_search(query) and self._needs_web_first(query)
+
+    def _dedupe_results(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        deduped: Dict[str, Dict[str, Any]] = {}
+        for item in items:
+            key = (item.get("paper_id") or item.get("url") or item.get("title") or "").lower()
+            if not key:
+                continue
+            existing = deduped.get(key)
+            if not existing or float(item.get("quality_score", 0) or 0) > float(existing.get("quality_score", 0) or 0):
+                deduped[key] = item
+        return sorted(deduped.values(), key=lambda item: (-float(item.get("quality_score", 0) or 0), item.get("rank", 99)))
+
     def _web_query(self, query: str, grade=None) -> str:
         missing = "; ".join(grade.missing_aspects if grade else [])
         if missing:
             return f"{query} {missing}"
         return query
+
+    def _academic_query(self, query: str) -> str:
+        try:
+            return AcademicSearchTool(self.db, llm=self.llm).router._clean_query(query)
+        except Exception:
+            return (query or "")[:160]
 
     def _normalize(self, item: Dict[str, Any], index: int) -> Dict[str, Any]:
         return {
@@ -83,13 +147,16 @@ class WebSearchVerifierAgent(BaseAgent):
             "title": item.get("title", ""),
             "url": item.get("url", ""),
             "snippet": item.get("snippet", ""),
-            "source": "web_search",
+            "source": item.get("source", "web_search"),
             "result_type": "web_evidence",
             "type": "web",
             "provider": item.get("provider", ""),
             "rank": item.get("rank", index + 1),
             "quality_score": item.get("quality_score", 0.0),
             "query": item.get("query", ""),
+            "authors": item.get("authors", ""),
+            "year": item.get("year", ""),
+            "paper_id": item.get("paper_id", ""),
         }
 
     def _is_candidate_usable(self, item: Dict[str, Any]) -> bool:

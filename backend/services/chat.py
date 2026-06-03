@@ -58,15 +58,18 @@ class ChatService:
         last_metrics: Dict[str, Any] = {}
 
         yield {"type": "route", "data": decision.to_dict()}
+        sources_from_event: List[Dict[str, Any]] = []
         async for event in self.workflow_runner.run_async(self.db, self.llm, context, decision):
             if event.get("type") == "delta":
                 full_answer_parts.append(event.get("content", ""))
             if event.get("type") == "metrics":
                 last_metrics = event
+            if event.get("type") == "sources":
+                sources_from_event = event.get("data", [])
             yield event
 
         full_answer = "".join(full_answer_parts)
-        result = self._result_from_context(decision, context, full_answer, last_metrics)
+        result = self._result_from_context(decision, context, full_answer, last_metrics, sources_from_event)
         conv = self._save_result(message, result, conversation_id, decision)
         yield {"type": "conversation_id", "conversation_id": conv.id if conv else (conversation_id or 0)}
 
@@ -86,12 +89,13 @@ class ChatService:
         context.extra["route_decision"] = decision.to_dict()
         return context
 
-    def _result_from_context(self, decision: RouteDecision, context: AgentContext, answer: str, metrics: Dict[str, Any]) -> WorkflowResult:
+    def _result_from_context(self, decision: RouteDecision, context: AgentContext, answer: str, metrics: Dict[str, Any], sources_from_event: List[Dict[str, Any]] = None) -> WorkflowResult:
         pd = context.pipeline_data
-        sources = []
+        sources = sources_from_event or []
         explanations = []
         metadata = {key: value for key, value in metrics.items() if key not in {"type", "path", "processing_time", "confidence"}}
-        if pd.integration_data:
+        # Fallback: check integration_data if no sources from event
+        if not sources and pd.integration_data:
             sources = pd.integration_data.sources or []
             if not answer:
                 answer = pd.integration_data.answer

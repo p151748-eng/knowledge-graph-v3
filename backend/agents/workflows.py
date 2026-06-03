@@ -157,6 +157,7 @@ class SelfRAGWorkflow(BaseWorkflow):
                 processing_time=f"{elapsed:.1f}s",
                 metadata={
                     "web_sources": output.get("web_sources", []),
+                    "suggested_actions": output.get("suggested_actions", []),
                     "retrieval_rounds": output.get("retrieval_rounds", []),
                     "evidence_grade": output.get("evidence_grade", {}),
                     "answer_verification": output.get("answer_verification", {}),
@@ -197,6 +198,7 @@ class PaperAssistantWorkflow(BaseWorkflow):
                     "retrieval_plan": output.get("retrieval_plan", {}),
                     "evidence_grade": output.get("evidence_grade", {}),
                     "retrieval_rounds": output.get("retrieval_rounds", []),
+                    "web_evidence": output.get("web_evidence", []),
                     "performance": output.get("performance", {}),
                     "evidence_items": evidence_state.evidence_dicts(),
                     "citation_verification": citation_verification,

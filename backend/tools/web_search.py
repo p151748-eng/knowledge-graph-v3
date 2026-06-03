@@ -3,10 +3,8 @@ WebSearchTool: 联网搜索工具。
 搜索结果可自动沉淀到 KG 和文档库。
 """
 
-import html
 import json
 import re
-import urllib.parse
 import urllib.request
 from typing import Any, Dict, List
 from urllib.parse import urlparse
@@ -17,6 +15,7 @@ from tools.kg_extract import KGExtractTool
 from tools.doc_store import DocStoreTool
 from models.db import Node, Edge
 from llm.manager import llm_manager
+from config import config
 
 
 class WebSearchTool(BaseTool):
@@ -153,11 +152,9 @@ class WebSearchTool(BaseTool):
         """Search multiple providers/expanded queries, then rank and deduplicate results."""
         candidates: List[Dict[str, Any]] = []
         queries = self._expand_queries(query)
-        providers = [
-            ("bing_cn", self._bing_cn_search),
-            ("so", self._so_search),
-            ("duckduckgo", self._duckduckgo_search),
-        ]
+        if not config.BOCHA_SEARCH_ENABLED or not config.BOCHA_API_KEY:
+            return [{"title": "搜索失败", "url": "", "snippet": "未配置 BOCHA_API_KEY 或 BOCHA_SEARCH_ENABLED=false", "provider": "bocha", "rank": 0, "quality_score": 0.0}]
+        providers = [("bocha", self._bocha_search)]
         provider_limit = max(max_results, 5)
         for query_rank, search_query in enumerate(queries):
             for provider, search_func in providers:
@@ -171,12 +168,12 @@ class WebSearchTool(BaseTool):
                     enriched["query"] = search_query
                     enriched["query_rank"] = query_rank
                     enriched["original_url"] = enriched.get("url", "")
-                    enriched["url"] = self._resolve_search_redirect(enriched.get("url", ""))
+                    enriched["url"] = enriched.get("url", "")
                     enriched["quality_score"] = self._quality_score(enriched, query)
                     candidates.append(enriched)
         ranked = self._rank_and_dedupe(candidates)
         direct = self._known_research_results(query)
-        if direct:
+        if direct and not any(item.get("provider") == "bocha" for item in ranked):
             ranked = self._rank_and_dedupe(direct + ranked)
         if ranked:
             return ranked[:max_results]
@@ -218,15 +215,61 @@ class WebSearchTool(BaseTool):
                 "query_rank": 0,
                 "quality_score": 0.94,
             })
+        if "multi-agent" in lowered or "multi agent" in lowered or "多agent" in lowered or "多智能体" in lowered:
+            results.append({
+                "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+                "url": "https://arxiv.org/abs/2402.01680",
+                "snippet": "This survey reviews LLM-based multi-agent systems, including communication, cooperation, coordination, and challenges in multi-agent collaboration.",
+                "provider": "known_research",
+                "rank": 1,
+                "query": query,
+                "query_rank": 0,
+                "quality_score": 0.96,
+            })
+            results.append({
+                "title": "Communicative Agents for Software Development",
+                "url": "https://arxiv.org/abs/2307.07924",
+                "snippet": "ChatDev studies communicative agents that collaborate through structured natural language conversations, showing both the promise and overhead of agent communication.",
+                "provider": "known_research",
+                "rank": 1,
+                "query": query,
+                "query_rank": 0,
+                "quality_score": 0.90,
+            })
+        if "semantic communication" in lowered or "语义压缩" in lowered or "semantic compression" in lowered:
+            results.append({
+                "title": "Semantic Communications: Principles and Challenges",
+                "url": "https://arxiv.org/abs/2201.01389",
+                "snippet": "Semantic communication focuses on transmitting meaning rather than raw symbols, supporting compressed semantic representations in communication protocols.",
+                "provider": "known_research",
+                "rank": 1,
+                "query": query,
+                "query_rank": 0,
+                "quality_score": 0.88,
+            })
         return results
 
     def _expand_queries(self, query: str) -> List[str]:
         normalized = re.sub(r"\s+", " ", query or "").strip()
         if not normalized:
             return []
+        if " || " in normalized:
+            queries = [item.strip() for item in normalized.split(" || ") if item.strip()]
+            unique = []
+            seen = set()
+            for item in queries:
+                key = item.lower()
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(item)
+            return unique[:10]
         queries = [normalized]
         lowered = normalized.lower()
-        research_signal = any(term in lowered for term in ["rag", "graphrag", "self-rag", "crag", "paper", "论文", "asai", "microsoft", "corrective"])
+        research_signal = any(term in lowered for term in [
+            "rag", "graphrag", "self-rag", "crag", "paper", "论文", "asai", "microsoft", "corrective",
+            "multi-agent", "multi agent", "agent", "llm", "semantic", "communication", "protocol", "survey",
+            "多agent", "多智能体", "通信", "协议", "语义压缩",
+        ])
         if research_signal:
             cleaned = normalized.replace("论文", "paper")
             queries.extend([
@@ -234,7 +277,22 @@ class WebSearchTool(BaseTool):
                 f'{cleaned} site:aclanthology.org',
                 f'{cleaned} site:openreview.net',
                 f'{cleaned} site:microsoft.com',
+                f'{cleaned} site:semanticscholar.org',
+                f'{cleaned} site:github.com',
             ])
+            if "multi-agent" in lowered or "multi agent" in lowered or "多agent" in lowered or "多智能体" in lowered:
+                queries.extend([
+                    '"LLM multi-agent" communication protocol arxiv',
+                    '"multi-agent" "communication" "large language models"',
+                    '"semantic communication" "multi-agent" "LLM"',
+                    '"agent communication" "language model" "protocol"',
+                ])
+            if "semantic" in lowered or "语义压缩" in lowered or "communication" in lowered or "通信" in lowered:
+                queries.extend([
+                    '"semantic compression" "multi-agent"',
+                    '"semantic communication" "multi-agent systems"',
+                    '"communication efficiency" "LLM agents"',
+                ])
             if "self-rag" in lowered or "self rag" in lowered:
                 queries.extend([
                     '"Self-RAG" "Learning to Retrieve, Generate, and Critique"',
@@ -257,7 +315,7 @@ class WebSearchTool(BaseTool):
             if key not in seen:
                 seen.add(key)
                 unique.append(item)
-        return unique[:6]
+        return unique[:10]
 
     def _rank_and_dedupe(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         deduped: Dict[str, Dict[str, Any]] = {}
@@ -298,6 +356,12 @@ class WebSearchTool(BaseTool):
             "github.com",
             "semanticscholar.org",
             "research.google",
+            "gov.cn",
+            "edu.cn",
+            "who.int",
+            "nih.gov",
+            "fda.gov",
+            "sec.gov",
         ]
         if any(domain.endswith(auth) for auth in authority_domains):
             score += 0.35
@@ -306,10 +370,8 @@ class WebSearchTool(BaseTool):
         weak_title_terms = ["翻译", "教程", "小白", "最全", "csdn", "博客"]
         if any(term in title.lower() for term in weak_title_terms):
             score -= 0.12
-        if item.get("provider") == "bing_cn":
-            score += 0.06
-        if item.get("provider") == "duckduckgo":
-            score += 0.04
+        if item.get("provider") == "bocha":
+            score += 0.10
         score -= min(0.12, max(0, int(item.get("rank", 1)) - 1) * 0.02)
         return round(max(0.0, min(1.0, score)), 3)
 
@@ -317,121 +379,60 @@ class WebSearchTool(BaseTool):
         domain = urlparse(url if "://" in url else "https://" + url).netloc.lower()
         return any(domain.endswith(auth) for auth in ["arxiv.org", "aclanthology.org", "openreview.net", "microsoft.com", "github.com", "semanticscholar.org"])
 
-    def _resolve_search_redirect(self, url: str) -> str:
-        if "www.so.com/link?" not in (url or ""):
-            return url
-        try:
-            request = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-                },
-                method="HEAD",
-            )
-            opener = urllib.request.build_opener(urllib.request.HTTPRedirectHandler)
-            with opener.open(request, timeout=4) as response:
-                final_url = response.geturl()
-                return final_url or url
-        except Exception:
-            return url
-
-    def _bing_cn_search(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
-        """调用 cn.bing.com 搜索并解析结果页。"""
-        url = "https://cn.bing.com/search?q=" + urllib.parse.quote(query)
-        html_text = self._fetch(url)
-        if not html_text:
+    def _bocha_search(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
+        if not config.BOCHA_API_KEY:
             return []
-        results = []
-        pattern = re.compile(r'<li class="b_algo".*?<h2.*?<a href="(?P<url>[^"]+)"[^>]*>(?P<title>.*?)</a>.*?(?:<p[^>]*>(?P<snippet>.*?)</p>)?', re.S | re.I)
-        for match in pattern.finditer(html_text):
-            title = self._clean_html(match.group("title"))
-            result_url = html.unescape(match.group("url"))
-            snippet = self._clean_html(match.group("snippet") or "")
-            if title and result_url:
-                results.append({"title": title, "url": result_url, "snippet": snippet})
-            if len(results) >= max_results:
-                break
-        return results
-
-    def _so_search(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
-        """调用 360 搜索并解析结果页。"""
-        url = "https://www.so.com/s?q=" + urllib.parse.quote(query)
-        html_text = self._fetch(url)
-        if not html_text:
-            return []
-        results = []
-        pattern = re.compile(r'<h3[^>]*class="[^"]*(?:res-title|title)[^"]*".*?<a[^>]+href="(?P<url>[^"]+)"[^>]*>(?P<title>.*?)</a>.*?(?:<p[^>]*class="[^"]*(?:res-desc|content|summary)[^"]*"[^>]*>(?P<snippet>.*?)</p>)?', re.S | re.I)
-        for match in pattern.finditer(html_text):
-            title = self._clean_html(match.group("title"))
-            result_url = html.unescape(match.group("url"))
-            snippet = self._clean_html(match.group("snippet") or "")
-            if result_url.startswith("//"):
-                result_url = "https:" + result_url
-            if title and result_url:
-                results.append({"title": title, "url": result_url, "snippet": snippet})
-            if len(results) >= max_results:
-                break
-        return results
-
-    def _fetch(self, url: str) -> str:
+        payload = json.dumps({
+            "query": query,
+            "freshness": config.BOCHA_SEARCH_FRESHNESS,
+            "summary": config.BOCHA_SEARCH_SUMMARY,
+            "count": max(1, min(50, max_results)),
+        }).encode("utf-8")
+        request = urllib.request.Request(
+            config.BOCHA_SEARCH_URL,
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {config.BOCHA_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
         try:
-            request = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-                },
-            )
-            with urllib.request.urlopen(request, timeout=15) as response:
-                raw = response.read()
-                charset = response.headers.get_content_charset()
-                if not charset:
-                    head = raw[:2000].decode("ascii", errors="ignore")
-                    match = re.search(r"charset=['\"]?([A-Za-z0-9_-]+)", head, re.I)
-                    charset = match.group(1) if match else "utf-8"
-                text = raw.decode(charset, errors="ignore")
-                if "�" in text[:2000] and charset.lower() != "gb18030":
-                    alt = raw.decode("gb18030", errors="ignore")
-                    if alt[:2000].count("�") < text[:2000].count("�"):
-                        return alt
-                return text
-        except Exception:
-            return ""
+            with urllib.request.urlopen(request, timeout=20) as response:
+                data = json.loads(response.read().decode("utf-8"))
+        except Exception as exc:
+            return [{"title": "搜索失败", "url": "", "snippet": str(exc), "provider": "bocha"}]
 
-    def _clean_html(self, text: str) -> str:
-        text = re.sub(r"<script[\s\S]*?</script>|<style[\s\S]*?</style>", " ", text or "", flags=re.I)
-        text = re.sub(r"<[^>]+>", " ", text)
-        text = html.unescape(text)
-        return re.sub(r"\s+", " ", text).strip()
+        if data.get("code") != 200:
+            return [{"title": "搜索失败", "url": "", "snippet": data.get("msg") or json.dumps(data, ensure_ascii=False), "provider": "bocha"}]
+
+        values = (((data.get("data") or {}).get("webPages") or {}).get("value") or [])
+        results: List[Dict[str, Any]] = []
+        for item in values[:max_results]:
+            title = item.get("name") or ""
+            url = item.get("url") or ""
+            snippet = item.get("summary") or item.get("snippet") or ""
+            if not title or not url or not snippet:
+                continue
+            results.append({
+                "title": title,
+                "url": url,
+                "snippet": snippet,
+                "display_url": item.get("displayUrl") or "",
+                "site_name": item.get("siteName") or "",
+                "site_icon": item.get("siteIcon") or "",
+                "date_published": item.get("datePublished") or item.get("dateLastCrawled") or "",
+                "provider": "bocha",
+            })
+        return results
 
     def _is_real_result(self, item: Dict[str, Any]) -> bool:
         title = item.get("title", "")
         url = item.get("url", "")
-        return bool(url) and not url.startswith("/") and url != "https://example.com" and not title.startswith("[模拟]") and title != "搜索失败"
-
-    def _duckduckgo_search(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
-        """调用 DuckDuckGo 搜索"""
-        try:
-            from duckduckgo_search import DDGS
-
-            results = []
-            with DDGS() as ddgs:
-                for r in ddgs.text(query, max_results=max_results):
-                    results.append({
-                        "title": r.get("title", ""),
-                        "url": r.get("href", ""),
-                        "snippet": r.get("body", ""),
-                    })
-            return results
-        except ImportError:
-            # DuckDuckGo 未安装时返回模拟结果
-            return [
-                {
-                    "title": f"[模拟] {query} 相关内容",
-                    "url": "https://example.com",
-                    "snippet": f"这是关于 {query} 的搜索结果摘要。",
-                }
-            ]
-        except Exception as e:
-            return [{"title": "搜索失败", "url": "", "snippet": str(e)}]
+        snippet = item.get("snippet", "")
+        parsed = urlparse(url if "://" in url else "https://" + url)
+        domain = parsed.netloc.lower()
+        blocked_domains = ["wenku.so.com", "image.so.com"]
+        if any(domain.endswith(blocked) for blocked in blocked_domains):
+            return False
+        return bool(url) and not url.startswith("/") and url != "https://example.com" and not title.startswith("[模拟]") and title != "搜索失败" and bool(snippet.strip())

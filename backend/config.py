@@ -180,6 +180,50 @@ class Config:
     def WEB_SEARCH_AUTO_SAVE(self) -> bool:
         return os.getenv("WEB_SEARCH_AUTO_SAVE", "true").lower() in ("true", "1", "yes")
 
+    @property
+    def BOCHA_API_KEY(self) -> Optional[str]:
+        return os.getenv("BOCHA_API_KEY")
+
+    @property
+    def BOCHA_SEARCH_URL(self) -> str:
+        return os.getenv("BOCHA_SEARCH_URL", "https://api.bocha.cn/v1/web-search")
+
+    @property
+    def BOCHA_SEARCH_ENABLED(self) -> bool:
+        return os.getenv("BOCHA_SEARCH_ENABLED", "true").lower() in ("true", "1", "yes")
+
+    @property
+    def BOCHA_SEARCH_SUMMARY(self) -> bool:
+        return os.getenv("BOCHA_SEARCH_SUMMARY", "true").lower() in ("true", "1", "yes")
+
+    @property
+    def BOCHA_SEARCH_FRESHNESS(self) -> str:
+        return os.getenv("BOCHA_SEARCH_FRESHNESS", "noLimit")
+
+    @property
+    def AI4SCHOLAR_API_KEY(self) -> Optional[str]:
+        return os.getenv("AI4SCHOLAR_API_KEY")
+
+    @property
+    def AI4SCHOLAR_BASE_URL(self) -> str:
+        return os.getenv("AI4SCHOLAR_BASE_URL", "https://ai4scholar.net")
+
+    @property
+    def AI4SCHOLAR_ENABLED(self) -> bool:
+        return os.getenv("AI4SCHOLAR_ENABLED", "true").lower() in ("true", "1", "yes")
+
+    @property
+    def ACADEMIC_SEARCH_MAX_RESULTS(self) -> int:
+        return int(os.getenv("ACADEMIC_SEARCH_MAX_RESULTS", "6"))
+
+    @property
+    def ACADEMIC_SEARCH_USE_SNIPPETS(self) -> bool:
+        return os.getenv("ACADEMIC_SEARCH_USE_SNIPPETS", "true").lower() in ("true", "1", "yes")
+
+    @property
+    def ACADEMIC_SEARCH_FALLBACK_WEB(self) -> bool:
+        return os.getenv("ACADEMIC_SEARCH_FALLBACK_WEB", "true").lower() in ("true", "1", "yes")
+
     # ── Chroma ─────────────────────────────────────────────────
     @property
     def CHROMA_PERSIST_DIR(self) -> str:

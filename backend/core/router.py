@@ -68,6 +68,10 @@ class ContextAwareRouter:
         r"^(那|那么|继续|再|还有|这个|它|其|上面|刚才|前面)",
         r"(呢|怎么样|如何|为什么)$",
     ]
+    CONTEXTUAL_WEB_FOLLOWUP_TERMS = [
+        "联网补充", "继续联网", "补充一下", "继续补充", "查一下", "搜索一下",
+        "上网查一下", "帮我查", "帮我搜", "联网查", "联网搜",
+    ]
 
     def route(self, route_input: RouteInput) -> RouteDecision:
         query = route_input.query or ""
@@ -89,6 +93,7 @@ class ContextAwareRouter:
         if followup and last_route and self._normalize_path(last_route.get("path")):
             inherited = self._normalize_path(last_route.get("path"))
             intent = self._refine_followup_intent(query, inherited, last_route.get("intent", "followup"))
+            features = self._features(query)
             return RouteDecision(
                 path=inherited,
                 intent=intent,
@@ -97,6 +102,7 @@ class ContextAwareRouter:
                 confidence=0.86,
                 reason="当前问题依赖上一轮上下文，继承上一轮路径",
                 reporting_level=self._reporting_level(inherited),
+                metadata={"features": features, "web_search_requested": features.get("has_web_search", False)},
             )
 
         features = self._features(query)
@@ -128,19 +134,22 @@ class ContextAwareRouter:
         paper_terms = self.PAPER_KEYWORDS
         simple_terms = ["是什么", "定义", "什么意思", "介绍一下", "what is"]
         current_object_terms = ["这个结论", "该结论", "这个回答", "当前回答", "上述结论", "是否可靠", "可靠吗", "依据是什么", "证据是否", "有没有支撑"]
-        outline_terms = ["大纲", "开题", "提纲", "outline", "章节安排", "生成大纲"]
+        outline_terms = ["大纲", "提纲", "outline", "章节安排", "生成大纲"]
+        opening_report_terms = ["开题报告", "开题", "研究方案", "课题申报", "research proposal"]
         freshness_terms = ["最新", "当前", "现在", "2025", "2026", "fresh", "current", "latest"]
         multi_object = self._multi_object_signal(query)
         has_outline = self._contains_any(lowered, outline_terms)
+        has_opening_report = self._contains_any(lowered, opening_report_terms)
         return {
-            "has_research": self._contains_any(lowered, research_terms) and not has_outline,
+            "has_research": self._contains_any(lowered, research_terms) and not (has_outline or has_opening_report),
             "has_compare": self._contains_any(lowered, compare_terms),
-            "has_design": self._contains_any(lowered, design_terms) and not has_outline,
+            "has_design": self._contains_any(lowered, design_terms) and not (has_outline or has_opening_report),
             "has_verify": self._contains_any(lowered, verify_terms),
             "has_freshness": self._contains_any(lowered, freshness_terms),
             "has_web_search": self._contains_any(lowered, web_search_terms),
             "has_paper": self._contains_any(lowered, paper_terms),
             "has_outline": has_outline,
+            "has_opening_report": has_opening_report,
             "has_complex": self._contains_any(lowered, self.COMPLEX_KEYWORDS),
             "has_simple": self._contains_any(lowered, simple_terms),
             "current_object_verification": self._contains_any(lowered, current_object_terms),
@@ -167,10 +176,12 @@ class ContextAwareRouter:
             scores["fast"] = min(scores["fast"], 0.45)
         if features["has_paper"] and not (features["has_design"] or features["has_research"] or features["multi_object"] or features["has_verify"]):
             scores["paper_assistant"] += 0.35
-        # 大纲生成任务优先路由到 paper_assistant
-        if features.get("has_outline"):
-            scores["paper_assistant"] += 0.55
+        if features.get("has_outline") or features.get("has_opening_report"):
+            scores["paper_assistant"] += 0.75 if features.get("has_opening_report") else 0.55
             scores["research"] = min(scores["research"], 0.3)
+        if features.get("has_opening_report") and ("多篇论文" in query or "研究空白" in query or features["multi_object"]):
+            scores["research"] += 1.25
+            scores["paper_assistant"] -= 0.55
         if features["has_verify"] and not (features["has_design"] or features["has_research"]):
             scores["paper_assistant"] -= 0.3
 
@@ -252,6 +263,8 @@ class ContextAwareRouter:
         stripped = (query or "").strip()
         if not stripped:
             return False
+        if any(term in stripped for term in self.CONTEXTUAL_WEB_FOLLOWUP_TERMS):
+            return True
         if len(stripped) <= 12:
             return any(re.search(pattern, stripped) for pattern in self.FOLLOWUP_PATTERNS)
         return bool(re.search(r"(刚才|上面|前面|继续|这个|它|其)", stripped))
@@ -283,7 +296,9 @@ class ContextAwareRouter:
             return "paper_compare"
         if any(token in lowered_query for token in ["相关工作", "综述", "引用", "reference"]):
             return "paper_literature_review"
-        if any(token in lowered_query for token in ["大纲", "开题", "提纲"]):
+        if any(token in lowered_query for token in ["开题报告", "开题", "研究方案", "课题申报", "research proposal"]):
+            return "paper_opening_report"
+        if any(token in lowered_query for token in ["大纲", "提纲", "outline"]):
             return "paper_outline"
         if any(token in lowered_query for token in ["贡献", "创新点"]):
             return "paper_contribution"

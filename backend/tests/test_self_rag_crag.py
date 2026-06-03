@@ -131,9 +131,57 @@ def test_web_verify_accepts_real_and_rejects_simulated():
         }):
             context = AgentContext(pipeline_data=PipelineData(query="Self-RAG 2026 最新资料"))
             result = pipeline.run(context)
-            assert result.success
-            assert len(context.pipeline_data.web_evidence) == 1
-            assert context.pipeline_data.web_evidence[0]["url"] != "https://example.com"
+        assert result.success
+        assert len(context.pipeline_data.web_evidence) == 1
+        assert context.pipeline_data.web_evidence[0]["url"] != "https://example.com"
+        assert result.output["suggested_actions"][0]["type"] == "import_paper"
+        assert result.output["suggested_actions"][0]["requires_confirmation"] is True
+        assert result.output["suggested_actions"][0]["paper"]["arxiv_id"] == "2310.11511"
+
+
+def test_no_import_suggestion_when_local_sufficient():
+    with patch.object(HybridSearchTool, "execute", fake_retrieval):
+        pipeline = SelfRAGPipeline(db=None, llm=FakeLLM(), allow_web=True)
+        context = AgentContext(pipeline_data=PipelineData(query="本地证据足够的问题"))
+        result = pipeline.run(context)
+        assert result.success
+        assert result.output["suggested_actions"] == []
+
+
+def test_contextual_web_query_uses_previous_topic():
+    pipeline = SelfRAGPipeline(db=None, llm=FakeLLM(), allow_web=True)
+    recent_history = [
+        {"role": "user", "content": "请验证 GraphRAG 是否适合医学论文阅读，并给出可靠依据。"},
+        {"role": "assistant", "content": "当前证据不足，可以联网补充。", "path": "self_rag"},
+    ]
+    query = pipeline._external_verification_query("帮我联网补充", "帮我联网补充", "", recent_history)
+    assert "GraphRAG" in query
+    assert "医学论文阅读" in query
+    assert query != "帮我联网补充"
+
+
+def test_arxiv_id_extraction_variants():
+    pipeline = SelfRAGPipeline(db=None, llm=FakeLLM(), allow_web=False)
+    assert pipeline._extract_arxiv_id("https://arxiv.org/abs/2310.11511") == "2310.11511"
+    assert pipeline._extract_arxiv_id("https://arxiv.org/html/2310.11511v1") == "2310.11511"
+    assert pipeline._extract_arxiv_id("https://arxiv.org/pdf/2310.11511") == "2310.11511"
+    assert pipeline._extract_arxiv_id("https://example.com/abs/2310.11511") == ""
+
+
+def test_import_suggestion_does_not_import_during_chat():
+    with patch.object(HybridSearchTool, "execute", fake_retrieval):
+        with patch("agents.web_verifier.WebSearchTool.execute", return_value={
+            "results": [
+                {"title": "Self-RAG paper", "url": "https://arxiv.org/abs/2310.11511", "snippet": "Self-RAG retrieves and critiques evidence."},
+            ]
+        }):
+            with patch("services.arxiv_importer.ArxivImporter.import_paper") as import_paper:
+                pipeline = SelfRAGPipeline(db=None, llm=FakeLLM(), allow_web=True)
+                context = AgentContext(pipeline_data=PipelineData(query="Self-RAG 2026 最新资料"))
+                result = pipeline.run(context)
+                assert result.success
+                assert result.output["suggested_actions"]
+                import_paper.assert_not_called()
 
 
 def test_chat_service_self_rag_path():
@@ -144,6 +192,7 @@ def test_chat_service_self_rag_path():
         result = service.chat("本地证据足够的问题", force_path="self_rag")
         assert result["path"] == "self_rag"
         assert "retrieval_rounds" in result
+        assert "suggested_actions" in result
         assert result["response"]
 
 
@@ -151,5 +200,9 @@ if __name__ == "__main__":
     test_local_sufficient_no_web()
     test_local_repair_success()
     test_web_verify_accepts_real_and_rejects_simulated()
+    test_no_import_suggestion_when_local_sufficient()
+    test_contextual_web_query_uses_previous_topic()
+    test_arxiv_id_extraction_variants()
+    test_import_suggestion_does_not_import_during_chat()
     test_chat_service_self_rag_path()
     print("=== Self-RAG / CRAG 回归测试通过 ===")
