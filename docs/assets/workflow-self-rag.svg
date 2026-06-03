@@ -1,0 +1,51 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title{font:800 28px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.label{font:700 17px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.small{font:500 13px Inter,Segoe UI,Arial,sans-serif;fill:#475569}.box{fill:white;stroke:#CBD5E1;stroke-width:1.5}.blue{fill:#EFF6FF;stroke:#6B8AED}.green{fill:#ECFDF5;stroke:#27A37A}.orange{fill:#FFF7ED;stroke:#D08B45}.red{fill:#FEF2F2;stroke:#EF4444}.arrow{stroke:#64748B;stroke-width:2.2;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+  </defs>
+  <rect width="1200" height="520" rx="24" fill="#F8FAFC"/>
+  <text x="60" y="58" class="title">Self-RAG / CRAG Workflow</text>
+  <text x="60" y="86" class="small">Retrieve, grade, repair, verify with web or academic evidence, then answer with confidence</text>
+
+  <rect x="66" y="170" width="142" height="82" rx="18" class="blue"/>
+  <text x="137" y="202" text-anchor="middle" class="label">Question</text>
+  <text x="137" y="226" text-anchor="middle" class="small">needs evidence</text>
+
+  <rect x="256" y="170" width="150" height="82" rx="18" class="box"/>
+  <text x="331" y="202" text-anchor="middle" class="label">Retrieve</text>
+  <text x="331" y="226" text-anchor="middle" class="small">KG + docs + memory</text>
+
+  <rect x="454" y="170" width="150" height="82" rx="18" class="orange"/>
+  <text x="529" y="202" text-anchor="middle" class="label">Grade</text>
+  <text x="529" y="226" text-anchor="middle" class="small">support / freshness</text>
+
+  <rect x="652" y="90" width="154" height="82" rx="18" class="red"/>
+  <text x="729" y="122" text-anchor="middle" class="label">Repair</text>
+  <text x="729" y="146" text-anchor="middle" class="small">rewrite query</text>
+
+  <rect x="652" y="250" width="154" height="82" rx="18" class="green"/>
+  <text x="729" y="282" text-anchor="middle" class="label">Verify Online</text>
+  <text x="729" y="306" text-anchor="middle" class="small">web / academic / mixed</text>
+
+  <rect x="854" y="170" width="150" height="82" rx="18" class="box"/>
+  <text x="929" y="202" text-anchor="middle" class="label">Generate</text>
+  <text x="929" y="226" text-anchor="middle" class="small">evidence-grounded</text>
+
+  <rect x="1050" y="170" width="110" height="82" rx="18" class="blue"/>
+  <text x="1105" y="202" text-anchor="middle" class="label">Answer</text>
+  <text x="1105" y="226" text-anchor="middle" class="small">sources + confidence</text>
+
+  <path d="M208 211 H256" class="arrow"/>
+  <path d="M406 211 H454" class="arrow"/>
+  <path d="M604 190 C628 158 632 137 652 131" class="arrow"/>
+  <path d="M604 232 C628 264 632 285 652 291" class="arrow"/>
+  <path d="M806 131 C850 136 877 156 904 170" class="arrow"/>
+  <path d="M806 291 C854 284 889 260 914 252" class="arrow"/>
+  <path d="M1004 211 H1050" class="arrow"/>
+
+  <rect x="256" y="366" width="748" height="74" rx="18" fill="#FFFFFF" stroke="#CBD5E1" stroke-dasharray="7 7"/>
+  <text x="630" y="395" text-anchor="middle" class="label">Search mode selection</text>
+  <text x="630" y="420" text-anchor="middle" class="small">paper / literature / related work → academic · official / policy / GitHub / report → web · both → mixed</text>
+</svg>

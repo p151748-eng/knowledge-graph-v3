@@ -1,0 +1,60 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title{font:800 28px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.label{font:700 17px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.small{font:500 13px Inter,Segoe UI,Arial,sans-serif;fill:#475569}.box{fill:white;stroke:#CBD5E1;stroke-width:1.5}.accent{fill:#EFF6FF;stroke:#6B8AED}.warn{fill:#FFF7ED;stroke:#D08B45}.good{fill:#ECFDF5;stroke:#27A37A}.arrow{stroke:#64748B;stroke-width:2.2;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+  </defs>
+  <rect width="1200" height="520" rx="24" fill="#F8FAFC"/>
+  <text x="60" y="58" class="title">Paper Assistant Workflow</text>
+  <text x="60" y="86" class="small">Context-aware paper QA, academic search, citation-aware generation</text>
+
+  <rect x="70" y="155" width="150" height="90" rx="18" class="accent"/>
+  <text x="145" y="190" text-anchor="middle" class="label">User Query</text>
+  <text x="145" y="215" text-anchor="middle" class="small">paper / topic / follow-up</text>
+
+  <rect x="270" y="155" width="150" height="90" rx="18" class="box"/>
+  <text x="345" y="185" text-anchor="middle" class="label">Task Router</text>
+  <text x="345" y="210" text-anchor="middle" class="small">overview · method</text>
+  <text x="345" y="230" text-anchor="middle" class="small">gap · outline</text>
+
+  <rect x="470" y="155" width="150" height="90" rx="18" class="box"/>
+  <text x="545" y="185" text-anchor="middle" class="label">Local Evidence</text>
+  <text x="545" y="210" text-anchor="middle" class="small">paper chunks</text>
+  <text x="545" y="230" text-anchor="middle" class="small">KG + memory</text>
+
+  <rect x="670" y="155" width="150" height="90" rx="18" class="warn"/>
+  <text x="745" y="185" text-anchor="middle" class="label">Evidence Grade</text>
+  <text x="745" y="210" text-anchor="middle" class="small">support score</text>
+  <text x="745" y="230" text-anchor="middle" class="small">low-evidence hint</text>
+
+  <rect x="870" y="118" width="160" height="74" rx="18" class="good"/>
+  <text x="950" y="148" text-anchor="middle" class="label">AI4Scholar</text>
+  <text x="950" y="171" text-anchor="middle" class="small">papers · authors · year</text>
+
+  <rect x="870" y="218" width="160" height="74" rx="18" class="box"/>
+  <text x="950" y="248" text-anchor="middle" class="label">Bocha Web</text>
+  <text x="950" y="271" text-anchor="middle" class="small">official · reports · web</text>
+
+  <rect x="470" y="338" width="170" height="92" rx="18" class="box"/>
+  <text x="555" y="372" text-anchor="middle" class="label">Paper Expert</text>
+  <text x="555" y="398" text-anchor="middle" class="small">structured answer</text>
+
+  <rect x="710" y="338" width="180" height="92" rx="18" class="accent"/>
+  <text x="800" y="372" text-anchor="middle" class="label">Cited Answer</text>
+  <text x="800" y="398" text-anchor="middle" class="small">[1] [2] + links</text>
+
+  <path d="M220 200 H270" class="arrow"/>
+  <path d="M420 200 H470" class="arrow"/>
+  <path d="M620 200 H670" class="arrow"/>
+  <path d="M820 177 C840 165 850 158 870 155" class="arrow"/>
+  <path d="M820 223 C840 236 850 248 870 255" class="arrow"/>
+  <path d="M950 292 C900 350 760 384 640 384" class="arrow"/>
+  <path d="M745 245 C700 315 620 338 555 338" class="arrow"/>
+  <path d="M640 384 H710" class="arrow"/>
+
+  <rect x="86" y="312" width="300" height="118" rx="18" fill="#FFFFFF" stroke="#CBD5E1" stroke-dasharray="7 7"/>
+  <text x="236" y="344" text-anchor="middle" class="label">Context Follow-up</text>
+  <text x="236" y="372" text-anchor="middle" class="small">“这个选题 / 上述主题 / 相关论文”</text>
+  <text x="236" y="395" text-anchor="middle" class="small">uses previous topic + current constraints</text>
+</svg>

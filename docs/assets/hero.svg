@@ -1,0 +1,64 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1020"/>
+      <stop offset="0.52" stop-color="#111B35"/>
+      <stop offset="1" stop-color="#102A2D"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1E2A4A" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#102A2D" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+  <circle cx="1040" cy="80" r="170" fill="#27D6A3" opacity="0.09"/>
+  <circle cx="120" cy="350" r="160" fill="#6B8AED" opacity="0.12"/>
+
+  <g opacity="0.55">
+    <path d="M760 90 C850 30 970 40 1040 130" stroke="#27D6A3" stroke-width="2"/>
+    <path d="M760 320 C860 390 980 360 1060 250" stroke="#6B8AED" stroke-width="2"/>
+    <circle cx="760" cy="90" r="6" fill="#6B8AED"/>
+    <circle cx="1040" cy="130" r="6" fill="#27D6A3"/>
+    <circle cx="760" cy="320" r="6" fill="#6B8AED"/>
+    <circle cx="1060" cy="250" r="6" fill="#27D6A3"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="58" width="575" height="304" rx="24" fill="url(#card)" stroke="#31446D"/>
+    <text x="104" y="132" fill="#E8F0FF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="52" font-weight="800">KG-Agent System v3</text>
+    <text x="106" y="178" fill="#9FB3D9" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22">Knowledge Graph Enhanced RAG for Papers</text>
+    <text x="106" y="226" fill="#DDE7F7" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20">论文阅读 · 研究空白 · 学术联网 · 证据校验</text>
+    <g transform="translate(104 270)">
+      <rect width="104" height="38" rx="19" fill="#223B68" stroke="#4067A8"/>
+      <text x="52" y="25" fill="#CFE1FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Paper AI</text>
+      <rect x="118" width="112" height="38" rx="19" fill="#193C37" stroke="#2A8F74"/>
+      <text x="174" y="25" fill="#C6FFF0" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Self-RAG</text>
+      <rect x="244" width="96" height="38" rx="19" fill="#3B2A58" stroke="#8B65D6"/>
+      <text x="292" y="25" fill="#EEE4FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">KG</text>
+      <rect x="354" width="132" height="38" rx="19" fill="#4A2F1D" stroke="#D08B45"/>
+      <text x="420" y="25" fill="#FFE8C8" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">AI4Scholar</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="710" y="74" width="390" height="268" rx="22" fill="#111A30" stroke="#31446D"/>
+    <rect x="742" y="106" width="118" height="54" rx="14" fill="#1C2D52" stroke="#6B8AED"/>
+    <text x="801" y="139" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">React UI</text>
+    <rect x="910" y="106" width="130" height="54" rx="14" fill="#193C37" stroke="#27D6A3"/>
+    <text x="975" y="139" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">FastAPI</text>
+    <rect x="742" y="202" width="130" height="54" rx="14" fill="#3B2A58" stroke="#8B65D6"/>
+    <text x="807" y="235" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Workflows</text>
+    <rect x="910" y="202" width="130" height="54" rx="14" fill="#4A2F1D" stroke="#D08B45"/>
+    <text x="975" y="235" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Evidence</text>
+    <rect x="822" y="286" width="142" height="36" rx="18" fill="#1B253D" stroke="#3A4F7D"/>
+    <text x="893" y="309" fill="#BFD0EF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13">MySQL · Chroma · LLM</text>
+    <path d="M860 133 H910" stroke="#5F79B8" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M975 160 V202" stroke="#5F79B8" stroke-width="2"/>
+    <path d="M910 229 H872" stroke="#5F79B8" stroke-width="2"/>
+    <path d="M807 256 V286" stroke="#5F79B8" stroke-width="2"/>
+    <path d="M975 256 V286" stroke="#5F79B8" stroke-width="2"/>
+  </g>
+</svg>

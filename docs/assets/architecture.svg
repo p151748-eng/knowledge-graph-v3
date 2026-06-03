@@ -1,0 +1,77 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#EEF6FF"/>
+    </linearGradient>
+    <style>
+      .title{font:700 28px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.label{font:700 18px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}.small{font:500 14px Inter,Segoe UI,Arial,sans-serif;fill:#475569}.tiny{font:500 12px Inter,Segoe UI,Arial,sans-serif;fill:#64748B}.box{fill:white;stroke:#CBD5E1;stroke-width:1.5}.blue{fill:#EFF6FF;stroke:#6B8AED}.green{fill:#ECFDF5;stroke:#27A37A}.purple{fill:#F5F3FF;stroke:#8B65D6}.orange{fill:#FFF7ED;stroke:#D08B45}.gray{fill:#F8FAFC;stroke:#94A3B8}.arrow{stroke:#64748B;stroke-width:2;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+  </defs>
+  <rect width="1200" height="720" rx="24" fill="url(#bg)"/>
+  <text x="60" y="62" class="title">KG-Agent System v3 Architecture</text>
+  <text x="60" y="90" class="small">React UI → FastAPI → Context-aware routing → Multi-workflow RAG / KG / Web evidence</text>
+
+  <rect x="60" y="132" width="210" height="420" rx="20" class="blue"/>
+  <text x="165" y="170" text-anchor="middle" class="label">Frontend</text>
+  <text x="165" y="198" text-anchor="middle" class="small">React + Vite</text>
+  <rect x="88" y="232" width="154" height="48" rx="12" class="box"/>
+  <text x="165" y="262" text-anchor="middle" class="small">Chat Page</text>
+  <rect x="88" y="296" width="154" height="48" rx="12" class="box"/>
+  <text x="165" y="326" text-anchor="middle" class="small">Import / Docs</text>
+  <rect x="88" y="360" width="154" height="48" rx="12" class="box"/>
+  <text x="165" y="390" text-anchor="middle" class="small">KG Graph</text>
+  <rect x="88" y="424" width="154" height="48" rx="12" class="box"/>
+  <text x="165" y="454" text-anchor="middle" class="small">Settings</text>
+  <text x="165" y="512" text-anchor="middle" class="tiny">REST API + SSE streaming</text>
+
+  <rect x="330" y="132" width="210" height="420" rx="20" class="green"/>
+  <text x="435" y="170" text-anchor="middle" class="label">Backend API</text>
+  <text x="435" y="198" text-anchor="middle" class="small">FastAPI</text>
+  <rect x="358" y="232" width="154" height="48" rx="12" class="box"/>
+  <text x="435" y="262" text-anchor="middle" class="small">ChatService</text>
+  <rect x="358" y="296" width="154" height="48" rx="12" class="box"/>
+  <text x="435" y="326" text-anchor="middle" class="small">Context Router</text>
+  <rect x="358" y="360" width="154" height="48" rx="12" class="box"/>
+  <text x="435" y="390" text-anchor="middle" class="small">WorkflowRunner</text>
+  <rect x="358" y="424" width="154" height="48" rx="12" class="box"/>
+  <text x="435" y="454" text-anchor="middle" class="small">Memory Context</text>
+
+  <rect x="600" y="102" width="250" height="500" rx="20" class="purple"/>
+  <text x="725" y="140" text-anchor="middle" class="label">Workflows</text>
+  <rect x="630" y="174" width="190" height="44" rx="12" class="box"/>
+  <text x="725" y="202" text-anchor="middle" class="small">FastQA</text>
+  <rect x="630" y="234" width="190" height="44" rx="12" class="box"/>
+  <text x="725" y="262" text-anchor="middle" class="small">KG Pipeline</text>
+  <rect x="630" y="294" width="190" height="44" rx="12" class="box"/>
+  <text x="725" y="322" text-anchor="middle" class="small">Paper Assistant</text>
+  <rect x="630" y="354" width="190" height="44" rx="12" class="box"/>
+  <text x="725" y="382" text-anchor="middle" class="small">Self-RAG / CRAG</text>
+  <rect x="630" y="414" width="190" height="44" rx="12" class="box"/>
+  <text x="725" y="442" text-anchor="middle" class="small">Research Workflow</text>
+  <rect x="630" y="492" width="190" height="52" rx="12" class="box"/>
+  <text x="725" y="514" text-anchor="middle" class="small">Evidence Verification</text>
+  <text x="725" y="533" text-anchor="middle" class="tiny">grading · repair · citations</text>
+
+  <rect x="910" y="132" width="230" height="420" rx="20" class="orange"/>
+  <text x="1025" y="170" text-anchor="middle" class="label">Tools & Data</text>
+  <rect x="938" y="212" width="174" height="44" rx="12" class="box"/>
+  <text x="1025" y="240" text-anchor="middle" class="small">Hybrid Search</text>
+  <rect x="938" y="270" width="174" height="44" rx="12" class="box"/>
+  <text x="1025" y="298" text-anchor="middle" class="small">AI4Scholar</text>
+  <rect x="938" y="328" width="174" height="44" rx="12" class="box"/>
+  <text x="1025" y="356" text-anchor="middle" class="small">Bocha Web Search</text>
+  <rect x="938" y="386" width="174" height="44" rx="12" class="box"/>
+  <text x="1025" y="414" text-anchor="middle" class="small">KG Extract / DocStore</text>
+  <rect x="938" y="464" width="80" height="44" rx="12" class="gray"/>
+  <text x="978" y="492" text-anchor="middle" class="tiny">MySQL</text>
+  <rect x="1032" y="464" width="80" height="44" rx="12" class="gray"/>
+  <text x="1072" y="492" text-anchor="middle" class="tiny">Chroma</text>
+
+  <path d="M270 342 H330" class="arrow"/>
+  <path d="M540 342 H600" class="arrow"/>
+  <path d="M850 342 H910" class="arrow"/>
+  <path d="M1025 552 V626 H435 V552" stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 7"/>
+  <text x="730" y="654" text-anchor="middle" class="tiny">Sources, citations, memory and graph evidence flow back to the answer</text>
+</svg>
