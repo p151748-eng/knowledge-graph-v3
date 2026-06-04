@@ -5,18 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>面向论文阅读、研究选题与知识沉淀的知识图谱增强 RAG 系统</strong>
-</p>
-
-<p align="center">
-  <a href="docs/product-showcase.html">产品展示</a> ·
-  <a href="docs/feature-manual.md">功能介绍</a> ·
-  <a href="ARCHITECTURE.md">Architecture</a> ·
-  <a href="API.md">API</a> ·
-  <a href="docs/user-guide.md">User Guide</a> ·
-  <a href="docs/demo.md">Demo</a> ·
-  <a href="DEVELOPMENT.md">Development</a> ·
-  <a href="DEPLOYMENT.md">Deployment</a>
+  <strong>面向论文阅读、研究选题与知识沉淀的知识图谱增强 RAG 研究工作台</strong>
 </p>
 
 <p align="center">
@@ -27,256 +16,154 @@
   <img alt="RAG" src="https://img.shields.io/badge/RAG-KG%20Enhanced-6B8AED" />
 </p>
 
-KG-Agent System v3 是一个面向个人学习、论文阅读、研究选题分析和知识管理的智能知识库系统。它把 RAG、知识图谱、多 Agent 工作流、上下文记忆、证据校验、联网搜索和学术论文检索组合在一起，让用户可以在同一个界面完成文档导入、知识沉淀、论文问答、研究空白分析、最新论文补充和可视化图谱探索。
+KG-Agent 把论文阅读、研究选题、证据验证、学术联网检索和知识图谱沉淀放在同一个界面里。它不是只回答“文档里有什么”，而是根据问题自动选择合适工作流：简单定义快速回答，复杂分析走知识库流程，单篇论文交给论文助手，研究方案进入 Research Workflow，最新或验证类问题触发 Self-RAG / 联网补证。
 
-> 想先像浏览产品官网一样快速了解项目，请看 [产品展示页](docs/product-showcase.html)；想按场景阅读完整介绍，请看 [功能介绍](docs/feature-manual.md)。
+## 一眼看懂它能做什么
 
-## 为什么需要 KG-Agent
-
-普通 RAG 系统通常能回答“文档里有什么”，但在论文阅读和研究规划场景中还需要更多能力：
-
-- 需要区分简单问答、复杂分析、论文阅读、研究规划、事实验证等不同任务。
-- 需要在本地知识库证据不足时主动提示并补充联网证据。
-- 需要优先搜索真实论文，并在回答中保留规范引用标记和来源链接。
-- 需要把文档、论文、概念、方法、实验和关系沉淀成可检索的知识图谱。
-- 需要在长对话中记住当前选题、研究方向和上下文追问。
-
-KG-Agent 面向这些问题设计了多路径工作流和证据驱动回答机制。
-
-## 核心能力
-
-| 能力 | 说明 |
-| --- | --- |
-| 动态多工作流路由 | 根据问题意图自动选择 FastPath、KG Pipeline、Paper Assistant、Self-RAG 或 Research Workflow。 |
-| Paper Assistant | 面向论文概览、方法解释、实验分析、相关工作、研究空白和写作大纲等任务。 |
-| 学术联网检索 | 论文类“联网补充”优先走 AI4Scholar 学术检索，并保留作者、年份、paper_id、URL 和引用标记。 |
-| Self-RAG / CRAG | 对证据不足或需要验证的问题进行检索评分、检索修复、联网验证和答案校验。 |
-| Knowledge Graph | 支持节点/边管理、图谱搜索、ForceGraph2D 可视化和论文结构化图谱。 |
-| 文档与论文导入 | 支持文本、文件和 arXiv 论文导入，自动分片、向量化和实体关系抽取。 |
-| 上下文记忆 | 结合近期对话、长期摘要、任务状态和向量召回，识别“这个选题”“继续刚才”等追问。 |
-| 可观测回答 | 前端展示路径、来源、执行步骤、证据评分、检索轮次和性能指标。 |
-
-
-## 产品展示
-
-如果你想先用 1 分钟了解 KG-Agent 能解决什么问题，可以打开 [docs/product-showcase.html](docs/product-showcase.html)，里面包含面向 GitHub 展示的产品页和 5 个对话示例截图。
-
-## 功能展示
-
-### 研究助手：从模糊问题到可做研究选题
-
-<p align="center">
-  <img src="docs/assets/demo-research-assistant.svg" alt="Research Assistant Demo" width="100%" />
-</p>
-
-### 证据透明：看到每条证据从哪里来
-
-<p align="center">
-  <img src="docs/assets/demo-evidence-panel.svg" alt="Evidence Panel Demo" width="100%" />
-</p>
-
-### 真实问题截图：不同问题自动进入不同工作流
-
-下面这些截图来自本地前后端真实运行，不是重新绘制的概念图，用来展示路由选择、联网补证、论文助手和研究助手的实际界面效果。
-
-| 问题类型 | 真实问题 | 截图 |
+| 使用场景 | 你可以直接这样问 | 系统会做什么 |
 | --- | --- | --- |
-| 简单定义 | `RAG 是什么？请用三句话解释。` | [查看截图](docs/assets/real-screenshots/fast-definition.png) |
-| 复杂分析 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | [查看截图](docs/assets/real-screenshots/pipeline-analysis.png) |
-| 论文问题 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | [查看截图](docs/assets/real-screenshots/paper-assistant.png) |
-| 研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | [查看截图](docs/assets/real-screenshots/research-plan.png) |
-| 最新验证 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | [查看截图](docs/assets/real-screenshots/self-rag-medical-web.png) |
+| 快速理解概念 | `RAG 是什么？请用三句话解释。` | 直接给出简明解释，不启动复杂流程。 |
+| 分析方法关系 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | 检索本地知识、组织对比维度、展示来源和执行步骤。 |
+| 阅读单篇论文 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | 从本地论文分片中提取方法、实验、贡献和引用片段。 |
+| 设计研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | 拆解研究目标，结合证据生成研究问题、技术路线和风险。 |
+| 验证最新论文 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | 触发联网/学术检索，返回论文来源、URL、摘要和支撑状态。 |
 
-<p align="center">
-  <img src="docs/assets/real-screenshots/self-rag-medical-web.png" alt="Real Self-RAG medical web verification screenshot" width="100%" />
-</p>
+## 这个项目可以做什么
 
-更多真实场景、使用方式和示例问题见 [docs/feature-manual.md](docs/feature-manual.md)，完整产品展示页见 [docs/product-showcase.html](docs/product-showcase.html)。
+下面用真实问题展示 KG-Agent 的主要能力。每个例子都来自本地前后端实际运行，截图直接展示问题提交后的结果界面。
 
-## 系统架构
+### 1. 查找并验证最新论文
 
-<p align="center">
-  <img src="docs/assets/architecture.svg" alt="KG-Agent Architecture" width="100%" />
-</p>
-
-KG-Agent 由 React 前端、FastAPI 后端、多工作流编排层、工具层、数据库和外部模型/搜索服务组成。
+**问题**
 
 ```text
-React + Vite UI
-  -> FastAPI REST / SSE
-  -> ChatService + ContextAwareRouter
-  -> WorkflowRunner
-  -> FastQA / KG Pipeline / Paper Assistant / Self-RAG / Research Workflow
-  -> HybridSearch / AcademicSearch / WebSearch / KGExtract / DocStore
-  -> MySQL + Chroma + LLM Providers + Bocha + AI4Scholar
+请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。
 ```
 
-更多架构细节见 [ARCHITECTURE.md](ARCHITECTURE.md)。
-
-## 主要工作流
-
-### Paper Assistant
+**结果截图**
 
 <p align="center">
-  <img src="docs/assets/workflow-paper-assistant.svg" alt="Paper Assistant Workflow" width="100%" />
+  <img src="docs/assets/real-screenshots/self-rag-medical-web.png" alt="Self-RAG medical web verification" width="100%" />
 </p>
 
-适合论文阅读、选题分析、研究空白、相关工作和引用补充。典型两轮对话：
+这个问题包含“最近”“联网验证”“医学场景”“新论文”，系统会触发 Self-RAG / 联网补证，返回论文来源、URL、摘要和证据支撑状态。
+
+### 2. 从研究方向生成可做方案
+
+**问题**
 
 ```text
-我想研究“多智能体 RAG 在医学论文阅读中的应用”，帮我分析这个选题的研究空白和创新点。
-
-帮我联网搜索这个选题的相关论文，重点找 2024 年以后的最新研究。
+帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。
 ```
 
-系统会识别第二轮是上下文追问，继承上一轮选题，将搜索 query 压缩为学术检索友好的表达，优先召回真实论文，并在回答中输出 `[1]`、`[2]` 等引用标记和引用链接。
-
-### Self-RAG / CRAG
+**结果截图**
 
 <p align="center">
-  <img src="docs/assets/workflow-self-rag.svg" alt="Self-RAG Workflow" width="100%" />
+  <img src="docs/assets/real-screenshots/research-plan.png" alt="Research workflow real screenshot" width="100%" />
 </p>
 
-适合“是否可靠”“是否有依据”“最新情况”“帮我验证”等问题。系统先评估本地证据是否足够，再决定是否进行检索修复、联网验证或学术论文补证。
+系统会把模糊方向拆成研究目标、技术路线、可验证问题和风险点，并保留研究动作、证据列表和验证结果。
 
-## 页面功能
+### 3. 阅读并总结单篇论文
 
-| 页面 | 路径 | 功能 |
-| --- | --- | --- |
-| 聊天 | `/` | 流式对话、路径选择、路线预测、来源展示、执行步骤和指标展示。 |
-| 知识导入 | `/import` | 手动文本、文件和 arXiv 论文导入。 |
-| 文档库 | `/docs` | 文档列表、详情、分片和删除管理。 |
-| 知识图谱 | `/kg` | 图谱可视化、节点/边管理、图谱搜索和论文图谱检索。 |
-| 设置 | `/settings` | LLM 提供商、模型和温度参数配置。 |
+**问题**
 
-## 快速开始
+```text
+请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。
+```
 
-### 1. 环境要求
+**结果截图**
 
-- Python 3.10+
-- Node.js 18+
-- MySQL 8.0+
-- 至少一个可用 LLM API Key
-- 可选：Bocha API Key、AI4Scholar 相关配置，用于联网搜索与学术检索
+<p align="center">
+  <img src="docs/assets/real-screenshots/paper-assistant.png" alt="Paper assistant real screenshot" width="100%" />
+</p>
 
-### 2. 安装依赖
+Paper Assistant 会优先读取本地论文分片，围绕方法、实验、贡献和局限组织回答，而不是泛泛总结。
+
+### 4. 比较多个 RAG 方法
+
+**问题**
+
+```text
+请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/pipeline-analysis.png" alt="Pipeline analysis real screenshot" width="100%" />
+</p>
+
+复杂方法比较会进入知识库分析流程，系统会组织概念关系、机制差异、适用场景和来源证据。
+
+### 5. 快速理解基础概念
+
+**问题**
+
+```text
+RAG 是什么？请用三句话解释。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/fast-definition.png" alt="Fast definition real screenshot" width="100%" />
+</p>
+
+简单定义会走快速回答路径，不会被复杂工作流拖慢。
+
+## 核心亮点
+
+- **多工作流自动路由**：同一个聊天入口，自动区分 Fast、Pipeline、Paper Assistant、Self-RAG 和 Research。
+- **论文优先的联网补证**：论文类问题优先保留标题、作者、年份、paper_id、URL 和引用标记。
+- **证据透明面板**：不仅展示答案，也展示每条证据来自本地、论文库、图谱还是联网搜索。
+- **研究型对话记忆**：能识别“这个选题”“继续刚才”等追问，延续上一轮研究目标。
+- **知识图谱沉淀**：把论文、概念、方法、实验和关系沉淀成可搜索、可探索的图谱。
+
+## GitHub 展示图
+
+这些是为了让访客快速理解产品场景而制作的静态展示图，适合放在项目介绍、答辩或演示材料中。
+
+<p align="center">
+  <img src="docs/assets/demo-research-assistant.svg" alt="Research assistant demo" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo-evidence-panel.svg" alt="Evidence panel demo" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo-knowledge-graph.svg" alt="Knowledge graph demo" width="100%" />
+</p>
+
+## 最小启动方式
 
 ```bash
 git clone https://github.com/p151748-eng/knowledge-graph-v3.git
 cd knowledge-graph-v3
-
 pip install -r backend/requirements.txt
-
-cd frontend
-npm install
-cd ..
-```
-
-### 3. 配置环境变量
-
-复制后端环境变量模板：
-
-```bash
+cd frontend && npm install && cd ..
 cp backend/.env.example backend/.env
 ```
 
-至少配置数据库和一个 LLM 提供商：
-
-```env
-DATABASE_URL=mysql+pymysql://root:your-password@localhost:3306/konw
-LLM_PROVIDER=dashscope
-LLM_MODEL=qwen-plus
-QWEN_API_KEY=your-qwen-key
-
-BOCHA_SEARCH_ENABLED=true
-BOCHA_API_KEY=your-bocha-api-key
-```
-
-不要提交真实 `.env` 或任何 API Key。
-
-### 4. 启动服务
-
-后端：
+配置 `backend/.env` 中的数据库和至少一个 LLM API Key 后启动：
 
 ```bash
 cd backend
-python -m uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+python -m uvicorn main:app --host 0.0.0.0 --port 8003 --reload
 ```
-
-前端：
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-浏览器打开：
+浏览器打开 `http://localhost:5173`。
 
-```text
-http://localhost:5173
-```
+## 更多资料
 
-如果使用仓库脚本，注意 [run.sh](run.sh) 和 [run.bat](run.bat) 当前默认使用后端端口 `8003`。
+技术细节不再堆在 README 首页里，避免影响展示阅读：
 
-## 操作演示
-
-完整可复制演示见 [docs/demo.md](docs/demo.md)，包括：
-
-- 论文选题研究空白分析 + 2024 年后最新论文联网补充。
-- arXiv 论文导入 + Paper Assistant 问答。
-- Self-RAG 可靠性验证。
-- 知识图谱检索与可视化。
-
-## 操作手册
-
-使用者手册见 [docs/user-guide.md](docs/user-guide.md)，覆盖：
-
-- 启动前准备。
-- 页面导航。
-- 论文导入与问答。
-- 联网搜索和引用来源查看。
-- 知识图谱使用。
-- 常见问题排查。
-
-## API 入口
-
-| API | 说明 |
-| --- | --- |
-| `POST /api/chat` | 自动路由对话。 |
-| `POST /api/chat/stream` | SSE 流式对话。 |
-| `POST /api/chat/paper` | 强制论文助手路径。 |
-| `POST /api/chat/self-rag` | 强制 Self-RAG 路径。 |
-| `POST /api/websearch` | 联网搜索。 |
-| `POST /api/academic-search` | 学术论文搜索。 |
-| `POST /api/ingest` | 手动文档导入。 |
-| `POST /api/ingest/arxiv` | arXiv 论文导入。 |
-| `GET /api/kg/graph` | 图谱可视化数据。 |
-
-完整接口说明见 [API.md](API.md)。
-
-## 文档索引
-
-- [ARCHITECTURE.md](ARCHITECTURE.md)：系统架构和核心模块。
-- [API.md](API.md)：REST API 说明。
-- [DEVELOPMENT.md](DEVELOPMENT.md)：开发环境和项目结构。
-- [DEPLOYMENT.md](DEPLOYMENT.md)：部署与运维。
-- [REQUIREMENTS.md](REQUIREMENTS.md)：需求说明。
-- [docs/product-showcase.html](docs/product-showcase.html)：面向 GitHub 访客的产品展示页和对话示例截图。
-- [docs/feature-manual.md](docs/feature-manual.md)：面向使用者的功能介绍、真实场景和示例问题。
-- [docs/user-guide.md](docs/user-guide.md)：用户操作手册。
-- [docs/demo.md](docs/demo.md)：演示脚本。
-
-## 技术栈
-
-| 层 | 技术 |
-| --- | --- |
-| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Zustand, React Query, React Markdown, ForceGraph2D |
-| Backend | FastAPI, Uvicorn, SQLAlchemy, Pydantic, SSE |
-| Retrieval | BM25, semantic search, graph expansion, Chroma vector store |
-| Knowledge Graph | MySQL nodes/edges/documents, paper graph builder |
-| LLM | Qwen, OpenAI-compatible providers, Anthropic, DeepSeek |
-| External Evidence | Bocha Web Search, AI4Scholar academic search |
-
-## 项目状态
-
-当前版本聚焦个人知识库和论文研究工作流，适合本地运行、个人研究和二次开发。生产部署前建议补充认证、权限控制、密钥管理、任务队列和更完整的监控告警。
+- [功能介绍](docs/feature-manual.md)：面向使用者的场景化说明。
+- [演示脚本](docs/demo.md)：可复制的演示流程。
+- [技术参考](docs/technical-reference.md)：安装、API、页面功能和技术栈。
