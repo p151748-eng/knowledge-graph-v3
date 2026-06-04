@@ -1,64 +1,141 @@
 <svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="420" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0B1020"/>
-      <stop offset="0.52" stop-color="#111B35"/>
-      <stop offset="1" stop-color="#102A2D"/>
+      <stop stop-color="#061128"/>
+      <stop offset="0.46" stop-color="#14235B"/>
+      <stop offset="1" stop-color="#063C45"/>
     </linearGradient>
-    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#1E2A4A" stop-opacity="0.95"/>
-      <stop offset="1" stop-color="#102A2D" stop-opacity="0.9"/>
+    <radialGradient id="glowBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(910 154) rotate(90) scale(210 260)">
+      <stop stop-color="#6BA6FF" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#6BA6FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1040 290) rotate(90) scale(170 220)">
+      <stop stop-color="#27D6A3" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#27D6A3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="heroCard" x1="64" y1="58" x2="644" y2="370" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#223A7A" stop-opacity="0.98"/>
+      <stop offset="0.58" stop-color="#15244C" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#0E3F42" stop-opacity="0.94"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/>
+    <linearGradient id="accent" x1="92" y1="272" x2="594" y2="272" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DA7FF"/>
+      <stop offset="0.5" stop-color="#27D6A3"/>
+      <stop offset="1" stop-color="#FFC46B"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="710" y1="66" x2="1110" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172A5C"/>
+      <stop offset="1" stop-color="#0B2530"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.34"/>
     </filter>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#7DA7FF"/></marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#27D6A3"/></marker>
+    <marker id="arrowGold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#FFC46B"/></marker>
   </defs>
-  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
-  <circle cx="1040" cy="80" r="170" fill="#27D6A3" opacity="0.09"/>
-  <circle cx="120" cy="350" r="160" fill="#6B8AED" opacity="0.12"/>
 
-  <g opacity="0.55">
-    <path d="M760 90 C850 30 970 40 1040 130" stroke="#27D6A3" stroke-width="2"/>
-    <path d="M760 320 C860 390 980 360 1060 250" stroke="#6B8AED" stroke-width="2"/>
-    <circle cx="760" cy="90" r="6" fill="#6B8AED"/>
-    <circle cx="1040" cy="130" r="6" fill="#27D6A3"/>
-    <circle cx="760" cy="320" r="6" fill="#6B8AED"/>
-    <circle cx="1060" cy="250" r="6" fill="#27D6A3"/>
+  <rect width="1200" height="420" rx="32" fill="url(#bg)"/>
+  <rect width="1200" height="420" rx="32" fill="url(#glowBlue)"/>
+  <rect width="1200" height="420" rx="32" fill="url(#glowGreen)"/>
+  <circle cx="88" cy="72" r="130" fill="#6B8AED" opacity="0.14"/>
+  <circle cx="1150" cy="36" r="190" fill="#27D6A3" opacity="0.10"/>
+  <circle cx="500" cy="416" r="180" fill="#8B65D6" opacity="0.08"/>
+
+  <g opacity="0.32">
+    <path d="M44 96 C180 38 300 54 430 136 S710 230 850 126 S1062 24 1160 98" stroke="#88A8FF" stroke-width="1.4"/>
+    <path d="M30 328 C156 250 326 278 488 326 S770 382 930 280 S1078 180 1172 228" stroke="#27D6A3" stroke-width="1.4"/>
+    <path d="M698 42 C768 102 788 180 854 214 S1002 244 1106 340" stroke="#FFC46B" stroke-width="1.2" stroke-dasharray="6 8"/>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="64" y="58" width="575" height="304" rx="24" fill="url(#card)" stroke="#31446D"/>
-    <text x="104" y="132" fill="#E8F0FF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="52" font-weight="800">KG-Agent System v3</text>
-    <text x="106" y="178" fill="#9FB3D9" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22">Knowledge Graph Enhanced RAG for Papers</text>
-    <text x="106" y="226" fill="#DDE7F7" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20">论文阅读 · 研究空白 · 学术联网 · 证据校验</text>
-    <g transform="translate(104 270)">
-      <rect width="104" height="38" rx="19" fill="#223B68" stroke="#4067A8"/>
-      <text x="52" y="25" fill="#CFE1FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Paper AI</text>
-      <rect x="118" width="112" height="38" rx="19" fill="#193C37" stroke="#2A8F74"/>
-      <text x="174" y="25" fill="#C6FFF0" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Self-RAG</text>
-      <rect x="244" width="96" height="38" rx="19" fill="#3B2A58" stroke="#8B65D6"/>
-      <text x="292" y="25" fill="#EEE4FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">KG</text>
-      <rect x="354" width="132" height="38" rx="19" fill="#4A2F1D" stroke="#D08B45"/>
-      <text x="420" y="25" fill="#FFE8C8" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">AI4Scholar</text>
+    <rect x="64" y="54" width="586" height="312" rx="28" fill="url(#heroCard)" stroke="#4D6EB2" stroke-opacity="0.72"/>
+    <rect x="64" y="54" width="586" height="312" rx="28" fill="#FFFFFF" opacity="0.035"/>
+    <rect x="92" y="84" width="156" height="34" rx="17" fill="#0F244C" stroke="#587EEB" stroke-opacity="0.9"/>
+    <circle cx="114" cy="101" r="5" fill="#27D6A3" filter="url(#softGlow)"/>
+    <text x="128" y="106" fill="#CFE1FF" font-size="14" font-weight="700">知识图谱增强 RAG</text>
+    <text x="92" y="164" fill="#F3F7FF" font-size="50" font-weight="900">论文智能体系统</text>
+    <text x="94" y="204" fill="#BFD0EF" font-size="22" font-weight="500">面向论文阅读、研究空白发现与可信证据校验</text>
+    <rect x="92" y="232" width="502" height="4" rx="2" fill="url(#accent)" opacity="0.95"/>
+
+    <g transform="translate(92 270)">
+      <rect width="112" height="42" rx="21" fill="#193767" stroke="#6B8AED"/>
+      <text x="56" y="27" fill="#E8F0FF" text-anchor="middle" font-size="15" font-weight="800">论文助手</text>
+      <rect x="126" width="124" height="42" rx="21" fill="#123E39" stroke="#27D6A3"/>
+      <text x="188" y="27" fill="#C6FFF0" text-anchor="middle" font-size="15" font-weight="800">自校验 RAG</text>
+      <rect x="264" width="112" height="42" rx="21" fill="#362552" stroke="#A77BFF"/>
+      <text x="320" y="27" fill="#F0E7FF" text-anchor="middle" font-size="15" font-weight="800">知识图谱</text>
+      <rect x="390" width="112" height="42" rx="21" fill="#4D3018" stroke="#FFC46B"/>
+      <text x="446" y="27" fill="#FFEBC5" text-anchor="middle" font-size="15" font-weight="800">联网研究</text>
+    </g>
+
+    <g opacity="0.78">
+      <circle cx="555" cy="102" r="10" fill="#27D6A3" filter="url(#softGlow)"/>
+      <circle cx="596" cy="134" r="6" fill="#7DA7FF"/>
+      <circle cx="544" cy="154" r="5" fill="#FFC46B"/>
+      <path d="M555 102 L596 134 L544 154 L555 102" stroke="#AFC4FF" stroke-width="1.2" opacity="0.8"/>
     </g>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="710" y="74" width="390" height="268" rx="22" fill="#111A30" stroke="#31446D"/>
-    <rect x="742" y="106" width="118" height="54" rx="14" fill="#1C2D52" stroke="#6B8AED"/>
-    <text x="801" y="139" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">React UI</text>
-    <rect x="910" y="106" width="130" height="54" rx="14" fill="#193C37" stroke="#27D6A3"/>
-    <text x="975" y="139" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">FastAPI</text>
-    <rect x="742" y="202" width="130" height="54" rx="14" fill="#3B2A58" stroke="#8B65D6"/>
-    <text x="807" y="235" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Workflows</text>
-    <rect x="910" y="202" width="130" height="54" rx="14" fill="#4A2F1D" stroke="#D08B45"/>
-    <text x="975" y="235" fill="#E8F0FF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Evidence</text>
-    <rect x="822" y="286" width="142" height="36" rx="18" fill="#1B253D" stroke="#3A4F7D"/>
-    <text x="893" y="309" fill="#BFD0EF" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13">MySQL · Chroma · LLM</text>
-    <path d="M860 133 H910" stroke="#5F79B8" stroke-width="2" marker-end="url(#arrow)"/>
-    <path d="M975 160 V202" stroke="#5F79B8" stroke-width="2"/>
-    <path d="M910 229 H872" stroke="#5F79B8" stroke-width="2"/>
-    <path d="M807 256 V286" stroke="#5F79B8" stroke-width="2"/>
-    <path d="M975 256 V286" stroke="#5F79B8" stroke-width="2"/>
+    <rect x="710" y="58" width="408" height="306" rx="26" fill="url(#panel)" stroke="#44619B" stroke-opacity="0.82"/>
+    <text x="744" y="98" fill="#F3F7FF" font-size="20" font-weight="900">智能研究闭环</text>
+    <text x="744" y="122" fill="#9FB3D9" font-size="13">从问题理解到证据引用，自动组织多步工作流</text>
+
+    <rect x="744" y="150" width="122" height="60" rx="16" fill="#1D3568" stroke="#7DA7FF"/>
+    <text x="805" y="174" fill="#E8F0FF" text-anchor="middle" font-size="15" font-weight="800">前端交互</text>
+    <text x="805" y="195" fill="#AFC4FF" text-anchor="middle" font-size="12">聊天 · 可视化</text>
+
+    <rect x="954" y="150" width="122" height="60" rx="16" fill="#123F3A" stroke="#27D6A3"/>
+    <text x="1015" y="174" fill="#E8F0FF" text-anchor="middle" font-size="15" font-weight="800">任务路由</text>
+    <text x="1015" y="195" fill="#B8FFF0" text-anchor="middle" font-size="12">意图识别</text>
+
+    <rect x="744" y="264" width="122" height="60" rx="16" fill="#38245E" stroke="#A77BFF"/>
+    <text x="805" y="288" fill="#E8F0FF" text-anchor="middle" font-size="15" font-weight="800">知识记忆</text>
+    <text x="805" y="309" fill="#E8D9FF" text-anchor="middle" font-size="12">图谱 · 向量库</text>
+
+    <rect x="954" y="264" width="122" height="60" rx="16" fill="#523319" stroke="#FFC46B"/>
+    <text x="1015" y="288" fill="#E8F0FF" text-anchor="middle" font-size="15" font-weight="800">证据输出</text>
+    <text x="1015" y="309" fill="#FFE8C8" text-anchor="middle" font-size="12">引用 · 结论</text>
+
+    <path d="M866 180 C894 180 924 180 954 180" stroke="#7DA7FF" stroke-width="2.4" marker-end="url(#arrowBlue)"/>
+    <rect x="882" y="164" width="56" height="20" rx="10" fill="#172A5C" opacity="0.95"/>
+    <text x="910" y="178" fill="#CFE1FF" text-anchor="middle" font-size="11">请求</text>
+
+    <path d="M1015 210 C1015 236 1015 244 1015 264" stroke="#27D6A3" stroke-width="2.2" marker-end="url(#arrowGreen)"/>
+    <rect x="988" y="228" width="54" height="20" rx="10" fill="#0F3D3B" opacity="0.95"/>
+    <text x="1015" y="242" fill="#C6FFF0" text-anchor="middle" font-size="11">检索</text>
+
+    <path d="M954 294 C920 294 900 294 866 294" stroke="#FFC46B" stroke-width="2.2" marker-end="url(#arrowGold)"/>
+    <rect x="892" y="278" width="58" height="20" rx="10" fill="#472E1B" opacity="0.96"/>
+    <text x="921" y="292" fill="#FFEBC5" text-anchor="middle" font-size="11">证据链</text>
+
+    <path d="M805 264 C768 238 768 224 805 210" stroke="#A77BFF" stroke-width="2" marker-end="url(#arrowBlue)" opacity="0.95"/>
+    <rect x="760" y="228" width="58" height="20" rx="10" fill="#2C2150" opacity="0.95"/>
+    <text x="789" y="242" fill="#E8D9FF" text-anchor="middle" font-size="11">增强</text>
+
+    <g opacity="0.9">
+      <circle cx="1140" cy="154" r="5" fill="#7DA7FF"/>
+      <circle cx="1168" cy="202" r="7" fill="#27D6A3" filter="url(#softGlow)"/>
+      <circle cx="1130" cy="254" r="6" fill="#FFC46B"/>
+      <circle cx="1176" cy="314" r="4" fill="#A77BFF"/>
+      <path d="M1140 154 L1168 202 L1130 254 L1176 314" stroke="#C9D7FF" stroke-width="1.2" opacity="0.55"/>
+    </g>
+  </g>
+
+  <g transform="translate(710 378)" opacity="0.88">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#7DA7FF" stroke-width="2" marker-end="url(#arrowBlue)"/>
+    <text x="38" y="4" fill="#AFC4FF" font-size="12">主流程</text>
+    <line x1="102" y1="0" x2="130" y2="0" stroke="#27D6A3" stroke-width="2" marker-end="url(#arrowGreen)"/>
+    <text x="140" y="4" fill="#B8FFF0" font-size="12">检索增强</text>
+    <line x1="226" y1="0" x2="254" y2="0" stroke="#FFC46B" stroke-width="2" marker-end="url(#arrowGold)"/>
+    <text x="264" y="4" fill="#FFEBC5" font-size="12">证据校验</text>
   </g>
 </svg>
