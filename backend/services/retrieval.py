@@ -25,7 +25,7 @@ class RetrievalService:
         """获取对话列表"""
         query = self.db.query(Conversation)
         total = query.count()
-        convs = query.order_by(Conversation.updated_at.desc()).offset(offset).limit(limit).all()
+        convs = query.order_by(Conversation.id.desc()).offset(offset).limit(limit).all()
         return convs, total
 
     def get_conversation(self, conv_id: int) -> Optional[Conversation]:

@@ -7,8 +7,8 @@ from pydantic import BaseModel, Field
 class ChatRequest(BaseModel):
     message: str = Field(..., description="用户消息")
     conversation_id: Optional[int] = Field(None, description="继续已有对话的ID")
-    force_path: Optional[str] = Field(None, description="强制路径: fast/pipeline/paper/self_rag/crag")
-    chat_path: Optional[str] = Field(None, description="前端路径选择: auto/fast/pipeline/paper/self_rag/crag")
+    force_path: Optional[str] = Field(None, description="强制路径: fast/pipeline/paper/self_rag/crag/research")
+    chat_path: Optional[str] = Field(None, description="前端路径选择: auto/fast/pipeline/paper/self_rag/crag/research")
 
 
 class SourceItem(BaseModel):

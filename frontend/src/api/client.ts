@@ -21,6 +21,11 @@ function extractData(response: any) {
 
 // ── Chat ──────────────────────────────────────────────────────────
 
+export async function routePredict(message: string, conversationId?: number) {
+  const res = await client.post('/api/route/predict', { message, conversation_id: conversationId });
+  return extractData(res);
+}
+
 export async function chat(message: string, conversationId?: number) {
   const res = await client.post('/api/chat', { message, conversation_id: conversationId });
   return extractData(res);

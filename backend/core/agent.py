@@ -34,24 +34,6 @@ class BaseAgent(ABC):
         self.role = role
         self.description = description
         self.status = AgentStatus.IDLE
-        self._tools: Dict[str, Any] = {}
-
-    def bind_tools(self, tool_names: List[str]) -> None:
-        """绑定工具（子类或外部调用）"""
-        from tools.registry import ToolRegistry
-
-        registry = ToolRegistry()
-        for name in tool_names:
-            tool = registry.get(name)
-            if tool:
-                self._tools[name] = tool
-
-    def use_tool(self, name: str, **kwargs) -> Dict[str, Any]:
-        """执行工具"""
-        tool = self._tools.get(name)
-        if not tool:
-            return {"error": f"Tool '{name}' not bound"}
-        return tool.execute(**kwargs)
 
     @abstractmethod
     def execute(self, context: "AgentContext") -> AgentResult:

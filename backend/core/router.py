@@ -55,9 +55,9 @@ class ContextAwareRouter:
         "联网", "搜索", "上网查", "百度", "谷歌", "web search", "search",
     ]
     RESEARCH_KEYWORDS = [
-        "研究综述", "文献综述", "研究方向", "研究空白", "开题报告", "跨论文", "多篇论文",
+        "研究综述", "文献综述", "综述", "研究现状", "研究方向", "研究点", "研究空白", "开题报告", "跨论文", "多篇论文",
         "系统分析", "优化方案", "路线图", "技术路线", "架构设计", "设计", "拆解", "规划",
-        "方案", "瓶颈", "升级", "选题", "研究主题", "研究方向", "roadmap", "survey", "research gap", "proposal",
+        "方案", "瓶颈", "升级", "选题", "研究主题", "可做", "roadmap", "survey", "research gap", "proposal",
     ]
     COMPLEX_KEYWORDS = [
         "分析", "对比", "比较", "如何", "为什么", "区别", "差异", "联系", "关系", "结合", "整合",
@@ -202,7 +202,10 @@ class ContextAwareRouter:
         if features["has_design"]:
             scores["research"] += 0.65
         if features["has_compare"] and features["multi_object"]:
-            scores["research"] += 0.55
+            scores["research"] += 0.75
+        if features["has_compare"] and features["multi_object"] and any(term in query.lower() for term in ["self-rag", "graphrag", "crag", "rag", "agent"]):
+            scores["research"] += 0.35
+            scores["pipeline"] -= 0.2
         if features["has_paper"] and (features["has_research"] or features["multi_object"]):
             scores["research"] += 0.35
         if features["has_verify"] and features["has_design"]:

@@ -1,0 +1,1675 @@
+[
+  {
+    "question": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+    "path": "research",
+    "research_intent": "method_comparison",
+    "processing_time": "19.9s",
+    "confidence": 0.5,
+    "response": "好的，作为研究分析助手，我将基于本地证据对 Self-RAG、CRAG、GraphRAG 进行比较分析，并为你提供个人知识库研究助手的研究切入点建议。\n\n### 研究结论\n\n根据现有证据，可以明确描述 **Self-RAG** 的核心机制。对于 **CRAG** 和 **GraphRAG**，由于本地证据库中缺乏相关论文信息，无法进行有效比较。因此，本回答将重点阐述 Self-RAG 的特点，并基于此提出个人知识库研究助手的潜在切入点。\n\n### 依据与证据分析\n\n#### 1. Self-RAG 的核心机制\n\n**结论**: Self-RAG 是一种通过自我反思来提升生成质量的检索增强生成方法。其核心在于训练语言模型“按需检索”并对自身生成过程进行“自我反思”。\n\n**关键证据**:\n- **定义与目标**: Self-RAG 旨在通过按需检索和自我反思，提高 LLM 生成的事实准确性，同时不损害其通用性。它训练任意语言模型以端到端的方式，学习根据任务输入反思自身的生成过程【chunk:3852】。\n- **动机**: 传统 RAG 方法存在“无差别检索”的问题，即无论是否需要，都会检索并引入固定数量的文本块，这可能导致效率低下或引入无关上下文【chunk:3849】。Self-RAG 通过让模型自主决定何时检索来解决此问题。\n- **工作方式**: 模型会按“段”（实验中为句子）生成输出。在生成每个段时，模型可以决定是否进行检索，并使用检索到的文本来辅助生成【chunk:3865】。这种方法克服了仅依赖参数化知识导致的事实错误【chunk:3849】，也优于那些虽然能提升性能但牺牲运行效率、对无关上下文鲁棒性差、缺乏归因能力的方法【chunk:3859】。\n- **性能表现**: 在 PubHealth、PopQA 等任务上，Self-RAG 显著优于微调后的 LLM，甚至超越了使用复杂提示工程的 ChatGPT【chunk:3897】。\n\n**总结**: Self-RAG 的核心创新在于**“自我反思”**和**“按需检索”**。它让模型成为一个主动的学习者和评估者，而不是被动地接收检索结果。\n\n#### 2. CRAG 与 GraphRAG 的证据缺失\n\n**结论**: 在当前的本地证据库中，**未检索到**任何关于 CRAG (Corrective Retrieval Augmented Generation) 和 GraphRAG (Graph-based Retrieval Augmented Generation) 的论文信息。\n\n**说明**: 由于缺乏相关证据，无法对这两种方法的核心机制、优缺点与 Self-RAG 进行任何有意义的比较。要完成此比较，需要补充关于 CRAG 和 GraphRAG 的论文进行检索和分析。\n\n### 对比与分析（基于现有证据）\n\n| 特征维度 | Self-RAG | CRAG | GraphRAG |\n| :--- | :--- | :--- | :--- |\n| **核心机制** | 自我反思与按需检索 | **证据缺失** | **证据缺失** |\n| **检索触发** | 模型自主决定（按需） | **证据缺失** | **证据缺失** |\n| **检索后处理** | 模型反思并整合检索结果 | **证据缺失** | **证据缺失** |\n| **主要优势** | 提升事实准确性、灵活高效 | **证据缺失** | **证据缺失** |\n| **主要局限** | 依赖训练，计算开销可能增加 | **证据缺失** | **证据缺失** |\n\n### 个人知识库研究助手的研究切入点建议\n\n基于对 Self-RAG 的分析，以下是针对个人知识库研究助手（如用于管理个人文档、笔记、邮件等）的几个研究切入点：\n\n1.  **切入点一：基于 Self-RAG 的“反思式”问答**\n    - **思路**: 将 Self-RAG 的“自我反思”机制应用于个人知识库。当用户提问时，模型不仅检索相关文档片段，还能反思这些片段是否足够、是否相关、是否存在矛盾。\n    - **优势**: 解决个人知识库中信息碎片化、质量参差不齐的问题。模型可以判断“我是否需要更多信息来回答这个问题？”或“我找到的这段笔记是否支持这个观点？”，从而提供更可靠、更深度的回答。\n\n2.  **切入点二：探索 CRAG 的“纠正”机制在个人知识库中的应用**\n    - **前提**: 需要补充 CRAG 的论文证据。\n    - **潜在思路**: CRAG 的核心是“纠正”。在个人知识库场景中，信息可能存在过时或错误。可以研究如何让模型在检索后，对检索结果进行正确性评估，并主动进行修正或寻找替代信息。例如，当用户询问一个旧项目的进展时，模型能识别出检索到的信息已过时，并尝试寻找更新版本。\n\n3.  **切入点三：探索 GraphRAG 的“结构化”优势在个人知识库中的应用**\n    - **前提**: 需要补充 GraphRAG 的论文证据。\n    - **潜在思路**: GraphRAG 利用图结构来关联信息。个人知识库天然具有图结构（如“项目A”包含“文档B”，“文档B”引用“邮件C”）。可以研究如何利用图结构进行多跳推理，回答需要串联多个独立信息点的问题，例如“去年我们团队在客户X项目中遇到了什么技术挑战，最终是如何解决的？”，这需要跨越项目、团队、客户等多个维度的信息。\n\n**总结建议**:\n- **短期**: **深入研究 Self-RAG**，将其“按需检索”和“自我反思”作为提升个人知识库问答可靠性的核心方法。这是最直接、证据最充分的切入点。\n- **中期**: **检索并学习 CRAG 和 GraphRAG** 的论文，评估其“纠正”和“图结构”机制如何与 Self-RAG 结合，或独立应用于个人知识库的特定场景（如信息纠错、多跳推理）。\n- **长期**: 构建一个混合架构，结合 Self-RAG 的反思能力、CRAG 的纠错能力和 GraphRAG 的结构化推理能力，打造一个高度智能、可靠且强大的个人知识库研究助手。",
+    "research_plan_tasks": [
+      {
+        "id": "t1",
+        "type": "retrieve_papers",
+        "query": "Self-RAG method retrieval augmented generation paper",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t2",
+        "type": "retrieve_papers",
+        "query": "CRAG Corrective Retrieval Augmented Generation paper",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t3",
+        "type": "retrieve_papers",
+        "query": "GraphRAG graph-based retrieval augmented generation paper",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t4",
+        "type": "summarize_method",
+        "query": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+        "target": "Self-RAG",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t5",
+        "type": "summarize_method",
+        "query": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+        "target": "CRAG",
+        "depends_on": [
+          "t2"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t6",
+        "type": "summarize_method",
+        "query": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+        "target": "GraphRAG",
+        "depends_on": [
+          "t3"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t7",
+        "type": "compare_methods",
+        "query": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+        "target": "Self-RAG vs CRAG vs GraphRAG",
+        "depends_on": [
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t10",
+        "type": "verify_claims",
+        "query": "比较 Self-RAG、CRAG、GraphRAG 的差异，并给出个人知识库研究助手的研究切入点。",
+        "target": "所有总结和对比中的关键主张",
+        "depends_on": [
+          "t7"
+        ],
+        "params": {}
+      }
+    ],
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "intent": "method_comparison",
+        "evidence_count": 0,
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理"
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "intent": "method_comparison",
+        "evidence_count": 0,
+        "reason": "识别为 method_comparison，生成受控研究计划",
+        "observation_summary": "生成 8 个子任务，最终包含 verify_claims"
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "intent": "method_comparison",
+        "evidence_count": 0,
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; synthesize_research; verify_claims; final_answer"
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "intent": "method_comparison",
+        "evidence_count": 0,
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search"
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "observation",
+        "intent": "method_comparison",
+        "evidence_count": 10,
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=2, merged=10"
+      },
+      {
+        "step": 6,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "method_comparison",
+        "evidence_count": 10,
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 10 条证据：Self-Rag: Self-reflective Retrieval augmented Generation、Self-Rag: Self-reflective Retrieval augmented Generation、Self-Rag: Self-reflective Retrieval augmented Generation"
+      },
+      {
+        "step": 7,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "intent": "method_comparison",
+        "evidence_count": 10,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据"
+      }
+    ],
+    "graph_trace": [
+      {
+        "node": "memory_guard",
+        "elapsed": 0.0,
+        "next_action": "planner"
+      },
+      {
+        "node": "planner",
+        "elapsed": 3.863,
+        "next_action": "decompose"
+      },
+      {
+        "node": "decompose",
+        "elapsed": 0.0,
+        "next_action": "action_policy"
+      },
+      {
+        "node": "action_policy",
+        "elapsed": 0.0,
+        "next_action": "local_search"
+      },
+      {
+        "node": "local_search",
+        "elapsed": 3.326,
+        "next_action": "observation"
+      },
+      {
+        "node": "observation",
+        "elapsed": 0.0,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 12.67,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.002,
+        "next_action": "finalize"
+      },
+      {
+        "node": "finalize",
+        "elapsed": 0.0,
+        "next_action": "done"
+      }
+    ],
+    "evidence_count": 10,
+    "sources_count": 8,
+    "citation_verification": {
+      "supported": true,
+      "support_score": 0.5,
+      "citation_coverage": 0.5,
+      "unsupported_claims": [
+        "### 研究结论",
+        "对于 **CRAG** 和 **GraphRAG**，由于本地证据库中缺乏相关论文信息，无法进行有效比较",
+        "### 依据与证据分析"
+      ],
+      "supporting_evidence_ids": [
+        "chunk:3848",
+        "chunk:3852",
+        "chunk:3897"
+      ],
+      "claims": [
+        {
+          "text": "好的，作为研究分析助手，我将基于本地证据对 Self-RAG、CRAG、GraphRAG 进行比较分析，并为你提供个人知识库研究助手的研究切入点建议",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3852",
+            "chunk:3848",
+            "chunk:3897"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "根据现有证据，可以明确描述 **Self-RAG** 的核心机制",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3852",
+            "chunk:3848",
+            "chunk:3897"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "因此，本回答将重点阐述 Self-RAG 的特点，并基于此提出个人知识库研究助手的潜在切入点",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3852",
+            "chunk:3848",
+            "chunk:3897"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "### 研究结论",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "对于 **CRAG** 和 **GraphRAG**，由于本地证据库中缺乏相关论文信息，无法进行有效比较",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "### 依据与证据分析",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    },
+    "answer_verification": {
+      "supported": true,
+      "support_score": 0.5,
+      "unsupported_claims": [
+        "### 研究结论",
+        "对于 **CRAG** 和 **GraphRAG**，由于本地证据库中缺乏相关论文信息，无法进行有效比较",
+        "### 依据与证据分析"
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "question": "帮我基于多篇论文找研究空白并生成开题报告。",
+    "path": "research",
+    "research_intent": "gap_analysis",
+    "processing_time": "52.3s",
+    "confidence": 0.5,
+    "response": "好的，作为你的研究分析助手，我将基于提供的本地证据，为你分析研究空白并生成开题报告框架。\n\n### 研究空白分析与开题报告框架\n\n#### 一、 核心结论\n\n基于对三篇高质量论文（毛赟，2025；朱越石，2025；武千千，2025）的系统分析，当前“大语言模型（LLM）+ 知识图谱（KG）”融合技术领域存在一个明确且具有价值的研究空白：**在跨领域（如从医学到建筑）迁移时，缺乏一个兼顾“证据链可追溯性”与“高计算效率”的通用解决方案。**\n\n具体而言：\n1.  **现有研究 A（毛赟，2025）** 提出的 `KGIR-RAG` 方法通过构建“证据子图”实现了多跳问答的高准确性，但其代价是**计算资源消耗巨大**（如构建知识图谱耗时是问答阶段的近7倍），严重制约了其在实际场景中的部署效率。\n2.  **现有研究 B（朱越石，2025）** 提出的医学情报框架（MSTI）虽然构建了“回答—证据段—路径—版本”的可追溯证据链，但其设计高度**特定于医学领域**（如CLDN18.2案例），其方法学（如受控词表、时序知识图谱）在其他领域（如建筑、教育）的通用性和迁移成本尚不明确。\n3.  **现有研究 C（武千千，2025）** 聚焦于建筑领域，构建了特定的问答系统，但其核心挑战在于**高质量数据集的构建**，并未深入探讨如何利用知识图谱来构建可追溯的证据链，也未能解决计算效率问题。\n\n**研究空白的关键在于：** 如何设计一种**轻量化、跨领域**的知识图谱增强RAG方法，该方法既能像MSTI一样保证证据链的完整可追溯，又能像KGIR-RAG一样处理复杂推理，同时大幅降低（如毛赟论文中指出的）知识图谱构建阶段的计算开销，从而提升其在资源受限或需要快速部署场景下的实用性。\n\n#### 二、 依据与对比分析\n\n| 维度 | 论文A: KGIR-RAG (毛赟, 2025) | 论文B: MSTI (朱越石, 2025) | 论文C: 建筑领域问答 (武千千, 2025) | **研究空白分析** |\n| :--- | :--- | :--- | :--- | :--- |\n| **核心方法** | 基于知识图谱的证据子图构建与迭代改写检索 | 受控词表+时序知识图谱+路径约束RAG | 复合式问答数据生成 + 大模型训练优化 | 三者方法各异，缺乏统一、可迁移的范式。 |\n| **优势** | **高准确性**：在多跳问答任务（tpotQA）上EM指标提升1.3%。 | **高可追溯性**：实现了“回答-证据段-路径-版本”的段落级回溯。 | **领域深耕**：针对建筑领域提出了数据构建与模型训练方案。 | 如何结合A的推理能力和B的可追溯性？ |\n| **局限性/挑战** | **计算开销巨大**：构建知识图谱耗时是问答阶段的7倍（58.34h vs 8.42h）。 | **领域特异性强**：方法设计高度依赖医学领域的受控词表和时序逻辑。 | **证据链缺失**：未明确说明如何构建可追溯的证据链。 | **核心空白**：如何在保持可追溯性的同时，**显著降低（如论文A指出的）计算成本**，并使其适用于不同领域（如从医学迁移到建筑、教育等）？ |\n| **证据支撑** | [chunk:3533] 明确指出知识图谱构建阶段计算成本显著高于问答阶段。 | [chunk:3248] 强调“来源可追溯、过程可核验”，并基于CLDN18.2案例验证。 | [chunk:3298] 提出“复合式问答数据生成策略”以解决数据问题。 | 证据充分揭示了现有方法的痛点。 |\n\n#### 三、 下一步建议：开题报告框架\n\n基于上述分析，建议你以 **“面向跨领域应用的轻量化可追溯知识图谱增强RAG方法研究”** 为题，撰写开题报告。以下是为您生成的开题报告框架：\n\n**1. 选题背景与研究意义**\n   - **背景**：LLM+RAG在垂直领域应用广泛，但面临“黑箱”推理和“幻觉”问题。知识图谱的引入为解决这些问题提供了可能，但现有方法（如KGIR-RAG、MSTI）在效率、可迁移性上存在短板。\n   - **意义**：本研究旨在探索一种兼顾**效率、可解释性（可追溯）和通用性**的解决方案，对于推动LLM在更多资源受限或需要高度合规的行业（如法律、金融、医疗）的落地具有重要理论价值和实践意义。\n\n**2. 国内外研究现状与评述（文献综述）**\n   - **2.1 基于知识图谱的RAG方法**：综述GraphRAG、LightRAG、KGIR-RAG等方法，重点分析其优势（推理能力强）和劣势（计算成本高）。\n   - **2.2 可追溯证据链构建技术**：综述MSTI等框架，讨论其在领域特定性上的成功与局限。\n   - **2.3 跨领域迁移与轻量化技术**：探讨模型压缩、知识蒸馏、高效索引等技术在降低KG构建开销方面的潜力。\n   - **研究空白总结**：明确指出当前缺乏一种能够同时实现**低计算开销、高证据可追溯性、跨领域通用性**的技术方案。\n\n**3. 研究目标与内容**\n   - **研究目标**：提出并验证一种轻量化的、可跨领域迁移的知识图谱增强RAG框架，在保证推理准确性的前提下，显著降低知识图谱构建的计算成本，并实现证据链的端到端可追溯。\n   - **研究内容**：\n     - **内容一：轻量化知识图谱构建方法研究**。探索如何利用更小的模型（如SLM）或更高效的抽取策略（如基于规则的预筛选）来替代大模型进行三元组抽取，以降低论文A中提到的58.34小时构建耗时。\n     - **内容二：跨领域证据链模板化设计**。借鉴MSTI的“路径”思想，但设计一套与具体领域无关的、基于“实体-关系-属性”的通用证据链模板，使其能快速适配新领域。\n     - **内容三：融合效率与可追溯的迭代推理机制**。设计一种新的推理策略，在迭代改写检索过程中，既能利用轻量KG进行高效检索，又能将每一步的推理路径回链到原始文档段落。\n\n**4. 拟采取的研究方案与技术路线**\n   - **技术路线**：\n     1.  **基线复现**：复现KGIR-RAG和MSTI的核心模块，量化其性能（准确率、时间、资源消耗）作为对比基准。\n     2.  **轻量化KG构建**：对比不同规模模型（如LLaMA-7B vs. 70B）在KG抽取上的效果与成本，探索“小模型初筛+大模型校验”的混合策略。\n     3.  **通用证据链模块设计**：设计基于“段落ID + 关键三元组 + 推理步”的通用数据结构，替代MSTI中的医学受控词表。\n     4.  **系统集成与实验**：在医学（复用MSTI数据集）、建筑（复用武千千论文相关数据）等至少两个不同领域数据集上进行实验，验证方法的通用性和效率。\n\n**5. 预期成果与创新点**\n   - **预期成果**：\n     - 提出一种轻量化的跨领域知识图谱增强RAG方法。\n     - 构建一个公开的、用于评估RAG系统“效率-可追溯性”的基准测试集。\n     - 发表高水平学术论文1-2篇。\n   - **创新点**：\n     - **效率创新**：首次系统性地解决基于知识图谱的RAG方法中知识图谱构建阶段的高计算开销问题。\n     - **方法创新**：提出一种与领域无关的证据链模板化设计，实现了从领域特定到跨领域迁移的突破。\n\n**6. 研究计划与进度安排（略）**\n\n**7. 参考文献（部分）**\n   - 毛赟. (2025). 基于知识图谱增强的多跳问答方法研究.\n   - 朱越石. (2025). 基于RAG与知识图谱融合的医学情报证据链框架研究. *无线互联科技*.\n   - 武千千. (2025). 基于大语言模型和知识图谱增强的建筑领域问答技术研究.\n\n---\n**重要说明**：\n- 当前分析完全基于您提供的本地证据。如果联网搜索到更多相关论文（如GraphRAG、LightRAG的原始论文），建议将其补充到文献综述中，以增强开题报告的完整性。\n- 该开题报告框架是一个起点，您需要根据自身的研究兴趣和导师建议进一步细化具体的技术细节和实验方案。",
+    "research_plan_tasks": [
+      {
+        "id": "t1",
+        "type": "retrieve_papers",
+        "query": "多篇相关领域的高质量论文",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t2",
+        "type": "summarize_evidence",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "t1",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t3",
+        "type": "compare_methods",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "t1",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t4",
+        "type": "extract_experiments",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "t1",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t5",
+        "type": "summarize_method",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "t1",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t6",
+        "type": "find_research_gap",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "",
+        "depends_on": [
+          "t2",
+          "t3",
+          "t4",
+          "t5"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t7",
+        "type": "generate_outline",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "",
+        "depends_on": [
+          "t6"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t9",
+        "type": "verify_claims",
+        "query": "帮我基于多篇论文找研究空白并生成开题报告。",
+        "target": "t8",
+        "depends_on": [],
+        "params": {}
+      }
+    ],
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理"
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "识别为 gap_analysis，生成受控研究计划",
+        "observation_summary": "生成 8 个子任务，最终包含 verify_claims"
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; synthesize_research; verify_claims; final_answer"
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search"
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "observation",
+        "intent": "gap_analysis",
+        "evidence_count": 8,
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=0, semantic=8, graph=0, merged=8"
+      },
+      {
+        "step": 6,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "gap_analysis",
+        "evidence_count": 8,
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 8 条证据：基于知识图谱增强的多跳问答方法研究-毛赟、基于RAG与知识图谱融合的医学情报证据链框架研究-朱越石、一种基于大模型多智能体的作文自动评分方法-朱海霞"
+      },
+      {
+        "step": 7,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "targeted_repair",
+        "intent": "gap_analysis",
+        "evidence_count": 8,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "部分或全部断言缺少证据支撑"
+      },
+      {
+        "step": 8,
+        "node": "targeted_repair",
+        "action": "targeted_repair_search",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "gap_analysis",
+        "evidence_count": 4,
+        "reason": "验证发现关键断言缺少证据，预算允许一次补充检索",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=0, merged=6"
+      },
+      {
+        "step": 9,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "intent": "gap_analysis",
+        "evidence_count": 12,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据"
+      }
+    ],
+    "graph_trace": [
+      {
+        "node": "memory_guard",
+        "elapsed": 0.0,
+        "next_action": "planner"
+      },
+      {
+        "node": "planner",
+        "elapsed": 3.195,
+        "next_action": "decompose"
+      },
+      {
+        "node": "decompose",
+        "elapsed": 0.0,
+        "next_action": "action_policy"
+      },
+      {
+        "node": "action_policy",
+        "elapsed": 0.0,
+        "next_action": "local_search"
+      },
+      {
+        "node": "local_search",
+        "elapsed": 2.629,
+        "next_action": "observation"
+      },
+      {
+        "node": "observation",
+        "elapsed": 0.0,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 23.082,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.001,
+        "next_action": "targeted_repair"
+      },
+      {
+        "node": "targeted_repair",
+        "elapsed": 3.818,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 19.538,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.002,
+        "next_action": "finalize"
+      },
+      {
+        "node": "finalize",
+        "elapsed": 0.0,
+        "next_action": "done"
+      }
+    ],
+    "evidence_count": 12,
+    "sources_count": 8,
+    "citation_verification": {
+      "supported": true,
+      "support_score": 0.5,
+      "citation_coverage": 0.5,
+      "unsupported_claims": [
+        "好的，作为你的研究分析助手，我将基于提供的本地证据，为你分析研究空白并生成开题报告框架",
+        "### 研究空白分析与开题报告框架",
+        "#### 一、 核心结论"
+      ],
+      "supporting_evidence_ids": [
+        "chunk:3248",
+        "chunk:3264",
+        "chunk:3503",
+        "chunk:3520",
+        "chunk:3533"
+      ],
+      "claims": [
+        {
+          "text": "基于对三篇高质量论文（毛赟，2025；朱越石，2025；武千千，2025）的系统分析，当前“大语言模型（LLM）+ 知识图谱（KG）”融合技术领域存在一个明确且具有价值的研究空白：**在跨领域（如从医学到建筑）迁移时，缺乏一个兼顾“证据链可追溯性”与“高计算效率”的通用解决方案",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3520",
+            "chunk:3264",
+            "chunk:3248"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "1.  **现有研究 A（毛赟，2025）** 提出的 `KGIR-RAG` 方法通过构建“证据子图”实现了多跳问答的高准确性，但其代价是**计算资源消耗巨大**（如构建知识图谱耗时是问答阶段的近7倍），严重制约了其在实际场景中的部署效率",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3520",
+            "chunk:3503",
+            "chunk:3533"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "2.  **现有研究 B（朱越石，2025）** 提出的医学情报框架（MSTI）虽然构建了“回答—证据段—路径—版本”的可追溯证据链，但其设计高度**特定于医学领域**（如CLDN18.2案例），其方法学（如受控词表、时序知识图谱）在其他领域（如建筑、教育）的通用性和迁移成本尚不明确",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3264",
+            "chunk:3248",
+            "chunk:3503"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "好的，作为你的研究分析助手，我将基于提供的本地证据，为你分析研究空白并生成开题报告框架",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "### 研究空白分析与开题报告框架",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "#### 一、 核心结论",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    },
+    "answer_verification": {
+      "supported": true,
+      "support_score": 0.5,
+      "unsupported_claims": [
+        "好的，作为你的研究分析助手，我将基于提供的本地证据，为你分析研究空白并生成开题报告框架",
+        "### 研究空白分析与开题报告框架",
+        "#### 一、 核心结论"
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "question": "帮我综述 2023-2026 年 Self-RAG 的发展，重点找近年论文。",
+    "path": "research",
+    "research_intent": "literature_review",
+    "processing_time": "34.9s",
+    "confidence": 0.83,
+    "response": "好的，作为研究分析助手，我将基于提供的证据，为您综述 2023-2026 年 Self-RAG 的发展。\n\n### 结论\n\n截至当前分析，关于 **2023-2026 年 Self-RAG 的发展综述**，现有证据表明，该领域的核心基础工作集中在 **2023 年**，即 Asai 等人提出的原始 Self-RAG 论文。该论文确立了“自我反思”的范式，即通过引入反思令牌（reflection tokens）让模型自主决定是否需要检索，并对生成质量进行自我评估。\n\n然而，**对于 2024-2026 年 Self-RAG 的后续演进、变体、性能提升或新的应用，当前提供的证据严重不足**。本地证据全部指向 2023 年的原始论文，而联网证据未能检索到直接相关的 Self-RAG 发展论文。因此，本综述将主要基于 2023 年的原始论文进行总结，并明确指出当前证据的局限性。\n\n### 依据与核心发现\n\n#### 1. Self-RAG 的起源与核心方法 (2023年)\n\n*   **核心论文**: Self-Rag: Self-reflective Retrieval augmented Generation (Asai et al., 2023) [本地证据: chunk:3863, 3886, 3860, 3889, 3848]\n*   **核心思想**: Self-RAG 并非简单地每次生成都检索，而是让大语言模型（LLM）通过生成特殊的“反思令牌”（reflection tokens）来调控检索和生成过程。这包括：\n    *   **按需检索**：模型决定何时需要检索外部知识。\n    *   **自我评估**：模型评估生成内容与检索到的证据是否一致（例如，通过生成 “IsSup = No support” 这样的令牌来标记不支持的情况）[chunk:3886]。\n    *   **细粒度输出选择**：通过反思令牌，模型可以从多个候选输出中选择最佳结果 [chunk:3860]。\n*   **与同期工作的区别**：该论文指出，与当时其他需要额外训练来改变模型行为的 RAG 方法（如 RLHF）不同，Self-RAG 可以在**无需额外训练**的情况下调整 LM 的行为 [chunk:3886]。同时，它也与仅关注推理任务且不包含检索的自我评估方法（如 Xie et al., 2023）有本质区别 [chunk:3863]。\n*   **实验验证**: 论文在长文本生成任务（如传记生成、长文本QA）上进行了评估，使用了 FactScore、MAUVE 等指标 [chunk:3889]。\n*   **引文影响**: 该工作已被后续研究引用，例如在《基于知识图谱增强的多跳问答方法研究》中作为参考文献出现 [chunk:3573]，证明了其在该领域的影响力。\n\n#### 2. 2023-2026年发展现状（基于现有证据）\n\n**现有证据仅能支撑“2023年原始论文”这一单一节点，无法支持对2023-2026年整体发展的综述。** 具体分析如下：\n\n*   **本地证据**: 全部来自一篇论文的多个片段，年份均为 2023 年。没有涉及 2024、2025 或 2026 年的任何后续工作。\n*   **联网论文证据**: 检索到的三篇论文 [1][2][3] 主题分别为“教育中的生成式AI”、“传染病学辅导”和“农业政策”，均与 Self-RAG 技术本身**无关**。这表明当前的检索未能有效定位到近年 Self-RAG 的进展。\n\n### 对比与分析\n\n基于现有信息，我们可以进行有限的对比分析：\n\n| 方法/方面 | Self-RAG (2023) | 其他RAG方法 (基于论文提及) |\n| :--- | :--- | :--- |\n| **核心机制** | 自我反思、按需检索、生成后评估 | 例如：两阶段微调检索器和LM (Lin et al., 2023) [chunk:3860] |\n| **训练需求** | 无需额外训练即可调整模型行为 [chunk:3886] | 通常需要训练来改变模型行为（如RLHF）[chunk:3886] |\n| **评估维度** | 支持、相关性等细粒度评估 | 通常使用端到端任务指标 |\n| **局限性** | 缺乏2024年后的后续发展证据，无法对比其与最新方法（如ActiveRAG, RQ-RAG等 [chunk:3573]）的性能差异。 | 引用文献中提到的ActiveRAG, RQ-RAG [chunk:3573] 代表了后续可能的发展方向，但证据中无详细信息。 |\n\n### 下一步建议\n\n鉴于当前证据的严重不足，为了完成您要求的综述，建议采取以下行动：\n\n1.  **扩展检索范围**：\n    *   **使用更精确的学术数据库**：建议在 **Google Scholar, arXiv, ACL Anthology, DBLP** 等平台进行针对性检索。关键词建议：\n        *   `\"Self-RAG\" 2024`\n        *   `\"Self-RAG\" 2025`\n        *   `\"Self-Reflective RAG\" variants`\n        *   `\"Self-RAG\" survey`\n    *   **追踪引用网络**：查找引用 Asai et al. (2023) “Self-RAG” 论文的最新工作，这是发现后续发展的最有效途径。\n\n2.  **识别关键变体**：根据现有知识，Self-RAG 的理念可能催生了多种变体，例如：\n    *   **Corrective RAG (CRAG)**：在检索后增加纠错步骤。\n    *   **Self-RAG 的强化学习变体**：使用强化学习优化反思令牌的生成。\n    *   **与 Agent 结合**：将 Self-RAG 作为智能体（Agent）内部推理与行动循环的一部分。\n\n3.  **重新设定研究任务**：如果无法获得足够的新证据，建议将研究目标从“综述 2023-2026 年发展”调整为 **“深入分析 Self-RAG (2023) 的原始方法与核心贡献”**，并明确指出其作为后续研究基石的定位。\n\n---\n\n### 参考论文\n\n由于当前联网证据中无直接相关的 Self-RAG 论文，此处仅列出在证据中被提及的原始核心论文：\n\n*   **Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection**\n    *   **作者**: Asai, A., Wu, Z., Wang, Y., et al.\n    *   **年份**: 2023\n    *   **来源**: 本地证据及参考文献 [chunk:3573] 中提及。该论文通常可在 arXiv 上找到。",
+    "research_plan_tasks": [
+      {
+        "id": "t1",
+        "type": "retrieve_papers",
+        "query": "Self-RAG 2023 2024 2025 2026",
+        "target": "获取2023-2026年Self-RAG相关论文",
+        "depends_on": [],
+        "params": {
+          "year_range": "2023-2026"
+        }
+      },
+      {
+        "id": "t2",
+        "type": "retrieve_papers",
+        "query": "Self-Reflective Retrieval Augmented Generation recent advances",
+        "target": "补充检索Self-RAG变体及最新进展",
+        "depends_on": [],
+        "params": {
+          "year_range": "2023-2026"
+        }
+      },
+      {
+        "id": "t3",
+        "type": "retrieve_kg_context",
+        "query": "Self-RAG knowledge graph",
+        "target": "获取Self-RAG相关知识图谱上下文",
+        "depends_on": [
+          "t1",
+          "t2"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t4",
+        "type": "summarize_method",
+        "query": "Self-RAG核心方法",
+        "target": "总结Self-RAG方法演进",
+        "depends_on": [
+          "t1",
+          "t2",
+          "t3"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t5",
+        "type": "compare_methods",
+        "query": "Self-RAG vs 其他RAG方法 2023-2026",
+        "target": "比较Self-RAG与其他RAG方法的性能与特点",
+        "depends_on": [
+          "t4"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t6",
+        "type": "extract_experiments",
+        "query": "Self-RAG实验设置与结果",
+        "target": "提取近年Self-RAG论文中的关键实验数据",
+        "depends_on": [
+          "t1",
+          "t2"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t7",
+        "type": "find_research_gap",
+        "query": "Self-RAG 2023-2026 研究空白与未来方向",
+        "target": "识别Self-RAG领域现有不足与开放问题",
+        "depends_on": [
+          "t4",
+          "t5",
+          "t6"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t8",
+        "type": "verify_claims",
+        "query": "Self-RAG综述中的关键论断与引用",
+        "target": "验证综述中所有重要论断的准确性",
+        "depends_on": [
+          "t4",
+          "t5",
+          "t6",
+          "t7"
+        ],
+        "params": {}
+      }
+    ],
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "intent": "literature_review",
+        "evidence_count": 0,
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理"
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "intent": "literature_review",
+        "evidence_count": 0,
+        "reason": "识别为 literature_review，生成受控研究计划",
+        "observation_summary": "生成 8 个子任务，最终包含 verify_claims"
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "intent": "literature_review",
+        "evidence_count": 0,
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; search_academic_or_web; synthesize_research; verify_claims; final_answer"
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "intent": "literature_review",
+        "evidence_count": 0,
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search"
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "external_search",
+        "intent": "literature_review",
+        "evidence_count": 10,
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=0, merged=10"
+      },
+      {
+        "step": 6,
+        "node": "external_search",
+        "action": "search_academic_or_web",
+        "tool_name": "WebSearchVerifierAgent",
+        "status": "completed",
+        "next_node": "observation",
+        "intent": "literature_review",
+        "evidence_count": 3,
+        "reason": "文献综述需要近年学术证据",
+        "observation_summary": "接受 3 条外部证据"
+      },
+      {
+        "step": 7,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "literature_review",
+        "evidence_count": 13,
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 13 条证据：Self-Rag: Self-reflective Retrieval augmented Generation、Self-Rag: Self-reflective Retrieval augmented Generation、Self-Rag: Self-reflective Retrieval augmented Generation"
+      },
+      {
+        "step": 8,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "intent": "literature_review",
+        "evidence_count": 13,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据"
+      }
+    ],
+    "graph_trace": [
+      {
+        "node": "memory_guard",
+        "elapsed": 0.0,
+        "next_action": "planner"
+      },
+      {
+        "node": "planner",
+        "elapsed": 4.611,
+        "next_action": "decompose"
+      },
+      {
+        "node": "decompose",
+        "elapsed": 0.0,
+        "next_action": "action_policy"
+      },
+      {
+        "node": "action_policy",
+        "elapsed": 0.0,
+        "next_action": "local_search"
+      },
+      {
+        "node": "local_search",
+        "elapsed": 3.391,
+        "next_action": "external_search"
+      },
+      {
+        "node": "external_search",
+        "elapsed": 11.914,
+        "next_action": "observation"
+      },
+      {
+        "node": "observation",
+        "elapsed": 0.0,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 14.935,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.002,
+        "next_action": "finalize"
+      },
+      {
+        "node": "finalize",
+        "elapsed": 0.0,
+        "next_action": "done"
+      }
+    ],
+    "evidence_count": 13,
+    "sources_count": 8,
+    "citation_verification": {
+      "supported": true,
+      "support_score": 0.83,
+      "citation_coverage": 0.83,
+      "unsupported_claims": [
+        "因此，本综述将主要基于 2023 年的原始论文进行总结，并明确指出当前证据的局限性"
+      ],
+      "supporting_evidence_ids": [
+        "chunk:3860",
+        "chunk:3863",
+        "chunk:3886"
+      ],
+      "claims": [
+        {
+          "text": "好的，作为研究分析助手，我将基于提供的证据，为您综述 2023-2026 年 Self-RAG 的发展",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3863",
+            "chunk:3886",
+            "chunk:3860"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "截至当前分析，关于 **2023-2026 年 Self-RAG 的发展综述**，现有证据表明，该领域的核心基础工作集中在 **2023 年**，即 Asai 等人提出的原始 Self-RAG 论文",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3863",
+            "chunk:3886",
+            "chunk:3860"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "该论文确立了“自我反思”的范式，即通过引入反思令牌（reflection tokens）让模型自主决定是否需要检索，并对生成质量进行自我评估",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3863"
+          ],
+          "confidence": 0.7000000000000001
+        },
+        {
+          "text": "然而，**对于 2024-2026 年 Self-RAG 的后续演进、变体、性能提升或新的应用，当前提供的证据严重不足**",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3863",
+            "chunk:3886",
+            "chunk:3860"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "本地证据全部指向 2023 年的原始论文，而联网证据未能检索到直接相关的 Self-RAG 发展论文",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3863",
+            "chunk:3886",
+            "chunk:3860"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "因此，本综述将主要基于 2023 年的原始论文进行总结，并明确指出当前证据的局限性",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    },
+    "answer_verification": {
+      "supported": true,
+      "support_score": 0.83,
+      "unsupported_claims": [
+        "因此，本综述将主要基于 2023 年的原始论文进行总结，并明确指出当前证据的局限性"
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "question": "RAG + 多智能体有什么可做的研究点？",
+    "path": "research",
+    "research_intent": "direction_exploration",
+    "processing_time": "42.3s",
+    "confidence": 0.67,
+    "response": "好的，作为研究分析助手，我将基于提供的证据和既定的执行计划，为您分析“RAG + 多智能体”领域的研究点。\n\n### 研究分析报告：RAG + 多智能体系统的研究点\n\n#### 1. 核心结论\n\nRAG（检索增强生成）与多智能体（Multi-Agent）系统的结合是一个新兴且活跃的研究方向。当前的研究点主要集中在**如何利用多智能体协作机制来克服传统RAG系统的固有缺陷**，例如单点故障、检索策略僵化、以及缺乏深度推理能力。主要可研究方向包括：**自适应RAG、基于知识图谱增强的多跳推理、以及智能体间的协作与反思机制**。\n\n#### 2. 主要依据与分析\n\n根据本地证据，我们可以梳理出以下几个具体且有潜力的研究点：\n\n**研究点一：多智能体协作的自适应RAG**\n*   **依据**：本地证据 [chunk:3082] 和 [chunk:3085] 明确指向一篇名为《多Agent协作的自适应RAG方法研究》的论文。\n*   **分析**：该研究点探讨了如何让多个智能体（Agent）协同工作，动态地决定何时检索、检索什么内容以及如何融合检索结果。这直接解决了传统RAG中“一次检索”或“固定流程”的局限性。通过“自适应”机制，系统可以根据问题的复杂度、知识库的覆盖度等因素，灵活调整检索策略，从而提高回答的准确性和相关性。\n\n**研究点二：知识图谱增强的多跳问答与推理**\n*   **依据**：本地证据 [chunk:3577] 引用了关于“多跳问答”的研究（如MuSiQue），并提到了“基于知识图谱增强的多跳问答方法研究”。证据 [chunk:3403] 也提到了“基于大语言模型和知识图谱增强的建筑领域问答技术研究”。\n*   **分析**：多智能体系统非常适合处理需要多步推理的复杂问题。可以设计一个由多个专门智能体组成的架构：一个智能体负责解析问题并规划推理步骤，其他智能体分别负责从知识图谱、文档数据库、甚至其他智能体的输出中检索和整合信息。这种架构能有效解决传统RAG在处理需要逻辑链的“多跳问题”时表现不佳的问题。\n\n**研究点三：基于自我反思与批评的RAG**\n*   **依据**：本地证据 [chunk:3863] 和 [chunk:3858] 详细介绍了 **Self-RAG** 的概念。Self-RAG通过生成“反思令牌”（reflection tokens）来决定是否需要检索，并对生成内容的质量进行自我评估。\n*   **分析**：将Self-RAG的思想扩展到多智能体系统中是一个非常有价值的研究方向。例如，可以构建一个“生成者-批评者”的智能体对。**生成者**负责初步回答，**批评者**则负责检查回答的事实性、完整性，并触发**检索智能体**进行补充检索或纠正。这种“反思-检索-再生成”的循环机制可以显著减少大模型的“幻觉”问题。\n\n#### 3. 研究空白与挑战\n\n尽管上述方向已有初步探索，但仍存在以下未充分研究的领域（研究空白）：\n\n1.  **智能体间通信与任务分解的效率**：如何设计高效的通信协议和任务分解机制，让多个智能体在解决复杂问题时既能并行工作又能有效协同，避免资源浪费和冲突，是一个关键挑战。\n2.  **多智能体RAG的可解释性**：当多个智能体协作生成一个答案时，追溯其来源和推理过程变得更加复杂。如何设计一个可解释的框架，让用户理解“哪个智能体提供了哪部分信息”以及“推理链是如何形成的”，是提升系统可信度的关键。\n3.  **跨模态RAG的多智能体协作**：目前的研究多集中在文本领域。如何设计一个多智能体系统，使其能够协同处理文本、图像、表格、代码等多种模态的数据，并基于统一的检索和生成框架提供答案，是一个前沿且具有挑战性的方向。\n4.  **长期记忆与个性化**：结合 [chunk:3577] 中提到的“神经生物学启发的长期记忆”（Hipporag），研究如何为多智能体系统构建共享或独立的长期记忆单元，使其能够从历史对话中学习，并为用户提供个性化服务，是一个值得探索的方向。\n\n#### 4. 下一步建议\n\n基于以上分析，建议您可以从以下一个或多个方向切入：\n\n1.  **深化“自适应RAG”研究**：深入研究多智能体系统中“自适应”策略的具体实现。例如，可以设计一个**元控制器（Meta-Controller）智能体**，它负责监控其他智能体的工作状态和RAG流程的性能指标，并动态调整检索策略（如切换检索源、调整检索深度、触发重新检索等）。\n2.  **构建“批评-反思”多智能体框架**：以Self-RAG为理论基础，构建一个至少包含“生成器”、“批评器”、“检索器”三个智能体的原型系统。重点研究“批评器”的评估标准（如相关性、事实一致性、完整性）以及它与“生成器”和“检索器”的交互逻辑。\n3.  **探索知识图谱与多智能体RAG的融合**：研究如何将知识图谱的结构化知识作为多智能体通信的“共享语言”或“中间表示”，以提高任务分解和推理的准确性。例如，规划智能体可以将问题转化为一个知识图谱查询路径，然后由多个检索智能体并行执行这些查询。\n\n**注意**：当前提供的本地证据数量有限（共10条），且主要来自一篇2026年的论文和几篇参考文献。上述分析基于这些有限证据进行推理和延伸，可能存在未覆盖到的前沿方向。建议您进一步检索最新的学术论文（如arXiv、ACL、NeurIPS等会议论文）来验证和补充这些研究点。",
+    "research_plan_tasks": [
+      {
+        "id": "t1",
+        "type": "retrieve_papers",
+        "query": "RAG multi-agent systems recent advances 2023 2024",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t2",
+        "type": "retrieve_papers",
+        "query": "multi-agent collaboration retrieval augmented generation",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t3",
+        "type": "summarize_evidence",
+        "query": "key challenges and limitations in current RAG multi-agent systems",
+        "target": "",
+        "depends_on": [
+          "t1",
+          "t2"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t4",
+        "type": "retrieve_kg_context",
+        "query": "RAG multi-agent knowledge graph integration",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t5",
+        "type": "find_research_gap",
+        "query": "underexplored areas in RAG multi-agent research",
+        "target": "",
+        "depends_on": [
+          "t3",
+          "t4"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t6",
+        "type": "generate_outline",
+        "query": "potential research directions RAG multi-agent",
+        "target": "",
+        "depends_on": [
+          "t5"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t7",
+        "type": "verify_claims",
+        "query": "validate feasibility of proposed research directions from t6",
+        "target": "",
+        "depends_on": [
+          "t6"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t8",
+        "type": "generate_proposal",
+        "query": "write a compact research proposal on selected RAG multi-agent direction",
+        "target": "",
+        "depends_on": [
+          "t7"
+        ],
+        "params": {}
+      }
+    ],
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "intent": "direction_exploration",
+        "evidence_count": 0,
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理"
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "intent": "direction_exploration",
+        "evidence_count": 0,
+        "reason": "识别为 direction_exploration，生成受控研究计划",
+        "observation_summary": "生成 8 个子任务，最终包含 verify_claims"
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "intent": "direction_exploration",
+        "evidence_count": 0,
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_knowledge; synthesize_research; verify_claims; final_answer"
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "intent": "direction_exploration",
+        "evidence_count": 0,
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search"
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_knowledge",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "observation",
+        "intent": "direction_exploration",
+        "evidence_count": 10,
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=10, merged=10"
+      },
+      {
+        "step": 6,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "direction_exploration",
+        "evidence_count": 10,
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 10 条证据：多Agent协作的自适应RAG方法研究-陈雪松、多Agent协作的自适应RAG方法研究-陈雪松、Multi Agent系统在微电网协调控制中的应用研究-章健"
+      },
+      {
+        "step": 7,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "targeted_repair",
+        "intent": "direction_exploration",
+        "evidence_count": 10,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "部分或全部断言缺少证据支撑"
+      },
+      {
+        "step": 8,
+        "node": "targeted_repair",
+        "action": "targeted_repair_search",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "direction_exploration",
+        "evidence_count": 5,
+        "reason": "验证发现关键断言缺少证据，预算允许一次补充检索",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=0, merged=6"
+      },
+      {
+        "step": 9,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "intent": "direction_exploration",
+        "evidence_count": 15,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据"
+      }
+    ],
+    "graph_trace": [
+      {
+        "node": "memory_guard",
+        "elapsed": 0.0,
+        "next_action": "planner"
+      },
+      {
+        "node": "planner",
+        "elapsed": 3.796,
+        "next_action": "decompose"
+      },
+      {
+        "node": "decompose",
+        "elapsed": 0.0,
+        "next_action": "action_policy"
+      },
+      {
+        "node": "action_policy",
+        "elapsed": 0.0,
+        "next_action": "local_search"
+      },
+      {
+        "node": "local_search",
+        "elapsed": 4.392,
+        "next_action": "observation"
+      },
+      {
+        "node": "observation",
+        "elapsed": 0.0,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 15.059,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.003,
+        "next_action": "targeted_repair"
+      },
+      {
+        "node": "targeted_repair",
+        "elapsed": 4.624,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 14.457,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.002,
+        "next_action": "finalize"
+      },
+      {
+        "node": "finalize",
+        "elapsed": 0.0,
+        "next_action": "done"
+      }
+    ],
+    "evidence_count": 15,
+    "sources_count": 8,
+    "citation_verification": {
+      "supported": true,
+      "support_score": 0.67,
+      "citation_coverage": 0.67,
+      "unsupported_claims": [
+        "#### 1. 核心结论",
+        "当前的研究点主要集中在**如何利用多智能体协作机制来克服传统RAG系统的固有缺陷**，例如单点故障、检索策略僵化、以及缺乏深度推理能力"
+      ],
+      "supporting_evidence_ids": [
+        "chunk:2746",
+        "chunk:3066",
+        "chunk:3067",
+        "chunk:3080",
+        "chunk:3082",
+        "chunk:3085",
+        "chunk:3577"
+      ],
+      "claims": [
+        {
+          "text": "好的，作为研究分析助手，我将基于提供的证据和既定的执行计划，为您分析“RAG + 多智能体”领域的研究点",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3067",
+            "chunk:3066",
+            "chunk:3080"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "### 研究分析报告：RAG + 多智能体系统的研究点",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3082",
+            "chunk:3085",
+            "chunk:3577"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "RAG（检索增强生成）与多智能体（Multi-Agent）系统的结合是一个新兴且活跃的研究方向",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3082",
+            "chunk:3085",
+            "chunk:2746"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "主要可研究方向包括：**自适应RAG、基于知识图谱增强的多跳推理、以及智能体间的协作与反思机制**",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3082",
+            "chunk:3085",
+            "chunk:3577"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "#### 1. 核心结论",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "当前的研究点主要集中在**如何利用多智能体协作机制来克服传统RAG系统的固有缺陷**，例如单点故障、检索策略僵化、以及缺乏深度推理能力",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    },
+    "answer_verification": {
+      "supported": true,
+      "support_score": 0.67,
+      "unsupported_claims": [
+        "#### 1. 核心结论",
+        "当前的研究点主要集中在**如何利用多智能体协作机制来克服传统RAG系统的固有缺陷**，例如单点故障、检索策略僵化、以及缺乏深度推理能力"
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "question": "这个方向最新还有哪些研究空白？",
+    "path": "research",
+    "research_intent": "gap_analysis",
+    "processing_time": "46.1s",
+    "confidence": 0.33,
+    "response": "好的，作为你的研究分析助手，我将基于现有证据，对“这个方向”的研究空白进行分析。\n\n**重要声明：** 我无法确定你所说的“这个方向”具体指代哪个研究领域。根据【对话记忆】，你没有提供任何前文信息。因此，我无法进行有针对性的空白分析。以下回答将基于你提供的所有证据（主要是关于PyTorch教程和损失函数的基础知识）进行总结，并明确指出当前证据的局限性。\n\n---\n\n### 研究空白分析报告\n\n#### 1. 结论\n\n基于当前可用的全部证据，**无法识别出任何具体的研究空白**。现有证据既不包含对特定研究方向的描述，也未提及任何开放性问题或未解决的挑战。所有检索到的内容均为机器学习领域的基础教程和通用概念（如损失函数、梯度下降），不足以支撑对“最新研究空白”的深度分析。\n\n#### 2. 依据\n\n- **用户意图缺失：** 你的问题中“这个方向”是一个占位符，没有具体指明是哪个领域（例如：自然语言处理中的大语言模型、计算机视觉中的小样本学习、生物信息学中的蛋白质结构预测等）。没有明确的研究方向，就无法定义“空白”。\n- **证据内容不相关：**\n    - **【本地证据】** 全部来自PyTorch官方教程和《Speech and Language Processing》教科书，内容涵盖神经网络定义、损失函数（如交叉熵）和梯度下降算法。这些是2010年代就已经成熟的基础知识，不是最新的研究前沿。\n    - **【联网论文证据】** 检索到的三篇论文（[1]、[2]、[3]）分别涉及“投入量假设”、“角色冲突”和“贸易与收入不平等”。这些论文与你的问题“这个方向”没有明确关联，且发表时间（2004, 2017, 2015）较早，无法代表“最新”的研究动态。\n- **检索结果无效：** 执行计划中的多个检索任务（如 `latest research gaps in [the direction specified by user]`）由于缺少具体方向，未能返回有效结果。\n\n#### 3. 对比与分析\n\n| 分析维度 | 当前证据状态 | 理想状态（成功分析所需） |\n| :--- | :--- | :--- |\n| **研究方向** | 未定义（占位符） | 明确、具体的研究领域（如：端侧大模型推理加速） |\n| **证据类型** | 基础教程、通用概念、不相关论文 | 最新综述论文、领域顶会论文、预印本（如arXiv） |\n| **时间范围** | 2004 - 2024（但内容为经典知识） | 2023 - 2025（最新进展） |\n| **关键信息** | 无 “空白”、“挑战”、“未来方向” 等关键词 | 明确指出“开放问题”、“未被探索的领域”、“现有方法的局限性” |\n\n**核心矛盾：** 你希望了解“最新”的“研究空白”，但提供的证据是“基础”的“通用知识”。两者之间存在巨大鸿沟。\n\n#### 4. 下一步建议\n\n要获得有价值的分析，请提供**具体的研究方向**。例如，你可以参考以下提问方式：\n\n1.  **明确领域：** “请分析**大语言模型幻觉问题**这个方向，最新还有哪些研究空白？”\n2.  **引用前文：** “我们刚才在讨论**基于图神经网络的药物分子性质预测**，这个方向最新还有哪些研究空白？”\n3.  **提供关键词：** “请帮我查找**可解释人工智能（XAI）在医疗影像诊断中的应用**这个方向，最新的研究空白和挑战是什么？”\n\n一旦你明确了研究方向，我将立即启动新的研究流程，检索最新的综述和前沿论文，为你提供结构化的空白分析。\n\n---\n\n### 参考论文\n\n由于当前检索到的论文与你的问题不相关，以下仅列出作为证据来源的论文，供你参考，但它们对回答本问题无帮助。\n\n[1] 检验“投入量假设”的实证研究——阅读任务对中国学生词汇记忆的影响. 黄燕. 2004.\n[链接](https://www.semanticscholar.org/paper/0db45a4eedbb57b7eeb315f42f407611fded120a)\n\n[2] 角色冲突对团队结果作用的实证研究—团队沟通水平的中介作用. 庄乐, 沈蕾. 2017.\n[链接](https://www.semanticscholar.org/paper/81b9fd1fb48cd1c1a5b2154e3ad69af09be53cff)\n\n[3] 贸易与收入不平等:异质性、任务贸易还是市场摩擦?——一个文献综述. 孙晓霓, 赵晓霞. 2015.\n[链接](https://www.semanticscholar.org/paper/62cfeb6797a3cbf23772bd1499dc014b4499e4b2)",
+    "research_plan_tasks": [
+      {
+        "id": "t1",
+        "type": "retrieve_papers",
+        "query": "latest research gaps in [the direction specified by user]",
+        "target": "",
+        "depends_on": [],
+        "params": {}
+      },
+      {
+        "id": "t2",
+        "type": "retrieve_papers",
+        "query": "recent surveys and reviews on [the direction] identifying open problems",
+        "target": "",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t3",
+        "type": "retrieve_kg_context",
+        "query": "research gaps [the direction]",
+        "target": "",
+        "depends_on": [
+          "t1"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t4",
+        "type": "find_research_gap",
+        "query": "Identify research gaps from the retrieved papers and knowledge graph context",
+        "target": "",
+        "depends_on": [
+          "t2",
+          "t3"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t5",
+        "type": "retrieve_papers",
+        "query": "recent papers addressing gaps in [the direction] published in 2024-2025",
+        "target": "",
+        "depends_on": [
+          "t4"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t6",
+        "type": "summarize_evidence",
+        "query": "Summarize evidence of remaining gaps and unmet challenges from retrieved papers",
+        "target": "",
+        "depends_on": [
+          "t5"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t7",
+        "type": "generate_outline",
+        "query": "Outline of current research gaps in [the direction]",
+        "target": "",
+        "depends_on": [
+          "t4",
+          "t6"
+        ],
+        "params": {}
+      },
+      {
+        "id": "t8",
+        "type": "verify_claims",
+        "query": "Verify claims about research gaps against the original papers and context",
+        "target": "",
+        "depends_on": [
+          "t7"
+        ],
+        "params": {}
+      }
+    ],
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理"
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "识别为 gap_analysis，生成受控研究计划",
+        "observation_summary": "生成 8 个子任务，最终包含 verify_claims"
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; search_academic_or_web; synthesize_research; verify_claims; final_answer"
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "intent": "gap_analysis",
+        "evidence_count": 0,
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search"
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "external_search",
+        "intent": "gap_analysis",
+        "evidence_count": 10,
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=8, semantic=8, graph=10, merged=10"
+      },
+      {
+        "step": 6,
+        "node": "external_search",
+        "action": "search_academic_or_web",
+        "tool_name": "WebSearchVerifierAgent",
+        "status": "completed",
+        "next_node": "observation",
+        "intent": "gap_analysis",
+        "evidence_count": 3,
+        "reason": "本地证据不足，需要外部补证",
+        "observation_summary": "接受 3 条外部证据"
+      },
+      {
+        "step": 7,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "gap_analysis",
+        "evidence_count": 13,
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 13 条证据：PyTorch Neural Networks 教程、where: L is the loss function、where: L is the loss function"
+      },
+      {
+        "step": 8,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "targeted_repair",
+        "intent": "gap_analysis",
+        "evidence_count": 13,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "部分或全部断言缺少证据支撑"
+      },
+      {
+        "step": 9,
+        "node": "targeted_repair",
+        "action": "targeted_repair_search",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "synthesis",
+        "intent": "gap_analysis",
+        "evidence_count": 6,
+        "reason": "验证发现关键断言缺少证据，预算允许一次补充检索",
+        "observation_summary": "检索结果：bm25=0, semantic=8, graph=0, merged=6"
+      },
+      {
+        "step": 10,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "intent": "gap_analysis",
+        "evidence_count": 19,
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "部分或全部断言缺少证据支撑"
+      }
+    ],
+    "graph_trace": [
+      {
+        "node": "memory_guard",
+        "elapsed": 0.0,
+        "next_action": "planner"
+      },
+      {
+        "node": "planner",
+        "elapsed": 4.099,
+        "next_action": "decompose"
+      },
+      {
+        "node": "decompose",
+        "elapsed": 0.0,
+        "next_action": "action_policy"
+      },
+      {
+        "node": "action_policy",
+        "elapsed": 0.0,
+        "next_action": "local_search"
+      },
+      {
+        "node": "local_search",
+        "elapsed": 3.248,
+        "next_action": "external_search"
+      },
+      {
+        "node": "external_search",
+        "elapsed": 10.826,
+        "next_action": "observation"
+      },
+      {
+        "node": "observation",
+        "elapsed": 0.0,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 13.543,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.002,
+        "next_action": "targeted_repair"
+      },
+      {
+        "node": "targeted_repair",
+        "elapsed": 3.717,
+        "next_action": "synthesis"
+      },
+      {
+        "node": "synthesis",
+        "elapsed": 10.67,
+        "next_action": "verify_citations"
+      },
+      {
+        "node": "citation_verifier",
+        "elapsed": 0.004,
+        "next_action": "finalize"
+      },
+      {
+        "node": "finalize",
+        "elapsed": 0.0,
+        "next_action": "done"
+      }
+    ],
+    "evidence_count": 19,
+    "sources_count": 8,
+    "citation_verification": {
+      "supported": false,
+      "support_score": 0.33,
+      "citation_coverage": 0.33,
+      "unsupported_claims": [
+        "好的，作为你的研究分析助手，我将基于现有证据，对“这个方向”的研究空白进行分析",
+        "**重要声明：** 我无法确定你所说的“这个方向”具体指代哪个研究领域",
+        "根据【对话记忆】，你没有提供任何前文信息",
+        "以下回答将基于你提供的所有证据（主要是关于PyTorch教程和损失函数的基础知识）进行总结，并明确指出当前证据的局限性"
+      ],
+      "supporting_evidence_ids": [
+        "chunk:3257",
+        "chunk:3263",
+        "chunk:3264",
+        "chunk:3527"
+      ],
+      "claims": [
+        {
+          "text": "因此，我无法进行有针对性的空白分析",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3527",
+            "chunk:3257",
+            "chunk:3264"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "text": "### 研究空白分析报告",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:3263"
+          ],
+          "confidence": 0.7000000000000001
+        },
+        {
+          "text": "好的，作为你的研究分析助手，我将基于现有证据，对“这个方向”的研究空白进行分析",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "**重要声明：** 我无法确定你所说的“这个方向”具体指代哪个研究领域",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "根据【对话记忆】，你没有提供任何前文信息",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        },
+        {
+          "text": "以下回答将基于你提供的所有证据（主要是关于PyTorch教程和损失函数的基础知识）进行总结，并明确指出当前证据的局限性",
+          "supported": false,
+          "supporting_evidence_ids": [],
+          "confidence": 0.2
+        }
+      ],
+      "final_action": "revise",
+      "reason": "部分或全部断言缺少证据支撑"
+    },
+    "answer_verification": {
+      "supported": false,
+      "support_score": 0.33,
+      "unsupported_claims": [
+        "好的，作为你的研究分析助手，我将基于现有证据，对“这个方向”的研究空白进行分析",
+        "**重要声明：** 我无法确定你所说的“这个方向”具体指代哪个研究领域",
+        "根据【对话记忆】，你没有提供任何前文信息",
+        "以下回答将基于你提供的所有证据（主要是关于PyTorch教程和损失函数的基础知识）进行总结，并明确指出当前证据的局限性"
+      ],
+      "final_action": "revise",
+      "reason": "部分或全部断言缺少证据支撑"
+    }
+  }
+]

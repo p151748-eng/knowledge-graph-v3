@@ -7,13 +7,14 @@ import time
 import json
 import io
 from contextlib import asynccontextmanager
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import text
+from pydantic import BaseModel, Field
 
 from config import config
 from models.db import Document, DocumentChunk, Edge, Node, get_db, init_db
@@ -145,6 +146,48 @@ def health_check(db: Session = Depends(get_db)):
     }
 
 
+# ── 路由预测 API ──────────────────────────────────────────────────────
+
+class RoutePredictRequest(BaseModel):
+    message: str = Field(..., description="用户问题")
+    conversation_id: Optional[int] = Field(None, description="对话ID")
+    recent_turns: Optional[List[Dict[str, Any]]] = Field(None, description="最近对话轮次")
+
+
+@app.post("/api/route/predict", tags=["chat"])
+def route_predict(req: RoutePredictRequest, db: Session = Depends(get_db)):
+    """预测路由但不执行，用于前端确认"""
+    try:
+        from core.router import ContextAwareRouter, RouteInput
+
+        router = ContextAwareRouter()
+        route_input = RouteInput(
+            query=req.message,
+            recent_turns=req.recent_turns or [],
+        )
+
+        decision = router.route(route_input)
+
+        return success_response({
+            "path": decision.path,
+            "intent": decision.intent,
+            "confidence": decision.confidence,
+            "reason": decision.reason,
+            "features": decision.metadata.get("features", {}),
+            "scores": decision.metadata.get("scores", {}),
+            "path_labels": {
+                "fast": "⚡ 快速回答 - 简单问题直接回复",
+                "pipeline": "🔄 标准流程 - 检索+解释+整合",
+                "self_rag": "🔬 自校验检索 - 证据验证+联网补充",
+                "paper_assistant": "📄 论文助手 - 论文深度分析",
+                "research": "📋 研究工作流 - 复杂研究任务规划",
+            }
+        })
+    except Exception as e:
+        logger.error(f"Route predict error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # ── 对话 API ──────────────────────────────────────────────────────
 
 @app.post("/api/chat", tags=["chat"])
@@ -204,13 +247,13 @@ async def chat_stream(req: ChatRequest, db: Session = Depends(get_db)):
     """SSE 流式对话"""
     service = ChatService(db)
 
-    # 前端 chat_path: auto -> 后端自动判断；fast/pipeline/paper/self_rag/crag -> 强制对应路径
+    # 前端 chat_path: auto -> 后端自动判断；fast/pipeline/paper/self_rag/crag/research -> 强制对应路径
     force_path = None
     if req.chat_path == 'fast':
         force_path = 'fast'
     elif req.chat_path == 'pipeline':
         force_path = 'pipeline'
-    elif req.chat_path in {'paper', 'paper_assistant', 'self_rag', 'crag'}:
+    elif req.chat_path in {'paper', 'paper_assistant', 'self_rag', 'crag', 'research'}:
         force_path = req.chat_path
     # auto: force_path=None，后端自动复杂度路由
 
@@ -248,6 +291,18 @@ def web_search(req: WebSearchRequest, db: Session = Depends(get_db)):
         return success_response(WebSearchData(**result))
     except Exception as e:
         logger.error(f"WebSearch error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/academic-search", response_model=WebSearchResponse, tags=["search"])
+def academic_search(req: WebSearchRequest, db: Session = Depends(get_db)):
+    try:
+        from tools.academic_search import AcademicSearchTool
+        tool = AcademicSearchTool(db)
+        result = tool.execute(req.query, max_results=req.max_results)
+        return success_response(WebSearchData(**result))
+    except Exception as e:
+        logger.error(f"AcademicSearch error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

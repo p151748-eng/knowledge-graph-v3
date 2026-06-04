@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useStore } from '../store/useStore';
-import { getConversations, deleteConversation } from '../api/client';
+import { getConversations, getConversation, deleteConversation } from '../api/client';
 import { useState, useEffect } from 'react';
 
 const NAV_ITEMS: Array<{ path: string; tab: 'chat' | 'import' | 'docs' | 'kg' | 'settings'; label: string; icon: string }> = [
@@ -31,6 +31,16 @@ export default function Layout() {
     }
   };
 
+  const handleSelectConv = async (convId: number) => {
+    setCurrentConversationId(convId);
+    try {
+      const data = await getConversation(convId);
+      useStore.setState({ messages: data.messages || [] });
+    } catch (e) {
+      console.error('Failed to load conversation:', e);
+    }
+  };
+
   const handleDeleteConv = async (id: number, e: React.MouseEvent) => {
     e.stopPropagation();
     if (!confirm('删除此对话？')) return;
@@ -45,6 +55,11 @@ export default function Layout() {
     }
   };
 
+  const handleNewConv = () => {
+    setCurrentConversationId(null);
+    useStore.setState({ messages: [] });
+  };
+
   const handleNav = (path: string, tab: 'chat' | 'import' | 'docs' | 'kg' | 'settings') => {
     setActiveTab(tab);
     navigate(path);
@@ -55,11 +70,15 @@ export default function Layout() {
       {/* 侧边栏 */}
       <nav className="w-64 min-h-screen flex flex-col border-r border-border">
         {/* Logo */}
-        <div className="p-8 pb-4">
-          <h1 className="font-display text-3xl leading-none">
+        <div className="p-6 pb-3 flex items-center gap-3">
+          <img src="/favicon.svg" alt="KG-Agent" className="w-10 h-10" />
+          <h1 className="font-display text-2xl leading-none">
             <span className="text-text-primary">KG</span>
-            <span className="text-brand">.AGENT</span>
+            <span className="text-brand">.Agent</span>
           </h1>
+        </div>
+        <div className="px-6 pb-2 text-xs font-mono text-text-muted">
+          知识图谱论文助手
         </div>
 
         {/* Nav Items */}
@@ -108,6 +127,14 @@ export default function Layout() {
                 ✕
               </button>
             </div>
+            {/* 新建对话按钮 */}
+            <button
+              onClick={handleNewConv}
+              className="mx-4 mt-3 mb-2 px-3 py-2 rounded-lg bg-brand/10 border border-brand/30 text-brand text-sm font-mono hover:bg-brand/20 hover:border-brand/50 transition-all flex items-center gap-2"
+            >
+              <span>✚</span>
+              <span>新建对话</span>
+            </button>
             <div className="flex-1 overflow-y-auto">
               {convs.length === 0 ? (
                 <div className="p-4 text-center font-mono text-xs text-text-muted/60">
@@ -117,10 +144,7 @@ export default function Layout() {
                 convs.map((conv) => (
                   <div
                     key={conv.id}
-                    onClick={() => {
-                      setCurrentConversationId(conv.id);
-                      useStore.setState({ messages: conv.messages || [] });
-                    }}
+                    onClick={() => handleSelectConv(conv.id)}
                     className={`
                       group relative px-4 py-3 border-b border-border-subtle cursor-pointer
                       hover:bg-slate/50 transition-all

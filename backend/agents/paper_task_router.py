@@ -59,6 +59,12 @@ class PaperTaskRouter:
             "override": {"bm25": True, "vector": True, "graph": True, "intent": "relation", "bm25_top_k": 12, "vector_top_k": 12, "graph_top_k": 10, "graph_method": "path"},
             "reason": "方法对比需要方法、实验和关系路径证据",
         },
+        "opening_report": {
+            "answer_style": "opening_report",
+            "preferred": ["abstract", "introduction", "related_work", "method", "experiment", "conclusion"],
+            "override": {"bm25": True, "vector": True, "graph": True, "intent": "global_summary", "bm25_top_k": 16, "vector_top_k": 16, "graph_top_k": 8, "graph_method": "subgraph"},
+            "reason": "开题报告需要按研究依据、内容、方案、创新点和进度组织",
+        },
         "outline": {
             "answer_style": "writing_outline",
             "preferred": ["abstract", "introduction", "method", "experiment", "conclusion"],
@@ -72,15 +78,17 @@ class PaperTaskRouter:
         "compare": ["对比", "比较", "区别", "不同", "差异", "优缺点", "vs", "versus", "compare", "difference"],
         "experiment": ["实验", "结果", "指标", "数据集", "消融", "benchmark", "bleu", "accuracy", "f1", "rouge", "dataset", "ablation"],
         "method": ["方法", "模型", "算法", "框架", "公式", "代码", "怎么做", "如何实现", "method", "model", "algorithm", "architecture"],
-        "outline": ["大纲", "开题", "论文结构", "写作思路", "章节安排", "提纲", "outline"],
+        "opening_report": ["开题报告", "开题", "研究方案", "课题申报", "proposal", "research proposal"],
+        "outline": ["大纲", "论文结构", "写作思路", "章节安排", "提纲", "outline"],
         "overview": ["主要解决", "贡献", "创新点", "讲了什么", "总结一下", "概述", "是什么", "overview", "summary", "contribution"],
     }
 
     def route(self, query: str) -> PaperTaskPlan:
         query_lower = (query or "").lower()
         scores = {task: self._score(query_lower, words) for task, words in self.KEYWORDS.items()}
-        # 优先检测大纲任务（用户明确要求生成大纲时）
-        if scores.get("outline", 0) > 0 and any(token in query_lower for token in ["大纲", "开题", "提纲", "outline", "生成大纲", "章节安排"]):
+        if scores.get("opening_report", 0) > 0 and any(token in query_lower for token in ["开题报告", "研究方案", "课题申报", "research proposal", "proposal"]):
+            task_type = "opening_report"
+        elif scores.get("outline", 0) > 0 and any(token in query_lower for token in ["大纲", "提纲", "outline", "生成大纲", "章节安排"]):
             task_type = "outline"
         elif scores.get("literature_review", 0) > 0 and any(token in query_lower for token in ["综述", "研究现状", "相关工作", "文献综述"]):
             task_type = "literature_review"

@@ -62,7 +62,8 @@ class FastQAWorkflow(BaseWorkflow):
         yield {"type": "status", "agent": "FastPath", "step": "检索中", "elapsed": 0.0}
         loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(None, self.run, context, decision)
-        yield {"type": "sources", "data": result.sources}
+        if result.sources:
+            yield {"type": "sources", "data": result.sources}
         for char in result.response:
             yield {"type": "delta", "content": char}
         yield {"type": "status", "agent": "FastPath", "step": "完成", "elapsed": time.time() - start}
@@ -207,10 +208,14 @@ class PaperAssistantWorkflow(BaseWorkflow):
         return WorkflowResult(False, "paper_assistant", response=f"[错误] 论文参考助手执行失败: {result.message}", confidence=0.0, processing_time=f"{elapsed:.1f}s")
 
     async def run_async(self, context: AgentContext, decision=None) -> AsyncGenerator[dict, None]:
+        start = time.time()
         yield {"type": "status", "agent": "PaperAssistant", "step": "论文任务分析中", "elapsed": 0.0}
         loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(None, self.run, context, decision)
-        yield {"type": "sources", "data": result.sources}
+        yield {"type": "status", "agent": "PaperAssistant", "step": "检索论文证据完成", "elapsed": time.time() - start}
+        yield {"type": "status", "agent": "CitationVerifier", "step": "验证论文回答", "elapsed": time.time() - start}
+        if result.sources:
+            yield {"type": "sources", "data": result.sources}
         for char in result.response:
             yield {"type": "delta", "content": char}
         yield {"type": "metrics", "path": "paper_assistant", "processing_time": result.processing_time, "confidence": result.confidence, **result.metadata}

@@ -6,20 +6,25 @@
 @tailwind utilities;
 
 :root {
-  /* ── Claude 配色体系 ── */
-  --canvas-black: #1a1614;
-  --surface-slate: #2b2522;
-  --brand-accent: #d97757;
-  --brand-warm: #c4956a;
-  --info-blue: #6b8aed;
-  --success-green: #6db88f;
-  --warning-amber: #d4a843;
-  --danger-red: #d45d5d;
-  --hazard-white: #ede8e3;
-  --secondary-text: #a89e95;
-  --muted-text: #6e6560;
-  --border-color: #3d3632;
-  --border-subtle: #2e2824;
+  /* ── KG-Agent 柔和学术配色体系 ── */
+  /* 深色背景 - 柔和的深灰蓝 */
+  --canvas-black: #0f1419;
+  --surface-slate: #1c2128;
+  /* 品牌色 - 柔和的青蓝色 */
+  --brand-accent: #58a6ff;
+  --brand-warm: #7c9fcb;
+  /* 功能色 - 柔和版本 */
+  --info-blue: #58a6ff;
+  --success-green: #3fb950;
+  --warning-amber: #d29922;
+  --danger-red: #f85149;
+  /* 文字色 - 柔和的白灰色 */
+  --hazard-white: #e6edf3;
+  --secondary-text: #8b949e;
+  --muted-text: #6e7681;
+  /* 边框色 */
+  --border-color: #30363d;
+  --border-subtle: #21262d;
 }
 
 * {
@@ -110,4 +115,67 @@ body {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* ── Import action card animation ─────────────────────────────── */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.import-action-card {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* ── Pulse glow for processing status ─────────────────────────── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(88, 166, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.3);
+  }
+}
+
+.status-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Button hover scale ────────────────────────────────────────── */
+@keyframes subtle-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.btn-import:hover {
+  animation: subtle-bounce 0.4s ease-out;
+}
+
+/* ── Fade in for metrics ───────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.metrics-panel {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* ── Card shadow lift ──────────────────────────────────────────── */
+.card-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- 背景 -->
+  <circle cx="64" cy="64" r="60" fill="#0f1419"/>
+  <circle cx="64" cy="64" r="58" fill="none" stroke="#30363d" stroke-width="2"/>
+
+  <!-- 小猫身体 -->
+  <ellipse cx="64" cy="72" rx="32" ry="28" fill="#e6edf3"/>
+
+  <!-- 小猫耳朵 -->
+  <path d="M36 48 L44 72 L28 68 Z" fill="#e6edf3"/>
+  <path d="M92 48 L84 72 L100 68 Z" fill="#e6edf3"/>
+  <!-- 耳朵内部 -->
+  <path d="M38 52 L43 66 L32 64 Z" fill="#d29922"/>
+  <path d="M90 52 L85 66 L96 64 Z" fill="#d29922"/>
+
+  <!-- 小猫脸部 -->
+  <!-- 眼睛 - 知识图谱节点风格 -->
+  <ellipse cx="48" cy="60" rx="10" ry="12" fill="#1c2128"/>
+  <ellipse cx="80" cy="60" rx="10" ry="12" fill="#1c2128"/>
+  <!-- 眼睛发光 - 代表知识/智能 -->
+  <circle cx="48" cy="58" r="5" fill="#58a6ff"/>
+  <circle cx="80" cy="58" r="5" fill="#3fb950"/>
+  <!-- 眼睛高光 -->
+  <circle cx="50" cy="56" r="2" fill="#e6edf3"/>
+  <circle cx="82" cy="56" r="2" fill="#e6edf3"/>
+
+  <!-- 鼻子 -->
+  <ellipse cx="64" cy="72" rx="6" ry="4" fill="#d29922"/>
+
+  <!-- 嘴巴 - 微笑 -->
+  <path d="M56 76 Q64 84 72 76" fill="none" stroke="#8b949e" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- 胡须 -->
+  <line x1="38" y1="70" x2="26" y2="66" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="38" y1="74" x2="26" y2="76" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="90" y1="70" x2="102" y2="66" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="90" y1="74" x2="102" y2="76" stroke="#8b949e" stroke-width="1.5"/>
+
+  <!-- 头顶知识光环 -->
+  <circle cx="64" cy="28" r="8" fill="none" stroke="#58a6ff" stroke-width="2" opacity="0.8"/>
+  <circle cx="64" cy="28" r="5" fill="#58a6ff" opacity="0.3"/>
+  <!-- 光环星星 -->
+  <circle cx="58" cy="24" r="2" fill="#58a6ff"/>
+  <circle cx="70" cy="24" r="2" fill="#58a6ff"/>
+  <circle cx="64" cy="20" r="2" fill="#58a6ff"/>
+
+  <!-- 脖子上的小书本标记 -->
+  <rect x="56" y="92" width="16" height="12" rx="2" fill="#30363d" stroke="#58a6ff" stroke-width="1"/>
+  <line x1="60" y1="95" x2="68" y2="95" stroke="#e6edf3" stroke-width="1"/>
+  <line x1="60" y1="98" x2="66" y2="98" stroke="#8b949e" stroke-width="1"/>
+
+  <!-- KG 小标签 -->
+  <text x="64" y="118" font-family="Impact, sans-serif" font-size="12" fill="#58a6ff" text-anchor="middle" font-weight="bold">KG-Agent</text>
+</svg>

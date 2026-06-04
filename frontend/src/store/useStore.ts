@@ -1,5 +1,12 @@
 import { create } from 'zustand';
 
+interface ExecutionStep {
+  agent: string;
+  step: string;
+  elapsed: number;
+  timestamp: number;
+}
+
 interface AppState {
   // UI 状态
   activeTab: 'chat' | 'import' | 'docs' | 'kg' | 'settings';
@@ -12,6 +19,11 @@ interface AppState {
   addMessage: (msg: any) => void;
   updateLastMessage: (updates: any) => void;
   clearMessages: () => void;
+
+  // 执行步骤历史（用于当前消息）
+  executionSteps: ExecutionStep[];
+  addExecutionStep: (step: ExecutionStep) => void;
+  clearExecutionSteps: () => void;
 
   // 处理状态
   isProcessing: boolean;
@@ -45,7 +57,11 @@ export const useStore = create<AppState>((set) => ({
     }
     return { messages: msgs };
   }),
-  clearMessages: () => set({ messages: [], currentConversationId: null }),
+  clearMessages: () => set({ messages: [], currentConversationId: null, executionSteps: [] }),
+
+  executionSteps: [],
+  addExecutionStep: (step) => set((state) => ({ executionSteps: [...state.executionSteps, step] })),
+  clearExecutionSteps: () => set({ executionSteps: [] }),
 
   isProcessing: false,
   setIsProcessing: (v) => set({ isProcessing: v }),

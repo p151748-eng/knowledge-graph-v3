@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="docs/feature-manual.md">功能介绍</a> ·
   <a href="ARCHITECTURE.md">Architecture</a> ·
   <a href="API.md">API</a> ·
   <a href="docs/user-guide.md">User Guide</a> ·
@@ -26,6 +27,8 @@
 </p>
 
 KG-Agent System v3 是一个面向个人学习、论文阅读、研究选题分析和知识管理的智能知识库系统。它把 RAG、知识图谱、多 Agent 工作流、上下文记忆、证据校验、联网搜索和学术论文检索组合在一起，让用户可以在同一个界面完成文档导入、知识沉淀、论文问答、研究空白分析、最新论文补充和可视化图谱探索。
+
+> 想先了解这个项目适合哪些真实场景、能帮用户完成什么任务，请看 [功能介绍](docs/feature-manual.md)。
 
 ## 为什么需要 KG-Agent
 
@@ -51,6 +54,23 @@ KG-Agent 面向这些问题设计了多路径工作流和证据驱动回答机�
 | 文档与论文导入 | 支持文本、文件和 arXiv 论文导入，自动分片、向量化和实体关系抽取。 |
 | 上下文记忆 | 结合近期对话、长期摘要、任务状态和向量召回，识别“这个选题”“继续刚才”等追问。 |
 | 可观测回答 | 前端展示路径、来源、执行步骤、证据评分、检索轮次和性能指标。 |
+
+
+## 功能展示
+
+### 研究助手：从模糊问题到可做研究选题
+
+<p align="center">
+  <img src="docs/assets/demo-research-assistant.svg" alt="Research Assistant Demo" width="100%" />
+</p>
+
+### 证据透明：看到每条证据从哪里来
+
+<p align="center">
+  <img src="docs/assets/demo-evidence-panel.svg" alt="Evidence Panel Demo" width="100%" />
+</p>
+
+更多真实场景、使用方式和示例问题见 [docs/feature-manual.md](docs/feature-manual.md)。
 
 ## 系统架构
 
@@ -220,6 +240,7 @@ http://localhost:5173
 - [DEVELOPMENT.md](DEVELOPMENT.md)：开发环境和项目结构。
 - [DEPLOYMENT.md](DEPLOYMENT.md)：部署与运维。
 - [REQUIREMENTS.md](REQUIREMENTS.md)：需求说明。
+- [docs/feature-manual.md](docs/feature-manual.md)：面向使用者的功能介绍、真实场景和示例问题。
 - [docs/user-guide.md](docs/user-guide.md)：用户操作手册。
 - [docs/demo.md](docs/demo.md)：演示脚本。
 

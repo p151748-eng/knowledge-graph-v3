@@ -1,0 +1,399 @@
+[
+  {
+    "name": "explicit_web_latest",
+    "question": "帮我综述 2023-2026 年 Self-RAG 的发展，重点联网找近年论文。",
+    "path": "research",
+    "intent": "literature_review",
+    "response": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足。",
+    "evidence_count": 3,
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理",
+        "evidence_count": 0
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "reason": "识别为 literature_review，生成受控研究计划",
+        "observation_summary": "生成 3 个子任务，最终包含 verify_claims",
+        "evidence_count": 0
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; search_academic_or_web; synthesize_research; verify_claims; final_answer",
+        "evidence_count": 0
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search",
+        "evidence_count": 0
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "external_search",
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=0, semantic=0, graph=0, merged=1",
+        "evidence_count": 1
+      },
+      {
+        "step": 6,
+        "node": "external_search",
+        "action": "search_academic_or_web",
+        "tool_name": "WebSearchVerifierAgent",
+        "status": "completed",
+        "next_node": "observation",
+        "reason": "用户显式要求联网或外部资料",
+        "observation_summary": "接受 2 条外部证据",
+        "evidence_count": 2
+      },
+      {
+        "step": 7,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 3 条证据：Self-RAG 2023、Recent Self-RAG Survey 2026、Agentic RAG Evaluation 2025",
+        "evidence_count": 3
+      },
+      {
+        "step": 8,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据",
+        "evidence_count": 3
+      }
+    ],
+    "graph_nodes": [
+      "memory_guard",
+      "planner",
+      "decompose",
+      "action_policy",
+      "local_search",
+      "external_search",
+      "observation",
+      "synthesis",
+      "citation_verifier",
+      "finalize"
+    ],
+    "citation_verification": {
+      "supported": true,
+      "support_score": 1.0,
+      "citation_coverage": 1.0,
+      "unsupported_claims": [],
+      "supporting_evidence_ids": [
+        "chunk:1",
+        "web:web-1"
+      ],
+      "claims": [
+        {
+          "text": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:1",
+            "web:web-1"
+          ],
+          "confidence": 0.8500000000000001
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "name": "freshness_latest",
+    "question": "这个方向最新还有哪些研究空白？",
+    "path": "research",
+    "intent": "gap_analysis",
+    "response": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足。",
+    "evidence_count": 3,
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理",
+        "evidence_count": 0
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "reason": "识别为 gap_analysis，生成受控研究计划",
+        "observation_summary": "生成 3 个子任务，最终包含 verify_claims",
+        "evidence_count": 0
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; search_academic_or_web; synthesize_research; verify_claims; final_answer",
+        "evidence_count": 0
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search",
+        "evidence_count": 0
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "external_search",
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=0, semantic=0, graph=0, merged=1",
+        "evidence_count": 1
+      },
+      {
+        "step": 6,
+        "node": "external_search",
+        "action": "search_academic_or_web",
+        "tool_name": "WebSearchVerifierAgent",
+        "status": "completed",
+        "next_node": "observation",
+        "reason": "本地证据不足，需要外部补证",
+        "observation_summary": "接受 2 条外部证据",
+        "evidence_count": 2
+      },
+      {
+        "step": 7,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 3 条证据：Self-RAG 2023、Recent Self-RAG Survey 2026、Agentic RAG Evaluation 2025",
+        "evidence_count": 3
+      },
+      {
+        "step": 8,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据",
+        "evidence_count": 3
+      }
+    ],
+    "graph_nodes": [
+      "memory_guard",
+      "planner",
+      "decompose",
+      "action_policy",
+      "local_search",
+      "external_search",
+      "observation",
+      "synthesis",
+      "citation_verifier",
+      "finalize"
+    ],
+    "citation_verification": {
+      "supported": true,
+      "support_score": 1.0,
+      "citation_coverage": 1.0,
+      "unsupported_claims": [],
+      "supporting_evidence_ids": [
+        "chunk:1",
+        "web:web-1"
+      ],
+      "claims": [
+        {
+          "text": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "chunk:1",
+            "web:web-1"
+          ],
+          "confidence": 0.8500000000000001
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  },
+  {
+    "name": "empty_local_with_web_request",
+    "question": "联网搜索 Agentic RAG 2026 最新研究空白并给出研究方案。",
+    "path": "research",
+    "intent": "gap_analysis",
+    "response": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足。",
+    "evidence_count": 2,
+    "actions": [
+      {
+        "step": 1,
+        "node": "memory_guard",
+        "action": "classify_research_intent",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "planner",
+        "reason": "进入研究边界判断",
+        "observation_summary": "问题将按研究任务边界继续处理",
+        "evidence_count": 0
+      },
+      {
+        "step": 2,
+        "node": "planner",
+        "action": "decompose_question",
+        "tool_name": "ResearchPlanner",
+        "status": "completed",
+        "next_node": "decompose",
+        "reason": "识别为 gap_analysis，生成受控研究计划",
+        "observation_summary": "生成 3 个子任务，最终包含 verify_claims",
+        "evidence_count": 0
+      },
+      {
+        "step": 3,
+        "node": "decompose",
+        "action": "decompose_question",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "action_policy",
+        "reason": "将研究计划映射为白名单 action 队列",
+        "observation_summary": "search_local_papers; search_academic_or_web; synthesize_research; verify_claims; final_answer",
+        "evidence_count": 0
+      },
+      {
+        "step": 4,
+        "node": "action_policy",
+        "action": "decompose_question",
+        "tool_name": "ResearchActionPolicy",
+        "status": "completed",
+        "next_node": "local_search",
+        "reason": "根据 intent、预算和工具拓扑选择下一节点",
+        "observation_summary": "next_node=local_search",
+        "evidence_count": 0
+      },
+      {
+        "step": 5,
+        "node": "local_search",
+        "action": "search_local_papers",
+        "tool_name": "HybridSearchTool",
+        "status": "completed",
+        "next_node": "external_search",
+        "reason": "本地证据是研究综合的默认依据",
+        "observation_summary": "检索结果：bm25=0, semantic=0, graph=0, merged=0",
+        "evidence_count": 0
+      },
+      {
+        "step": 6,
+        "node": "external_search",
+        "action": "search_academic_or_web",
+        "tool_name": "WebSearchVerifierAgent",
+        "status": "completed",
+        "next_node": "observation",
+        "reason": "用户显式要求联网或外部资料",
+        "observation_summary": "接受 2 条外部证据",
+        "evidence_count": 2
+      },
+      {
+        "step": 7,
+        "node": "observation",
+        "action": "synthesize_research",
+        "tool_name": "ResearchWorkflow",
+        "status": "completed",
+        "next_node": "synthesis",
+        "reason": "证据收集结束，进入研究综合",
+        "observation_summary": "累计 2 条证据：Recent Self-RAG Survey 2026、Agentic RAG Evaluation 2025",
+        "evidence_count": 2
+      },
+      {
+        "step": 8,
+        "node": "citation_verifier",
+        "action": "verify_claims",
+        "tool_name": "CitationVerifier",
+        "status": "completed",
+        "next_node": "finalize",
+        "reason": "最终研究结论必须经过证据支撑验证",
+        "observation_summary": "答案断言已匹配到证据",
+        "evidence_count": 2
+      }
+    ],
+    "graph_nodes": [
+      "memory_guard",
+      "planner",
+      "decompose",
+      "action_policy",
+      "local_search",
+      "external_search",
+      "observation",
+      "synthesis",
+      "citation_verifier",
+      "finalize"
+    ],
+    "citation_verification": {
+      "supported": true,
+      "support_score": 1.0,
+      "citation_coverage": 1.0,
+      "unsupported_claims": [],
+      "supporting_evidence_ids": [
+        "web:web-1"
+      ],
+      "claims": [
+        {
+          "text": "研究回答：根据当前证据，Self-RAG 近年发展需要外部论文补证；如果外部证据不足，应明确说明证据不足",
+          "supported": true,
+          "supporting_evidence_ids": [
+            "web:web-1"
+          ],
+          "confidence": 0.7000000000000001
+        }
+      ],
+      "final_action": "answer",
+      "reason": "答案断言已匹配到证据"
+    }
+  }
+]

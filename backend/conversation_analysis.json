@@ -1,0 +1,517 @@
+{
+  "conversation_id": 336,
+  "title": "RAG是什么?",
+  "created_at": "2026-05-28 04:59:22",
+  "message_count": 16,
+  "messages": [
+    {
+      "role": "user",
+      "content": "RAG是什么?",
+      "timestamp": "2026-05-28T04:59:22.282214"
+    },
+    {
+      "path": "fast",
+      "role": "assistant",
+      "intent": "force_fast",
+      "content": "## RAG 是什么？\n\n**RAG**（Retrieval-Augmented Generation）即**检索增强生成**，是现代问答系统和大语言模型应用的重要架构。\n\n### 核心思想\n\nRAG 的工作流程是：\n1. **检索（Retrieve）**：根据用户问题，从外部知识库中找到相关文档片段\n2. **生成（Generate）**：将检索到的片段放入 LLM 上下文，让模型基于这些证据生成答案\n\n### 为什么需要 RAG？\n\n| 问题 | RAG 如何解决 |\n|------|-------------|\n| LLM 有知识截止日期 | 接入实时/最新的外部知识库 |\n| LLM 容易\"幻觉\" | 用检索到的事实约束生成内容 |\n| 答案缺乏可追溯性 | 可以明确标注答案来源 |\n\n### RAG 中的检索方式\n\nRAG 系统通常采用**混合检索**策略：\n\n- **BM25 关键词检索**：擅长精确匹配实体名、术语、代码符号\n- **向量语义检索（Embedding）**：擅长理解同义表达和语义相似\n- **图检索（Graph）**：擅长实体关系、路径推理等结构化问题\n\n> 简单来说，RAG = **先检索，再生成**，让大模型\"有据可依\"地回答问题。",
+      "sources": [],
+      "timestamp": "2026-05-28T04:59:22.282214",
+      "explanations": [],
+      "route_decision": {
+        "path": "fast",
+        "intent": "force_fast",
+        "reason": "用户强制指定路径",
+        "metadata": {},
+        "confidence": 1.0,
+        "topic_changed": false,
+        "reporting_level": "minimal",
+        "context_dependent": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "1",
+      "timestamp": "2026-05-28T05:14:24.403088"
+    },
+    {
+      "path": "fast",
+      "role": "assistant",
+      "intent": "fact_qa",
+      "content": "您好！您输入了\"1\"，请问您是想：\n\n1. **继续了解 RAG 的某个方面？**（比如实现细节、应用场景等）\n2. **有其他问题想问？**\n3. **只是在测试？**（没关系，系统正常运行 ✅）\n\n请告诉我您的需求，我很乐意帮忙！",
+      "sources": [],
+      "timestamp": "2026-05-28T05:14:24.403088",
+      "explanations": [],
+      "route_decision": {
+        "path": "fast",
+        "intent": "fact_qa",
+        "reason": "简单事实问题走快速路径",
+        "metadata": {
+          "scores": {
+            "fast": 0.65,
+            "pipeline": 0.25,
+            "research": 0.0,
+            "self_rag": 0.0,
+            "paper_assistant": 0.0
+          },
+          "features": {
+            "length": 1,
+            "has_paper": false,
+            "has_design": false,
+            "has_simple": false,
+            "has_verify": false,
+            "has_compare": false,
+            "has_complex": false,
+            "has_research": false,
+            "multi_object": false,
+            "current_object_verification": false
+          }
+        },
+        "confidence": 0.72,
+        "topic_changed": true,
+        "reporting_level": "minimal",
+        "context_dependent": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "多智能体框架应该怎么设计，能否针对多智能体的选题帮我设计一份开题报告",
+      "timestamp": "2026-05-28T05:17:09.574434"
+    },
+    {
+      "path": "research",
+      "role": "assistant",
+      "intent": "research_design",
+      "content": "您好！作为您的研究分析助手，我将严格基于您提供的**证据**和**执行计划**，为您完成对“多智能体框架设计”的分析，并尝试规划一份开题报告的骨架。\n\n### **结论**\n综合现有证据，多智能体框架的研究已从概念探讨进入工程化与场景化阶段。当前主流设计以**大语言模型为核心驱动**，通过**角色定义、任务分解与流水线编排**来模拟人类协作。研究缺口主要存在于**框架的普适性、协作效率的优化、以及评估体系的建立**等方面。开题报告应聚焦于解决一个具体的框架设计挑战（如动态调度、容错机制），并提出可验证的改进方案。\n\n### **依据**\n1.  **框架实例与结构**：证据显示存在具体的框架实现，如`AutoGen`被用于自动执行技术挖掘任务（证据3120），以及一个清晰的`3-Agent流水线`（KG检索→解释→整合）用于处理复杂问题（证据57）。这证明了“多智能体”已具象化为可执行的软件架构。\n2.  **设计原则与目标**：研究强调了明确的指导原则。例如，在教学场景中提出了“认知适应、个性化、灵活协作”等五项设计原则（证据3700）。在系统需求中，明确了性能目标，如快速路径响应≤3秒，完整流水线≤10秒（证据57），这为框架设计设定了量化标准。\n3.  **应用验证**：多智能体方法已在**作文自动评分**（证据2884）和**知识挖掘**（证据3120）等具体任务中得到应用，表明其具备解决复杂问题的实用价值。\n\n### **对比/分析**\n通过分析证据，可以梳理出当前框架设计的几个关键维度对比：\n\n| 对比维度 | 证据中的体现 | 分析 |\n| :--- | :--- | :--- |\n| **架构模式** | 证据57中的“3-Agent流水线”是典型的**集中协调式**，由Admin指令驱动。 | 这种模式易于理解和实现，但中心节点可能成为瓶颈。 |\n| **核心驱动力** | 所有案例均基于**大语言模型**作为智能体的“大脑”，负责推理与生成。 | LLM能力是框架上限的关键，但也带来了不确定性和“幻觉”风险。 |\n| **任务处理** | 存在**动态路由**（简单问题走快速路径，复杂问题走完整流水线）（证据57）。 | 这体现了框架设计的**效率考量**，是智能调度的初级形态，但策略相对固定。 |\n| **协作深度** | 从简单的串联流水线（证据57）到要求“灵活协作”与“反馈优化”的循环机制（证据3700）。 | 协作机制从“单向任务流”向“动态协商与迭代”演进，复杂性更高。 |\n| **可复用性** | `AutoGen`被作为一个通用框架应用于不同任务（证据3120）。 | 体现了**框架的通用性设计**，但如何平衡通用性与特定领域的优化，仍是一个挑战。 |\n\n**研究缺口识别**：\n基于以上分析，当前研究可能存在的缺口包括：\n1.  **可扩展性与动态适应性缺口**：静态的流水线（如证据57）难以应对任务量或复杂度的动态变化。如何设计**动态任务分解与智能体协同**策略是挑战。\n2.  **鲁棒性与容错性缺口**：当智能体出现错误（如LLM输出偏差）或沟通失效时，现有证据未展示系统的**诊断与恢复机制**。\n3.  **评估与优化缺口**：缺乏对框架**整体效能**（而非单任务准确率）的综合性评估指标，如智能体间的协作效率、资源消耗比等。\n\n### **下一步建议**\n基于以上分析，为您设计开题报告大纲及核心内容建议如下：\n\n#### **开题报告核心结构建议**\n\n**1. 引言**\n*   **研究背景**：阐述大语言模型催生的智能体浪潮，以及单智能体在复杂任务中的局限性。\n*   **问题陈述**：明确指出当前多智能体框架在**可扩展性、鲁棒性或评估体系**方面的具体不足（从上述缺口中选择一个）。\n*   **研究目标**：提出本研究旨在设计一个**具有动态任务调度能力/增强容错能力/提供综合评估框架**的多智能体系统。\n\n**2. 文献综述**\n*   **多智能体系统理论基础**。\n*   **大语言模型智能体相关研究**（提及`AutoGen`、`ReAct`等证据中的相关工作，证据3700、3120）。\n*   **现有框架分析与评述**：重点对比分析集中式、分布式等架构，以及证据57中展示的流水线模式，指出其优缺点，自然引出本研究的必要性。\n\n**3. 研究内容与方案**\n*   **总体框架设计**：提出您计划设计的框架架构图，说明其核心创新点（例如，引入一个“调度者”角色或“监控-反馈”回路）。\n*   **核心模块设计**：\n    *   **动态任务分解与分配模块**（针对可扩展性缺口）。\n    *   **智能体状态监控与错误恢复模块**（针对鲁棒性缺口）。\n    *   **协作效能评估模块**（针对评估缺口）。\n*   **技术路线**：说明将使用哪些技术（如LLM API、向量数据库、消息队列）来实现上述模块。\n\n**4. 创新点与预期成果**\n*   明确列出1-3个理论或技术创新点。\n*   预期成果包括：原型系统、学术论文、以及在某个场景（如复杂问答、数据分析）下的验证实验报告。\n\n**5. 研究计划与可行性分析**\n*   制定分阶段的时间表。\n*   分析所需的数据、计算资源以及团队能力是否可行。\n\n请您基于这个框架，确定一个您最感兴趣且有把握解决的**具体研究缺口**（例如：“面向长程复杂任务的多智能体动态协作框架设计”），这样开题报告的目标和内容会更加聚焦和深入。",
+      "sources": [],
+      "timestamp": "2026-05-28T05:17:09.574434",
+      "explanations": [],
+      "route_decision": {
+        "path": "research",
+        "intent": "research_design",
+        "reason": "识别为需要规划、比较、设计或研究综合的复杂任务",
+        "metadata": {
+          "scores": {
+            "fast": 0.2,
+            "pipeline": 0.45,
+            "research": 1.85,
+            "self_rag": -0.35,
+            "paper_assistant": 0.65
+          },
+          "features": {
+            "length": 34,
+            "has_paper": true,
+            "has_design": true,
+            "has_simple": false,
+            "has_verify": false,
+            "has_compare": false,
+            "has_complex": false,
+            "has_research": true,
+            "multi_object": true,
+            "current_object_verification": false
+          }
+        },
+        "confidence": 0.92,
+        "topic_changed": true,
+        "reporting_level": "verbose",
+        "context_dependent": false
+      },
+      "workflow_metadata": {
+        "claims": [
+          {
+            "text": "作为您的研究分析助手，我将严格基于您提供的**证据**和**执行计划**，为您完成对“多智能体框架设计”的分析，并尝试规划一份开题报告的骨架",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          },
+          {
+            "text": "### **结论**",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          },
+          {
+            "text": "综合现有证据，多智能体框架的研究已从概念探讨进入工程化与场景化阶段",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          },
+          {
+            "text": "当前主流设计以**大语言模型为核心驱动**，通过**角色定义、任务分解与流水线编排**来模拟人类协作",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          },
+          {
+            "text": "研究缺口主要存在于**框架的普适性、协作效率的优化、以及评估体系的建立**等方面",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          },
+          {
+            "text": "开题报告应聚焦于解决一个具体的框架设计挑战（如动态调度、容错机制），并提出可验证的改进方案",
+            "supported": false,
+            "confidence": 0.2,
+            "supporting_evidence_ids": []
+          }
+        ],
+        "started_at": 1779945313.0803056,
+        "graph_trace": [
+          {
+            "node": "planner",
+            "elapsed": 25.48,
+            "next_action": "retrieve"
+          },
+          {
+            "node": "retrieval",
+            "elapsed": 44.991,
+            "next_action": "synthesize"
+          },
+          {
+            "node": "synthesis",
+            "elapsed": 46.002,
+            "next_action": "verify_citations"
+          },
+          {
+            "node": "citation_verifier",
+            "elapsed": 0.001,
+            "next_action": "finalize"
+          },
+          {
+            "node": "finalize",
+            "elapsed": 0.0,
+            "next_action": "done"
+          }
+        ],
+        "research_plan": {
+          "goal": "为多智能体框架设计研究生成一份结构化的开题报告",
+          "tasks": [
+            {
+              "id": "t1",
+              "type": "retrieve_papers",
+              "query": "recent review papers on multi-agent system architecture and framework design",
+              "params": {},
+              "target": "",
+              "depends_on": []
+            },
+            {
+              "id": "t2",
+              "type": "retrieve_papers",
+              "query": "state-of-the-art methods for agent coordination, communication, and task decomposition in multi-agent systems",
+              "params": {},
+              "target": "",
+              "depends_on": []
+            },
+            {
+              "id": "t3",
+              "type": "compare_methods",
+              "query": "Compare key architectural paradigms (e.g., centralized vs. decentralized, communication topologies) in multi-agent framework design based on retrieved literature.",
+              "params": {},
+              "target": "A structured comparison table or summary of different frameworks/paradigms.",
+              "depends_on": [
+                "t1",
+                "t2"
+              ]
+            },
+            {
+              "id": "t4",
+              "type": "summarize_method",
+              "query": "Summarize the core components and design principles of a contemporary, influential multi-agent framework (e.g., AutoGen, MetaGPT, CrewAI) from the retrieved papers.",
+              "params": {},
+              "target": "A concise technical summary of the selected framework's structure and workflow.",
+              "depends_on": [
+                "t1",
+                "t2"
+              ]
+            },
+            {
+              "id": "t5",
+              "type": "find_research_gap",
+              "query": "Identify current challenges and open research questions in multi-agent framework design, such as scalability, robustness, or domain adaptation, based on the literature review and method comparison.",
+              "params": {},
+              "target": "A list of 2-3 clearly articulated research gaps or problems.",
+              "depends_on": [
+                "t3",
+                "t4"
+              ]
+            },
+            {
+              "id": "t6",
+              "type": "generate_outline",
+              "query": "Generate a standard outline for a research proposal/opening report on designing a multi-agent framework, incorporating the identified research gap and potential approach.",
+              "params": {},
+              "target": "A hierarchical outline (sections and subsections) for the opening report.",
+              "depends_on": [
+                "t5"
+              ]
+            },
+            {
+              "id": "t7",
+              "type": "generate_proposal",
+              "query": "Draft the core content for the opening report's 'Introduction' and 'Proposed Research' sections, based on the outline, summarizing the background, stating the problem, and outlining the proposed framework design approach to address the gap.",
+              "params": {},
+              "target": "A coherent draft text for the key proposal sections.",
+              "depends_on": [
+                "t6"
+              ]
+            },
+            {
+              "id": "t8",
+              "type": "verify_claims",
+              "query": "Verify the key claims made in the draft proposal regarding the identified research gap and the novelty of the proposed approach against the retrieved literature.",
+              "params": {},
+              "target": "A verification report indicating whether the claims are well-supported or require modification.",
+              "depends_on": [
+                "t7"
+              ]
+            }
+          ],
+          "budget": {
+            "max_subtasks": 8,
+            "max_llm_calls": 8,
+            "max_web_calls": 1,
+            "max_retrieval_calls": 5,
+            "max_runtime_seconds": 60
+          }
+        },
+        "evidence_items": [
+          {
+            "id": "chunk:3120",
+            "score": 0.043508196721311475,
+            "title": "生成式AI大模型结合知识库与AI Agent开展知识挖掘的探析-赵浜",
+            "content": "【论文】生成式AI大模型结合知识库与AI Agent开展知识挖掘的探析-赵浜\n【作者】Documentation,Information & Knowledge 《图书情报知识》网络首发论文 题目：\n【年份】2024\n【章节】4.5 利用基于知识图谱RAG的AI Agent开展技\n【类型】paragraph\n【正文】\n术先进性情报挖掘任务\n术先进性情报挖掘任务\n为进一步结合已有科技文献知识挖掘、创新情报\n发现结果与相关专家经验，开展技术先进性情报挖\n掘，本研究在获取ArXiv上近十年和量子计算领域相 关论文的基础上抽取其创新贡献内容中涉及的技术 表2 AutoGen 自动执行技术指标挖掘任务的输入与输出结果示例 Table 2 Example Results for Automatic Extraction of Technical Indicators 输入 （Admin） Find papers on Chip Design from arxiv in the last two month of year 2023, create a structured dataset of extracted 输出结果1 （Scientist） 技术指标 标题 BRYT: Data Rich Analytics Based Computer Architecture for A New Paradigm of Chip Design to Supplant Moore's Law 作者 Ian McDougall, Shayne Wadle, Harish Batchu, Michael Davies, Karthikeyan Sankaralingam 研究贡献 Introduced a data-rich analytics-based computing architecture（BRYT）for real-time chip monitoring 论文链接 https://arxiv.org/abs/2312.13428 输出结果2 （Scientist） 技术指标 标题 A general designing approach for polarization-independent photonic on-chip systems 作者 Yating Wu, Xiaoyan Liu, Tao Chu 研究贡献 Showcased a scalable approach to achieving polarization-independent（PID）devices for optical 论文链接 https://arxiv.org/abs/2312.06146 指标，",
+            "citation": "chunk:3120",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "paragraph",
+              "match_type": "bm25",
+              "original_id": 3120
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:57",
+            "score": 0.04171428571428572,
+            "title": "AI对话与Agent流水线资料",
+            "content": "# AI对话与Agent流水线资料\n\n## 来源：REQUIREMENTS.md / KG-Agent System 需求文档\n\n# KG-Agent System 需求文档\n\n---\n\n## 来源：REQUIREMENTS.md / 2.1.1 智能对话模块\n\n#### 2.1.1 智能对话模块\n\n| 功能 | 描述 | 优先级 |\n|------|------|--------|\n| 动态路由问答 | 根据问题复杂度自动选择快速路径或完整流水线 | P0 |\n| 快速路径 | 简单问题直接 KG 检索 + LLM 生成，响应 ~2秒 | P0 |\n| 3-Agent流水线 | 复杂问题走 KG检索→解释→整合，响应 ~5-8秒 | P0 |\n| 联网搜索 | DuckDuckGo 搜索，结果自动存入 KG 和文档库 | P1 |\n| 对话历史 | 支持多轮对话，历史消息存储和查看 | P1 |\n\n---\n\n## 来源：REQUIREMENTS.md / 3.1 性能需求\n\n### 3.1 性能需求\n\n| 指标 | 目标 |\n|------|------|\n| 快速路径响应时间 | ≤ 3秒 |\n| 完整流水线响应时间 | ≤ 10秒 |\n| 文档导入处理时间 | ≤ 30秒（单文档） |\n| 检索延迟 | ≤ 500ms |\n\n---\n\n## 来源：REQUIREMENTS.md / 7.2 性能验收\n\n### 7.2 性能验收\n\n| 指标 | 验收标准 |\n|------|----------|\n| 响应时间 | 快速路径 ≤ 3秒，完整流水线 ≤ 10秒 |\n| 检索延迟 | ≤ 500ms |\n| 系统稳定性 | 连续运行 24 小时无崩溃 |\n\n---\n\n---\n\n## 来源：ARCHITECTURE.md / KG-Agent System v2 架构设计文档\n\n# KG-Agent System v2 架构设计文档\n\n---\n\n## 来源：ARCHITECTURE.md / 1. 系统概述\n\n## 1. 系统概述\n\nKG-Agent System v2 是一个面向个人学习的智能知识库系统，采用 **3-Agent 流水线** + **动态路由** 架构设计。\n\n**设计理念：**\n- 简洁高效：精简的 3-Agent 架构，移除冗余功能\n- 动态路由",
+            "citation": "chunk:57",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "ai_doc_extraction",
+              "chunk_type": null,
+              "match_type": "bm25",
+              "original_id": 57
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3279",
+            "score": 0.03903225806451613,
+            "title": "基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千",
+            "content": "【论文】基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千\n【作者】作 者 姓 名  : 武千千\n【年份】2025\n【章节】ABSTRACT\n【类型】abstract\n【正文】\noning capabilities due to the massive, high-dimensional, an d multi -source heterogeneous nature of architectural data. To add ress these issues, this paper innovatively proposes the deep integration of large langu age models (LLMs) and knowledge graphs in the architecture domain, constructing a high-quality domain kn owledge system and enhancing QA capabilities. Following the research pathway of \"data construction —model training —knowledge enhancement —sys tem implementation,\" a smart knowledge service framework for the architecture profes sion is developed.",
+            "citation": "chunk:3279",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "abstract",
+              "match_type": "bm25",
+              "original_id": 3279
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3283",
+            "score": 0.038125,
+            "title": "基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千",
+            "content": "【论文】基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千\n【作者】作 者 姓 名  : 武千千\n【年份】2025\n【章节】ABSTRACT\n【类型】abstract\n【正文】\ngh natural language queries and structured searches, significantly improving response accuracy and system intelligence. Additionally, a one-stop architectural knowledge service platform is developed, providing industry users with multi-dimensional, intelligent knowledge acquisition and decision-support services.\nThe proposed integration framework of LLM s and knowledge graphs for architecture represents a methodological innovation and demonstrates practical feasibility, providing an effective approach to advancing intelligent knowledge services within the industry. This work lays the foundation for the further development of AI technologies tailored to the architecture field.",
+            "citation": "chunk:3283",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "abstract",
+              "match_type": "bm25",
+              "original_id": 3283
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3697",
+            "score": 0.03769230769230769,
+            "title": "面向国际中文教育的教学多智能体：目标定位、系统架构与应用场景-袁亚兴",
+            "content": "【论文】面向国际中文教育的教学多智能体：目标定位、系统架构与应用场景-袁亚兴\n【作者】2026 年第 3 期 （ 总第 395 期 ） 面 向国 际 中文教育的教学 多 智能体：\n【年份】2026\n【章节】\n【类型】paragraph\n【正文】\n晓 春 ， 魏 楚 元 .\n多\n智能体系统建模\n、 仿 真 及 应用 [M].\n北\n京\n：\n中国\n水\n利\n水\n电\n出\n版\n社\n， 2021 ：\n157-158.\n[29] CHEN G ， DONG S ， SHU Y ， et al. Autoagents ：\na framework for automatic agent generation [C]//Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence. Jeju Island ：\nInternational Convention Center Jeju ， 2024 ：\n22-30.\n[30] YAO S ， ZHAO J ， YU D ， et al. ReAct ：\nsynergizing reasoning and acting in language models [C]//Proceedings of the International Conference on Learning Representations. Kigali ：\nKigali Convention Centre ， 2023.\n[31] 刘 志 毅 .\n具\n身\n智能\n[M].\n北\n京\n：\n中\n译\n出\n版\n社\n， 2024 ：\n204-205.\nTeaching Multi-agents Systems for International Chinese Language Education:\nObjectives, System Architecture, and Application Scenarios YUAN Yaxing 1 , HE Yuanjing 2 , GUAN Mengyuan 3 , ZHI Yong 3 (1.Engineering Research Center of Integration and Application of Digital Learning Technology, Ministry of Education, Beijing 100039; 2.",
+            "citation": "chunk:3697",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "paragraph",
+              "match_type": "bm25",
+              "original_id": 3697
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3700",
+            "score": 0.03727272727272728,
+            "title": "面向国际中文教育的教学多智能体：目标定位、系统架构与应用场景-袁亚兴",
+            "content": "【论文】面向国际中文教育的教学多智能体：目标定位、系统架构与应用场景-袁亚兴\n【作者】2026 年第 3 期 （ 总第 395 期 ） 面 向国 际 中文教育的教学 多 智能体：\n【年份】2026\n【章节】Abstract\n【类型】abstract\n【正文】\ntruction logic of teaching multi-agents in international Chinese language education based on embodied cognition theory. The study first articulates the practical needs and objectives of teaching multi -agent systems, proposing five design principles: cognitive adaptation, personalization, flexible collaboration, cross -modal perception and interaction, and continuous tracking. Furthermore, the study constructs a teaching multi -agent collaborative mechanism with the functional loop of \"embodied interaction -context integration -cognitive construction -feedback optimization\", and elaborates on its organizational structure and operational mechanisms.",
+            "citation": "chunk:3700",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "abstract",
+              "match_type": "bm25",
+              "original_id": 3700
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:322",
+            "score": 0.03686567164179105,
+            "title": "Pinecone RAG 教程",
+            "content": "eneration (RAG) can address these limitations so chat, search, and agentic workflows can all benefit.\n\n## Limitations of foundation models\n\nProducts built on top of foundation models alone are brilliant yet flawed as foundation models have multiple limitations:\n\n### Knowledge cutoffs\n\nWhen you ask current models about recent events – like asking about last week’s NBA basketball game or how to use features in the latest iPhone model - they may confidently provide outdated or completely fabricated information, the hallucinations we mentioned earlier.\n\nModels are trained on massive datasets containing years of human knowledge and creative output from code repositories, books, websites, conversations, scientific papers, and more. But after a model is trained, this data is frozen at a specific point in time, the “cutoff”. This cutoff creates a knowledge gap , leading them to generate plausible but incorrect responses when asked about recent developments.\n\n### Lack depth in domain-specific k",
+            "citation": "chunk:322",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "web_crawl_ai_docs",
+              "chunk_type": null,
+              "match_type": "bm25",
+              "original_id": 322
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:2884",
+            "score": 0.036571428571428574,
+            "title": "一种基于大模型多智能体的作文自动评分方法-朱海霞",
+            "content": "【论文】一种基于大模型多智能体的作文自动评分方法-朱海霞\n【作者】办公自动化\n【年份】2024\n【章节】0  引言\n【类型】paragraph\n【正文】\n个流程设计简洁明了 ， 无需进行模型 训练 ， 实现零样本学习 、 零代码开发 ， 仅需少量的人工参与便能高效完成作文的自动评分任务 。 实验结果显示 ， 该方法不仅能有效 辅助语文课程的教学工作 ， 还具备向其他课程领域推广的广阔前景 。\n关键词 ： 大模型 ； 多智能体 ； 自动评分 ； 语文作文 中图分类号 :  TP 391 . 1 ;  G 633 . 34                                 文献 标识码 :  A                                       文章编号 :  2507 18 - 125 82 An Automatic Essay Scoring Method Based on Large Language Models and An Automatic Essay Scoring Method Based on Large Language Models and a Multi-Agent Frameworka Multi-Agent Framework Zhu Haixia 1 Chen Shihong 2 ( 1 .  Nanjing Mochou Vocational School ,  Jiangsu 210017 ,  China ) ( 2 .  School of Information Science and Technology ,  Guangdong University of Foreign Studies , Guangzhou 510006 ,  China ) AbstractAbstract ::  This paper innovatively proposes an automatic scoring method for Chinese essays based on large language models and a multi-agent framework .  In this method ,  two core agents are first constructed on a multi-agent platform :\na Writing Agent and an Essay Scoring Agent .",
+            "citation": "chunk:2884",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "paragraph",
+              "match_type": "bm25",
+              "original_id": 2884
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3863",
+            "score": 0.036086956521739134,
+            "title": "Self-Rag: Self-reflective Retrieval augmented Generation",
+            "content": "【论文】Self-Rag: Self-reflective Retrieval augmented Generation\n【作者】tikzmark \\usetikzlibrary intersections\n【年份】2023\n【章节】Self-rag: Learning to Retrieve, Generate, and Critique through Self-Reflection / Related Work\n【类型】related_work\n【正文】\nle Self-Rag uses reflection tokens to decide the need for retrieval and to self-evaluate generation quality. Xie et al. ( 2023 ) propose a self-evaluation-guided decoding framework, but they focus only on reasoning tasks with one evaluation dimension (reasoning path consistency) and without retrieval. Recent work on LLM refinement (Dhuliawala et al., 2023 ; Madaan et al., 2023 ; Paul et al., 2023 ) prompts a model to generate task output, natural language feedback and refined task output iteratively, but at the cost of inference efficiency.",
+            "citation": "chunk:3863",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "arxiv-html:2310.11511",
+              "chunk_type": "related_work",
+              "match_type": "bm25",
+              "original_id": 3863
+            },
+            "source_type": "chunk"
+          },
+          {
+            "id": "chunk:3280",
+            "score": 0.034470588235294114,
+            "title": "基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千",
+            "content": "【论文】基于大语言模型和知识图谱增强的建筑领域问答技术研究-武千千\n【作者】作 者 姓 名  : 武千千\n【年份】2025\n【章节】ABSTRACT\n【类型】abstract\n【正文】\nnhancement —sys tem implementation,\" a smart knowledge service framework for the architecture profes sion is developed. The specific r esearch contributions include :\n(1) Addressing the scarcity of high-quality datasets in the architecture field and the lack of accuracy and professionalism of general -purpose LLMs in architectural QA tasks, this thesis integrates multi-source heterogeneous architectural corpora and innovatively proposes a composite data generation strategy for QA tasks, successfully constructing a high -quality architectural domain dataset. Based on this dataset, a parameter -efficient fine-tuning method tailored to the archit ecture field is adopted to develop a domain -specific LLM with deep architectural knowledge understanding.",
+            "citation": "chunk:3280",
+            "metadata": {
+              "routes": [
+                "bm25"
+              ],
+              "source": "real_pdf_recall_batch_20260521",
+              "chunk_type": "abstract",
+              "match_type": "bm25",
+              "original_id": 3280
+            },
+            "source_type": "chunk"
+          }
+        ],
+        "answer_verification": {
+          "reason": "部分或全部断言缺少证据支撑",
+          "supported": false,
+          "final_action": "revise",
+          "support_score": 0.0,
+          "unsupported_claims": [
+            "作为您的研究分析助手，我将严格基于您提供的**证据**和**执行计划**，为您完成对“多智能体框架设计”的分析，并尝试规划一份开题报告的骨架",
+            "### **结论**",
+            "综合现有证据，多智能体框架的研究已从概念探讨进入工程化与场景化阶段",
+            "当前主流设计以**大语言模型为核心驱动**，通过**角色定义、任务分解与流水线编排**来模拟人类协作",
+            "研究缺口主要存在于**框架的普适性、协作效率的优化、以及评估体系的建立**等方面"
+          ]
+        },
+        "citation_verification": {
+          "claims": [
+            {
+              "text": "作为您的研究分析助手，我将严格基于您提供的**证据**和**执行计划**，为您完成对“多智能体框架设计”的分析，并尝试规划一份开题报告的骨架",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            },
+            {
+              "text": "### **结论**",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            },
+            {
+              "text": "综合现有证据，多智能体框架的研究已从概念探讨进入工程化与场景化阶段",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            },
+            {
+              "text": "当前主流设计以**大语言模型为核心驱动**，通过**角色定义、任务分解与流水线编排**来模拟人类协作",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            },
+            {
+              "text": "研究缺口主要存在于**框架的普适性、协作效率的优化、以及评估体系的建立**等方面",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            },
+            {
+              "text": "开题报告应聚焦于解决一个具体的框架设计挑战（如动态调度、容错机制），并提出可验证的改进方案",
+              "supported": false,
+              "confidence": 0.2,
+              "supporting_evidence_ids": []
+            }
+          ],
+          "reason": "部分或全部断言缺少证据支撑",
+          "supported": false,
+          "final_action": "revise",
+          "support_score": 0.0,
+          "citation_coverage": 0.0,
+          "unsupported_claims": [
+            "作为您的研究分析助手，我将严格基于您提供的**证据**和**执行计划**，为您完成对“多智能体框架设计”的分析，并尝试规划一份开题报告的骨架",
+            "### **结论**",
+            "综合现有证据，多智能体框架的研究已从概念探讨进入工程化与场景化阶段",
+            "当前主流设计以**大语言模型为核心驱动**，通过**角色定义、任务分解与流水线编排**来模拟人类协作",
+            "研究缺口主要存在于**框架的普适性、协作效率的优化、以及评估体系的建立**等方面"
+          ],
+          "supporting_evidence_ids": []
+        }
+      }
+    }
+  ]
+}

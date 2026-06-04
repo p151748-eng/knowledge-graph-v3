@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from agents.paper_assistant import PaperAssistantAgent
-from agents.planned_workflow import ExecutionPlan, PlannedTask, ResearchWorkflow
+from agents.planned_workflow import ExecutionPlan, PlannedTask, ResearchWorkflow, RESEARCH_TOOL_GRAPH
 from agents.self_rag_pipeline import SelfRAGPipeline
 from core.agent import AgentResult
 from core.context import AgentContext, PipelineData
@@ -146,8 +146,20 @@ def test_research_path_plans_and_verifies():
         assert result["research_plan"]["tasks"][-1]["type"] == "verify_claims"
         assert result["answer_verification"]["supported"] is True
         assert result["citation_verification"]["supported"] is True
+        assert "research_actions" in result
+        assert "tool_graph" in result
         assert result["evidence_items"]
-        assert [item["node"] for item in result["graph_trace"]] == ["planner", "retrieval", "synthesis", "citation_verifier", "finalize"]
+        nodes = [item["node"] for item in result["graph_trace"]]
+        for node in ["planner", "local_search", "synthesis", "citation_verifier", "finalize"]:
+            assert node in nodes
+        for action in result["research_actions"]:
+            if action.get("next_node"):
+                assert action["next_node"] in RESEARCH_TOOL_GRAPH[action["node"]]
+            if action["action"] in {"search_local_papers", "search_local_knowledge", "verify_claims"}:
+                assert action["tool_name"]
+                assert action["reason"]
+                assert action["observation_summary"]
+                assert action["status"]
         assert "研究方案" in result["response"]
 
 
@@ -207,6 +219,8 @@ def test_research_without_evidence_is_not_supported():
         result = service().chat("帮我基于多篇论文找研究空白并生成开题报告")
         assert result["path"] == "research"
         assert result["citation_verification"]["supported"] is False
+        assert result["research_actions"]
+        assert result["tool_graph"]
 
 
 def main():

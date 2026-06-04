@@ -21,6 +21,7 @@ RECENT_HISTORY_ROUNDS = 4
 # 对于大纲生成等需要完整上下文的任务，需要保留更多历史轮次
 SUMMARY_TRIGGER_MESSAGES = 8
 SUMMARY_TRIGGER_DELTA = 4
+SUMMARY_TRIGGER_CHARS = 2500
 SUMMARY_LOCK_TIMEOUT_SECONDS = 300
 MEMORY_COLLECTION = "conversation_memory"
 _MEMORY_TABLES_READY = False
@@ -30,6 +31,13 @@ BACK_PATTERNS = ["回到", "刚才那篇", "上一个", "前一个", "之前那�
 COMPARE_PATTERNS = ["比较", "对比", "区别", "异同"]
 PAPER_PATTERNS = [r"《([^》]{2,80})》", r"论文[：: ]+([^，。\n]{2,80})", r"题目[：: ]+([^，。\n]{2,80})"]
 DOC_PATTERNS = [r"文档[：: ]+([^，。\n]{2,80})", r"文件[：: ]+([^，。\n]{2,80})"]
+TOPIC_PATTERNS = [
+    r"(?:[【\[])?(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)(?:[】\]])?(?:是)?[：:：\s]+([^\n]{4,260})",
+    r"(?:[【\[])(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)(?:[】\]])\s*([^\n]{4,260})",
+    r"(?:[【\[])?(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)(?:[】\]])?(?:是)?(?=[【\[])([^\n]{4,260})",
+]
+TOPIC_REF_PATTERN = r"(?:基于|根据|围绕|选择|选用|采用|继续|分析)?(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)"
+TOPIC_HEADER_PATTERN = r"(?:^|\n)\s*(?:#{1,6}\s*)?(?:[-*]\s*)?(?:(?:[【\[])(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)(?:[】\]])\s*|(选题\s*[一二三四五六七八九十0-9]+|题目\s*[一二三四五六七八九十0-9]+)(?:[】\]])?(?:是)?(?:[：:：\s]+|(?=[【\[])))"
 
 
 class MemoryService:
@@ -68,14 +76,16 @@ class MemoryService:
             flag_modified(summary, "task_state")
             self.db.commit()
 
-        snippets = self.recall(query, conversation_id, task_state=task_state, top_k=5)
         recent_turns = self.load_recent_turns(conversation_id, rounds=RECENT_HISTORY_ROUNDS)
-        prompt_text = self._format_prompt_text(summary.summary or "", task_state, snippets, recent_turns)
+        explicit_focus = self._resolve_explicit_topic_reference(query, conversation_id, recent_turns, summary.summary or "")
+        snippets = self.recall(query, conversation_id, task_state=task_state, top_k=5)
+        prompt_text = self._format_prompt_text(summary.summary or "", task_state, snippets, recent_turns, query=query, explicit_focus=explicit_focus)
         return {
             "summary": summary.summary or "",
             "task_state": task_state,
             "snippets": snippets,
             "recent_turns": recent_turns,
+            "explicit_focus": explicit_focus,
             "prompt_text": prompt_text,
         }
 
@@ -126,11 +136,13 @@ class MemoryService:
             if end <= start:
                 self._release_summary_lock(summary)
                 return False
-            if end < SUMMARY_TRIGGER_MESSAGES and end - start < SUMMARY_TRIGGER_DELTA:
+            new_messages = conv.messages[start:end]
+            new_chars = sum(len(msg.get("content", "")) for msg in new_messages)
+            self._store_labeled_topics(conversation_id, new_messages, start, summary.task_state or {})
+            if end < SUMMARY_TRIGGER_MESSAGES and end - start < SUMMARY_TRIGGER_DELTA and new_chars < SUMMARY_TRIGGER_CHARS:
                 self._release_summary_lock(summary)
                 return False
 
-            new_messages = conv.messages[start:end]
             task_state = summary.task_state or {}
             result = self._compress_with_llm(summary.summary or "", task_state, new_messages)
             merged_summary = result.get("summary") or result.get("summary_delta") or self._fallback_summary(new_messages)
@@ -264,6 +276,103 @@ class MemoryService:
         response = self.llm.complete(prompt, system_prompt="你是对话记忆压缩器，只返回合法 JSON。", temperature=0.1).content
         return self._parse_json(response)
 
+    def _store_labeled_topics(self, conversation_id: int, messages: List[Dict[str, Any]], base_index: int, task_state: Dict[str, Any]) -> None:
+        stored = False
+        for offset, msg in enumerate(messages):
+            content = msg.get("content", "")
+            if not content or "选题" not in content and "题目" not in content:
+                continue
+            for topic in self._extract_all_labeled_topics(content):
+                message_index = base_index + offset
+                existing = self.db.query(ConversationMemoryItem).filter(
+                    ConversationMemoryItem.conversation_id == conversation_id,
+                    ConversationMemoryItem.kind == "topic",
+                    ConversationMemoryItem.topic_label == topic["label"],
+                    ConversationMemoryItem.message_index == message_index,
+                ).first()
+                if existing:
+                    if len(topic["content"]) > len(existing.content or ""):
+                        existing.content = topic["content"]
+                        existing.summary = f"{topic['label']}：{topic['title']}"
+                        existing.keywords = self._keywords(topic["content"] + " " + topic["label"])
+                        self._upsert_memory_vector(existing)
+                        stored = True
+                    continue
+                memory = ConversationMemoryItem(
+                    conversation_id=conversation_id,
+                    role="system",
+                    content=topic["content"],
+                    summary=f"{topic['label']}：{topic['title']}",
+                    keywords=self._keywords(topic["content"] + " " + topic["label"]),
+                    importance=0.95,
+                    message_index=message_index,
+                    kind="topic",
+                    focus_id=f"topic:{topic['label']}",
+                    focus_type="topic",
+                    topic_label=topic["label"],
+                )
+                self.db.add(memory)
+                self.db.flush()
+                self._upsert_memory_vector(memory)
+                stored = True
+        if stored:
+            self.db.commit()
+
+    def _extract_all_labeled_topics(self, text: str) -> List[Dict[str, str]]:
+        matches = list(re.finditer(TOPIC_HEADER_PATTERN, text or "", flags=re.M))
+        topics = []
+        for index, match in enumerate(matches):
+            label = self._normalize_topic_label(match.group(1) or match.group(2))
+            start = match.start()
+            end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+            section = self._shorten((text[start:end] or "").strip(), 2600)
+            title = ""
+            first_line = section.splitlines()[0] if section else ""
+            title_match = re.search(r"[：:：]\s*(.+)$", first_line)
+            if title_match:
+                title = title_match.group(1).strip()
+            topics.append({"label": label, "title": title or label, "content": section})
+        return topics
+
+    def _alternate_topic_label(self, label: str) -> str:
+        cn_to_digit = {
+            "零": "0",
+            "一": "1",
+            "二": "2",
+            "三": "3",
+            "四": "4",
+            "五": "5",
+            "六": "6",
+            "七": "7",
+            "八": "8",
+            "九": "9",
+            "十": "10",
+        }
+        match = re.match(r"^(选题|题目)([零一二三四五六七八九十])$", label or "")
+        if match:
+            return f"{match.group(1)}{cn_to_digit.get(match.group(2), match.group(2))}"
+        return ""
+
+    def _normalize_topic_label(self, label: str) -> str:
+        label = re.sub(r"\s+", "", label or "")
+        digit_to_cn = {
+            "0": "零",
+            "1": "一",
+            "2": "二",
+            "3": "三",
+            "4": "四",
+            "5": "五",
+            "6": "六",
+            "7": "七",
+            "8": "八",
+            "9": "九",
+            "10": "十",
+        }
+        match = re.match(r"^(选题|题目)(\d+)$", label)
+        if match:
+            return f"{match.group(1)}{digit_to_cn.get(match.group(2), match.group(2))}"
+        return label
+
     def _store_memory_items(self, conversation_id: int, items: List[Dict[str, Any]], base_index: int, task_state: Dict[str, Any]) -> None:
         active = task_state.get("active_focus") or {}
         for offset, item in enumerate(items[:8]):
@@ -363,8 +472,74 @@ class MemoryService:
             "rank_score": rank_score,
         }
 
-    def _format_prompt_text(self, summary: str, task_state: Dict[str, Any], snippets: List[Dict[str, Any]], recent_turns: Optional[List[dict]] = None) -> str:
+    def _resolve_explicit_topic_reference(self, query: str, conversation_id: Optional[int], recent_turns: List[dict], summary: str = "") -> Dict[str, Any]:
+        match = re.search(TOPIC_REF_PATTERN, query or "")
+        if not match:
+            return {}
+        label = self._normalize_topic_label(match.group(1))
+        candidates = []
+        memory = None
+        if conversation_id:
+            labels = [label]
+            alt_label = self._alternate_topic_label(label)
+            if alt_label and alt_label not in labels:
+                labels.append(alt_label)
+            memory = self.db.query(ConversationMemoryItem).filter(
+                ConversationMemoryItem.conversation_id == conversation_id,
+                ConversationMemoryItem.kind == "topic",
+                ConversationMemoryItem.topic_label.in_(labels),
+            ).order_by(ConversationMemoryItem.importance.desc(), ConversationMemoryItem.created_at.desc()).first()
+        if memory:
+            candidates.append({"label": label, "title": memory.summary or label, "content": memory.content, "source": "topic_memory"})
+        for turn in reversed(recent_turns or []):
+            content = turn.get("content") or ""
+            extracted = self._extract_labeled_topic(content, label)
+            if extracted:
+                candidates.append(extracted)
+        if summary:
+            extracted = self._extract_labeled_topic(summary, label)
+            if extracted:
+                candidates.append(extracted)
+        if not candidates:
+            return {"label": label, "content": "", "matched": False}
+        stored_topic = next((item for item in candidates if item.get("source") == "topic_memory"), None)
+        best = stored_topic or max(candidates, key=lambda item: len(item.get("content", "")))
+        best["matched"] = True
+        return best
+
+    def _extract_labeled_topic(self, text: str, label: str) -> Optional[Dict[str, Any]]:
+        if not text or label not in self._normalize_topic_label(text):
+            return None
+        for topic in self._extract_all_labeled_topics(text):
+            if topic.get("label") == label:
+                return topic
+        start = self._normalize_topic_label(text).find(label)
+        if start < 0:
+            return None
+        raw_start = max(0, text.find(label[-1], max(0, start - 5)) - len(label) + 1)
+        following = text[raw_start:] if raw_start >= 0 else text
+        next_match = re.search(r"\n\s*(?:#{1,6}\s*)?(?:选题|题目)\s*[一二三四五六七八九十0-9]+[：:：\s]", following[len(label):])
+        end = len(following)
+        if next_match:
+            end = len(label) + next_match.start()
+        section = following[:end].strip()
+        section = self._shorten(section, 1800)
+        title = ""
+        for pattern in TOPIC_PATTERNS:
+            matched = re.search(pattern, section)
+            if matched:
+                title = matched.group(2).strip()
+                break
+        return {"label": label, "title": title or label, "content": section}
+
+    def _format_prompt_text(self, summary: str, task_state: Dict[str, Any], snippets: List[Dict[str, Any]], recent_turns: Optional[List[dict]] = None, query: str = "", explicit_focus: Optional[Dict[str, Any]] = None) -> str:
         parts = []
+        if explicit_focus and explicit_focus.get("matched"):
+            parts.append(
+                f"【显式指代解析】用户提到的{explicit_focus.get('label')}是：\n"
+                f"标题：{explicit_focus.get('title') or explicit_focus.get('label')}\n"
+                f"完整内容：{explicit_focus.get('content')}"
+            )
         active = (task_state or {}).get("active_focus") or {}
         if active:
             parts.append(f"【当前焦点】{active.get('title') or active.get('focus_id')}；意图：{active.get('intent', '')}")
@@ -374,15 +549,14 @@ class MemoryService:
             lines = [f"- {s.get('summary') or s.get('content')}" for s in snippets[:5]]
             parts.append("【相关历史片段】\n" + "\n".join(lines))
         if recent_turns:
-            # 检测是否为大纲/开题任务，需要更完整的上下文
             is_outline_task = any(
-                kw in (msg.get('content', '') or '')
+                kw in (query or '') or kw in (msg.get('content', '') or '')
                 for msg in recent_turns
                 for kw in ['选题', '开题', '大纲', '提纲', 'outline', '基于']
             )
-            truncate_limit = 480 if is_outline_task else 240
+            truncate_limit = 900 if is_outline_task else 240
             recent_lines = []
-            for msg in recent_turns[-6:]:
+            for msg in recent_turns[-8:]:
                 role = "用户" if msg.get("role") == "user" else "助手"
                 recent_lines.append(f"{role}: {self._shorten(msg.get('content', ''), truncate_limit)}")
             if recent_lines:

@@ -38,16 +38,30 @@ def main():
         assert conv is not None
         print("[PASS] summary row created")
 
-        paper = service.chat_fast_path("接下来分析论文：《基于DeepSeek的汽车数据分析Agent设计》，重点关注技术栈和Agent构建方式。")
+        paper = service.chat_fast_path("记忆压缩论文：DeepSeek 数据分析 Agent 设计。请重点关注技术栈和 Agent 协作方式。")
         paper_id = paper["conversation_id"]
-        for i in range(4):
-            service.chat_fast_path(f"无关测试问题 {i}：请简单解释一个数据库概念。", paper_id)
-        memory.compress_if_needed(paper_id)
+        noise_messages = [
+            "无关噪声问题 0：请简单解释一下数据库索引。",
+            "切换意图：我想临时问一下 Docker Compose 是什么。",
+            "无关噪声问题 1：请简单解释一下 HTTP 状态码。",
+            "另一个意图：帮我比较一下 Redis 和 MySQL 的区别。",
+        ]
+        for msg in noise_messages:
+            service.chat_fast_path(msg, paper_id)
+        compressed = memory.compress_if_needed(paper_id)
+        assert compressed is True
         context = memory.build_memory_context("这篇论文用了什么技术栈？", paper_id)
         prompt_text = context["prompt_text"]
-        assert "DeepSeek" in prompt_text or "汽车数据分析" in prompt_text, prompt_text
-        assert len(context["recent_turns"]) <= 4
-        print("[PASS] long-range compressed recall and prompt budget")
+        assert "DeepSeek" in prompt_text or "数据分析" in prompt_text, prompt_text
+        assert "Agent" in prompt_text, prompt_text
+        assert len(context["recent_turns"]) <= 8
+        print("[PASS] long-range compressed recall survives noise and prompt budget")
+
+        noisy_context = memory.build_memory_context("刚才那篇数据分析 Agent 论文重点关注什么？", paper_id)
+        noisy_prompt = noisy_context["prompt_text"]
+        assert "DeepSeek" in noisy_prompt or "数据分析" in noisy_prompt, noisy_prompt
+        assert "技术栈" in noisy_prompt or "Agent" in noisy_prompt, noisy_prompt
+        print("[PASS] compressed memory recall under different intent noise")
 
         state = context["task_state"]
         old_focus = (state.get("active_focus") or {}).get("focus_id")

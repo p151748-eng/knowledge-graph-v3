@@ -1,14 +1,85 @@
 // TypeScript 类型定义
 
+export interface ExecutionStep {
+  agent: string;
+  step: string;
+  elapsed: number;
+  timestamp: number;
+}
+
+export interface ImportPaperAction {
+  type: 'import_paper';
+  label: string;
+  requires_confirmation: boolean;
+  reason?: string;
+  paper: {
+    title: string;
+    url: string;
+    source: string;
+    arxiv_id?: string;
+    snippet?: string;
+    provider?: string;
+    quality_score?: number;
+  };
+}
+
+export interface ResearchAction {
+  step?: number;
+  action?: string;
+  query?: string;
+  reason?: string;
+  tool_name?: string;
+  observation_summary?: string;
+  evidence_count?: number;
+  status?: string;
+  node?: string;
+  next_node?: string;
+  intent?: string;
+  allowed_tools?: string[];
+}
+
+export interface EvidenceItem {
+  id?: number | string;
+  source_type?: string;
+  title?: string;
+  content?: string;
+  citation?: string;
+  score?: number;
+  metadata?: {
+    source?: string;
+    provider?: string;
+    url?: string;
+    authors?: string;
+    year?: string | number;
+    chunk_type?: string;
+    match_type?: string;
+    paper_id?: string;
+    original_id?: string;
+    [key: string]: any;
+  };
+  [key: string]: any;
+}
+
 export interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp?: string;
   sources?: SourceItem[];
   explanations?: ExplanationItem[];
+  suggested_actions?: ImportPaperAction[];
   path?: string;
   processing_time?: string;
   confidence?: number;
+  paper_task?: PaperTaskInfo;
+  evidence_grade?: EvidenceGrade;
+  retrieval_rounds?: RetrievalRound[];
+  performance?: PerformanceMetrics;
+  executionSteps?: ExecutionStep[];
+  research_actions?: ResearchAction[];
+  research_intent?: string;
+  answer_verification?: Record<string, any>;
+  citation_verification?: Record<string, any>;
+  evidence_items?: EvidenceItem[];
 }
 
 export interface SourceItem {
@@ -78,10 +149,16 @@ export interface SSEEvent {
   confidence?: number;
   message?: string;
   conversation_id?: number;
+  suggested_actions?: ImportPaperAction[];
   paper_task?: PaperTaskInfo;
   evidence_grade?: EvidenceGrade;
   retrieval_rounds?: RetrievalRound[];
   performance?: PerformanceMetrics;
+  research_actions?: ResearchAction[];
+  research_intent?: string;
+  answer_verification?: Record<string, any>;
+  citation_verification?: Record<string, any>;
+  evidence_items?: EvidenceItem[];
 }
 
 export interface PaperTaskInfo {
