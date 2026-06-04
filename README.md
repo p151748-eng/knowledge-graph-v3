@@ -24,8 +24,8 @@ KG-Agent 把论文阅读、研究选题、证据验证、学术联网检索和�
 | --- | --- | --- |
 | 先理解概念 | `RAG 是什么？请用三句话解释。` | 快速解释基础概念，不启动复杂检索流程。 |
 | 再比较方法 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | 对比多个方法的机制、差异、适用场景和证据来源。 |
-| 精读一篇论文 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | 基于本地论文分片整理研究问题、方法、实验和贡献。 |
-| 查看证据来源 | `帮我联网搜索 Agentic RAG 在医学场景中的最新论文，并给出可以继续研究的方向。` | 在本地证据不足或需要最新资料时补充联网证据和来源链接。 |
+| 精读一篇论文 | `请基于知识库中的《Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection》，概括它的研究问题、核心方法、实验设计和主要贡献。` | 基于本地论文分片整理研究问题、方法、实验和贡献。 |
+| 自动补充文献 | `面向放射科报告的 Agentic RAG 系统有哪些最新研究空白？请基于证据给出可以继续做的研究方向。` | 当知识库证据不足时，自动补充外部文献，并展示论文名称、URL 和支撑状态。 |
 | 验证最新判断 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | 使用 Self-RAG / 联网补证判断结论是否有证据支撑。 |
 | 形成研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | 从方向拆解到研究问题、技术路线、风险和下一步资料需求。 |
 | 沉淀知识图谱 | `搜索 Self-RAG 相关概念，并查看它和 RAG、反思机制、事实性评估之间的关系。` | 把论文、概念、方法和关系变成可检索、可探索的图谱。 |
@@ -71,7 +71,7 @@ RAG 是什么？请用三句话解释。
 **问题**
 
 ```text
-请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。
+请基于知识库中的《Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection》，概括它的研究问题、核心方法、实验设计和主要贡献。
 ```
 
 **结果截图**
@@ -80,14 +80,14 @@ RAG 是什么？请用三句话解释。
   <img src="docs/assets/real-screenshots/paper-assistant-answer.png" alt="Paper assistant real screenshot" width="100%" />
 </p>
 
-Paper Assistant 会优先读取本地论文分片，围绕方法、实验、贡献和局限组织回答，而不是泛泛总结。
+这个例子指定了知识库中已导入的 Self-RAG 论文。Paper Assistant 会优先读取这篇论文的本地分片，围绕研究问题、方法、实验、贡献和局限组织回答，而不是泛泛总结。
 
-### 4. 证据不足时联网补充并生成来源链接
+### 4. 知识库证据不足时自动补充参考文献
 
 **问题**
 
 ```text
-帮我联网搜索 Agentic RAG 在医学场景中的最新论文，并给出可以继续研究的方向。
+面向放射科报告的 Agentic RAG 系统有哪些最新研究空白？请基于证据给出可以继续做的研究方向。
 ```
 
 **结果截图**
@@ -96,7 +96,7 @@ Paper Assistant 会优先读取本地论文分片，围绕方法、实验、贡�
   <img src="docs/assets/real-screenshots/research-web-evidence-links.png" alt="Research web evidence links screenshot" width="100%" />
 </p>
 
-当本地证据不足或用户明确要求“联网 / 最新论文”时，Research Workflow 会补充学术或网页证据，并把论文标题、来源、URL 和支撑状态展示出来。
+这个问题没有要求联网。实际运行时，本地知识库证据不足以支撑完整回答，Research Workflow 自动补充外部文献，并在结果中给出参考论文名称、arXiv URL 和证据不足提示。
 
 ### 5. 查找并验证最新论文
 
