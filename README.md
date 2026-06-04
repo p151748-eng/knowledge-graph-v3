@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="docs/product-showcase.html">产品展示</a> ·
   <a href="docs/feature-manual.md">功能介绍</a> ·
   <a href="ARCHITECTURE.md">Architecture</a> ·
   <a href="API.md">API</a> ·
@@ -28,7 +29,7 @@
 
 KG-Agent System v3 是一个面向个人学习、论文阅读、研究选题分析和知识管理的智能知识库系统。它把 RAG、知识图谱、多 Agent 工作流、上下文记忆、证据校验、联网搜索和学术论文检索组合在一起，让用户可以在同一个界面完成文档导入、知识沉淀、论文问答、研究空白分析、最新论文补充和可视化图谱探索。
 
-> 想先了解这个项目适合哪些真实场景、能帮用户完成什么任务，请看 [功能介绍](docs/feature-manual.md)。
+> 想先像浏览产品官网一样快速了解项目，请看 [产品展示页](docs/product-showcase.html)；想按场景阅读完整介绍，请看 [功能介绍](docs/feature-manual.md)。
 
 ## 为什么需要 KG-Agent
 
@@ -56,6 +57,10 @@ KG-Agent 面向这些问题设计了多路径工作流和证据驱动回答机�
 | 可观测回答 | 前端展示路径、来源、执行步骤、证据评分、检索轮次和性能指标。 |
 
 
+## 产品展示
+
+如果你想先用 1 分钟了解 KG-Agent 能解决什么问题，可以打开 [docs/product-showcase.html](docs/product-showcase.html)，里面包含面向 GitHub 展示的产品页和 5 个对话示例截图。
+
 ## 功能展示
 
 ### 研究助手：从模糊问题到可做研究选题
@@ -70,7 +75,23 @@ KG-Agent 面向这些问题设计了多路径工作流和证据驱动回答机�
   <img src="docs/assets/demo-evidence-panel.svg" alt="Evidence Panel Demo" width="100%" />
 </p>
 
-更多真实场景、使用方式和示例问题见 [docs/feature-manual.md](docs/feature-manual.md)。
+### 真实问题截图：不同问题自动进入不同工作流
+
+下面这些截图来自本地前后端真实运行，不是重新绘制的概念图，用来展示路由选择、联网补证、论文助手和研究助手的实际界面效果。
+
+| 问题类型 | 真实问题 | 截图 |
+| --- | --- | --- |
+| 简单定义 | `RAG 是什么？请用三句话解释。` | [查看截图](docs/assets/real-screenshots/fast-definition.png) |
+| 复杂分析 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | [查看截图](docs/assets/real-screenshots/pipeline-analysis.png) |
+| 论文问题 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | [查看截图](docs/assets/real-screenshots/paper-assistant.png) |
+| 研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | [查看截图](docs/assets/real-screenshots/research-plan.png) |
+| 最新验证 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | [查看截图](docs/assets/real-screenshots/self-rag-medical-web.png) |
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/self-rag-medical-web.png" alt="Real Self-RAG medical web verification screenshot" width="100%" />
+</p>
+
+更多真实场景、使用方式和示例问题见 [docs/feature-manual.md](docs/feature-manual.md)，完整产品展示页见 [docs/product-showcase.html](docs/product-showcase.html)。
 
 ## 系统架构
 
@@ -240,6 +261,7 @@ http://localhost:5173
 - [DEVELOPMENT.md](DEVELOPMENT.md)：开发环境和项目结构。
 - [DEPLOYMENT.md](DEPLOYMENT.md)：部署与运维。
 - [REQUIREMENTS.md](REQUIREMENTS.md)：需求说明。
+- [docs/product-showcase.html](docs/product-showcase.html)：面向 GitHub 访客的产品展示页和对话示例截图。
 - [docs/feature-manual.md](docs/feature-manual.md)：面向使用者的功能介绍、真实场景和示例问题。
 - [docs/user-guide.md](docs/user-guide.md)：用户操作手册。
 - [docs/demo.md](docs/demo.md)：演示脚本。
