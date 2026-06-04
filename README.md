@@ -20,83 +20,21 @@ KG-Agent 把论文阅读、研究选题、证据验证、学术联网检索和�
 
 ## 一眼看懂它能做什么
 
-| 使用场景 | 你可以直接这样问 | 系统会做什么 |
+| 使用阶段 | 你可以直接这样问 | 系统会做什么 |
 | --- | --- | --- |
-| 快速理解概念 | `RAG 是什么？请用三句话解释。` | 直接给出简明解释，不启动复杂流程。 |
-| 分析方法关系 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | 检索本地知识、组织对比维度、展示来源和执行步骤。 |
-| 阅读单篇论文 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | 从本地论文分片中提取方法、实验、贡献和引用片段。 |
-| 设计研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | 拆解研究目标，结合证据生成研究问题、技术路线和风险。 |
-| 验证最新论文 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | 触发联网/学术检索，返回论文来源、URL、摘要和支撑状态。 |
+| 先理解概念 | `RAG 是什么？请用三句话解释。` | 快速解释基础概念，不启动复杂检索流程。 |
+| 再比较方法 | `请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。` | 对比多个方法的机制、差异、适用场景和证据来源。 |
+| 精读一篇论文 | `请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。` | 基于本地论文分片整理研究问题、方法、实验和贡献。 |
+| 查看证据来源 | `帮我联网搜索 Agentic RAG 在医学场景中的最新论文，并给出可以继续研究的方向。` | 在本地证据不足或需要最新资料时补充联网证据和来源链接。 |
+| 验证最新判断 | `请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。` | 使用 Self-RAG / 联网补证判断结论是否有证据支撑。 |
+| 形成研究方案 | `帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。` | 从方向拆解到研究问题、技术路线、风险和下一步资料需求。 |
+| 沉淀知识图谱 | `搜索 Self-RAG 相关概念，并查看它和 RAG、反思机制、事实性评估之间的关系。` | 把论文、概念、方法和关系变成可检索、可探索的图谱。 |
 
 ## 这个项目可以做什么
 
-下面用真实问题展示 KG-Agent 的主要能力。每个例子都来自本地前后端实际运行，截图直接展示问题提交后的结果界面。
+下面按真实研究流程从简单到复杂展示 KG-Agent 的主要能力。每个例子都来自本地前后端实际运行，截图直接展示问题提交后的结果界面。
 
-### 1. 查找并验证最新论文
-
-**问题**
-
-```text
-请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。
-```
-
-**结果截图**
-
-<p align="center">
-  <img src="docs/assets/real-screenshots/self-rag-medical-web.png" alt="Self-RAG medical web verification" width="100%" />
-</p>
-
-这个问题包含“最近”“联网验证”“医学场景”“新论文”，系统会触发 Self-RAG / 联网补证，返回论文来源、URL、摘要和证据支撑状态。
-
-### 2. 从研究方向生成可做方案
-
-**问题**
-
-```text
-帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。
-```
-
-**结果截图**
-
-<p align="center">
-  <img src="docs/assets/real-screenshots/research-plan.png" alt="Research workflow real screenshot" width="100%" />
-</p>
-
-系统会把模糊方向拆成研究目标、技术路线、可验证问题和风险点，并保留研究动作、证据列表和验证结果。
-
-### 3. 阅读并总结单篇论文
-
-**问题**
-
-```text
-请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。
-```
-
-**结果截图**
-
-<p align="center">
-  <img src="docs/assets/real-screenshots/paper-assistant.png" alt="Paper assistant real screenshot" width="100%" />
-</p>
-
-Paper Assistant 会优先读取本地论文分片，围绕方法、实验、贡献和局限组织回答，而不是泛泛总结。
-
-### 4. 比较多个 RAG 方法
-
-**问题**
-
-```text
-请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。
-```
-
-**结果截图**
-
-<p align="center">
-  <img src="docs/assets/real-screenshots/pipeline-analysis.png" alt="Pipeline analysis real screenshot" width="100%" />
-</p>
-
-复杂方法比较会进入知识库分析流程，系统会组织概念关系、机制差异、适用场景和来源证据。
-
-### 5. 快速理解基础概念
+### 1. 快速理解基础概念
 
 **问题**
 
@@ -112,6 +50,102 @@ RAG 是什么？请用三句话解释。
 
 简单定义会走快速回答路径，不会被复杂工作流拖慢。
 
+### 2. 比较多个 RAG 方法
+
+**问题**
+
+```text
+请分析 Self-RAG、CRAG 和 GraphRAG 在证据检索与纠错机制上的关系。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/pipeline-analysis.png" alt="Pipeline analysis real screenshot" width="100%" />
+</p>
+
+复杂方法比较会进入知识库分析流程，系统会组织概念关系、机制差异、适用场景和来源证据。
+
+### 3. 阅读并总结单篇论文
+
+**问题**
+
+```text
+请概括这篇论文的研究问题、核心方法、实验设计和主要贡献。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/paper-assistant-answer.png" alt="Paper assistant real screenshot" width="100%" />
+</p>
+
+Paper Assistant 会优先读取本地论文分片，围绕方法、实验、贡献和局限组织回答，而不是泛泛总结。
+
+### 4. 证据不足时联网补充并生成来源链接
+
+**问题**
+
+```text
+帮我联网搜索 Agentic RAG 在医学场景中的最新论文，并给出可以继续研究的方向。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/research-web-evidence-links.png" alt="Research web evidence links screenshot" width="100%" />
+</p>
+
+当本地证据不足或用户明确要求“联网 / 最新论文”时，Research Workflow 会补充学术或网页证据，并把论文标题、来源、URL 和支撑状态展示出来。
+
+### 5. 查找并验证最新论文
+
+**问题**
+
+```text
+请联网验证最近是否有 Agentic RAG 在医学场景中的新论文。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/self-rag-medical-web.png" alt="Self-RAG medical web verification" width="100%" />
+</p>
+
+这个问题包含“最近”“联网验证”“医学场景”“新论文”，系统会触发 Self-RAG / 联网补证，返回论文来源、URL、摘要和证据支撑状态。
+
+### 6. 从研究方向生成可做方案
+
+**问题**
+
+```text
+帮我基于 Agentic RAG 在医学场景中的应用，设计一个可做的研究方案。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/research-plan.png" alt="Research workflow real screenshot" width="100%" />
+</p>
+
+系统会把模糊方向拆成研究目标、技术路线、可验证问题和风险点，并保留研究动作、证据列表和验证结果。
+
+### 7. 把论文和概念沉淀成知识图谱
+
+**问题**
+
+```text
+搜索 Self-RAG 相关概念，并查看它和 RAG、反思机制、事实性评估之间的关系。
+```
+
+**结果截图**
+
+<p align="center">
+  <img src="docs/assets/real-screenshots/knowledge-graph-view.png" alt="Knowledge graph real screenshot" width="100%" />
+</p>
+
+导入的论文和笔记不只是被切成向量分片，也可以沉淀为概念、方法、实验和关系网络，后续继续检索和探索。
+
 ## 核心亮点
 
 - **多工作流自动路由**：同一个聊天入口，自动区分 Fast、Pipeline、Paper Assistant、Self-RAG 和 Research。
@@ -119,22 +153,6 @@ RAG 是什么？请用三句话解释。
 - **证据透明面板**：不仅展示答案，也展示每条证据来自本地、论文库、图谱还是联网搜索。
 - **研究型对话记忆**：能识别“这个选题”“继续刚才”等追问，延续上一轮研究目标。
 - **知识图谱沉淀**：把论文、概念、方法、实验和关系沉淀成可搜索、可探索的图谱。
-
-## GitHub 展示图
-
-这些是为了让访客快速理解产品场景而制作的静态展示图，适合放在项目介绍、答辩或演示材料中。
-
-<p align="center">
-  <img src="docs/assets/demo-research-assistant.svg" alt="Research assistant demo" width="100%" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/demo-evidence-panel.svg" alt="Evidence panel demo" width="100%" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/demo-knowledge-graph.svg" alt="Knowledge graph demo" width="100%" />
-</p>
 
 ## 最小启动方式
 

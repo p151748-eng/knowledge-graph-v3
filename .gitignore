@@ -64,3 +64,7 @@ mysql/
 *.bak
 *.tmp
 notes/
+
+# Local Claude/session artifacts
+.claude/
+docs/assets/real-screenshots/*-error.png

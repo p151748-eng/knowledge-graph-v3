@@ -170,7 +170,6 @@ http://localhost:5173
 - [DEVELOPMENT.md](../DEVELOPMENT.md)：开发环境和项目结构。
 - [DEPLOYMENT.md](../DEPLOYMENT.md)：部署与运维。
 - [REQUIREMENTS.md](../REQUIREMENTS.md)：需求说明。
-- [product-showcase.html](product-showcase.html)：面向 GitHub 访客的产品展示页和对话示例截图。
 - [feature-manual.md](feature-manual.md)：面向使用者的功能介绍、真实场景和示例问题。
 - [user-guide.md](user-guide.md)：用户操作手册。
 - [demo.md](demo.md)：演示脚本。
